@@ -1,15 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
-
+import { Navbar } from '../components/ui/Navbar';
+import { Missions } from '../components/missions/Missions';
 
 export const DashboardRoutes = () => {
   return (
     <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
+      <Navbar />
+      <Routes>
+        <Route excat path="/missions" element={<Missions/>} />
+        <Route excat path="/" element={<Missions/>} />
 
-      {/* <Routes>
-      </Routes> */}
+      </Routes>
     </>
   );
 };
