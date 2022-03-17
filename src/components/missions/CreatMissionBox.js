@@ -1,17 +1,19 @@
 import React from 'react'
+import { NavLink, Outlet } from "react-router-dom";
 import Icon from '../Icon'
 
 export const CreateMissionBox = () => {
 
 
     return (
-        <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 ">
+        <NavLink
+            to="/createMission"
+            className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 "
+        >
 
             <article className="overflow-hidden rounded-lg shadow-lg bg-slate-100 cursor-pointer hover:bg-slate-400">
                 <div className=''>
-                    <div alt="Placeholder" className="aspect-video object-cover block h-auto w-full" >
-                        <Icon />
-                    </div>
+                    <Icon style='aspect-video object-cover block h-auto w-full' name='gotchu' color={'blue'} />
                 </div>
                 <header className="flex items-center justify-between leading-tight p-2 md:p-4">
                     <h1 className="text-lg">
@@ -33,7 +35,8 @@ export const CreateMissionBox = () => {
                     <a className="flex items-center no-underline hover:underline text-black" >
 
                         <div className='h-8 w-8'>
-                            <img alt="Placeholder" className="block rounded-full" src='gotchu.svg' />
+                            <Icon style="block rounded-full" name='gotchu' color={'blue'} />
+
                         </div>
                         <p className="ml-2 text-sm">
                             Gotchu
@@ -47,8 +50,8 @@ export const CreateMissionBox = () => {
 
             </article>
 
+        </NavLink>
 
-        </div>
     )
 }
 

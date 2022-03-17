@@ -90,7 +90,7 @@ export default function Icon({ name = 'pencil', size = 30, style = {}, color = '
 
     }
     return (
-        <div>
+        <div className={style}>
             {icons[name]}
         </div>
     )
