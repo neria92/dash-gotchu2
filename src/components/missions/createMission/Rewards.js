@@ -15,20 +15,21 @@ export const Rewards = () => {
                                     <div>
                                         <legend className="text-base font-medium text-gray-900">Recopensas</legend>
                                     </div>
-                                    <div className="mt-4 space-y-4">
-                                        <div className="flex items-center">
-                                            <input id="push-everything" name="push-notifications" type="radio" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                                            <label className="ml-3 block text-sm font-medium text-gray-700"> Baja </label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="push-email" name="push-notifications" type="radio" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                                            <label className="ml-3 block text-sm font-medium text-gray-700"> Media </label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="push-nothing" name="push-notifications" type="radio" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                                            <label className="ml-3 block text-sm font-medium text-gray-700"> Alta</label>
-                                        </div>
-                                    </div>
+                                    <Input
+                                        title={'Money'}
+                                        name='money'
+                                        placeHolder='Money'
+                                    />
+                                    <Input
+                                        title={'Gcoins'}
+                                        name='gcoins'
+                                        placeHolder='Gcoins'
+                                    />
+                                    <Input
+                                        title={'Puntos de experiencia'}
+                                        name='Xp'
+                                        placeHolder='xp'
+                                    />
                                 </fieldset>
                             </div>
                             <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -45,5 +46,23 @@ export const Rewards = () => {
             </div>
         </>
 
+    )
+}
+
+const Input = ({ title, name,placeHolder }) => {
+    return (
+        <div className="flex items-center">
+            <label className='mr-1'>{`${title}: `}</label>
+            <div className="mt-1 flex rounded-md shadow-sm">
+                <input
+                    type="text"
+                    name={name}
+                    id={title}
+                    // onChange={onChange}
+                    className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                    placeholder={placeHolder}
+                />
+            </div>
+        </div>
     )
 }
