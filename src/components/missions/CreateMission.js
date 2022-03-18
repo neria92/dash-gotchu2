@@ -4,6 +4,7 @@ import { Difficulty } from './createMission/Difficulty'
 import { Map } from './createMission/Map'
 import { Rewards } from './createMission/Rewards'
 import { TitleAndObjective } from './createMission/TitleAndObjective'
+import { TypeEvidences } from './createMission/TypeEvidences'
 
 export const CreateMission = () => {
     return (
@@ -15,7 +16,10 @@ export const CreateMission = () => {
             <DateMission />
 
             <Rewards />
+
             <Map />
+
+            <TypeEvidences />
 
 
         </div>

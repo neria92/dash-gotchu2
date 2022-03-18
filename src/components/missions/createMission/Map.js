@@ -1,44 +1,44 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import {
     Circle,
     MapContainer,
     TileLayer,
     LayersControl,
+    Marker,
+    Popup
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { Search } from './Search'
 import { useForm } from '../../../hooks/useForm'
-import { fetchingAddresses } from '../../../helpers/fetchingAddresses'
 import { AutoCompletePlaces } from './AutoCompletePlaces'
+import { IconLocation } from './IconLocation'
 
-const center = [51.505, -0.09]
+
 const fillBlueOptions = { fillColor: 'blue' }
+const waitTime = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 export const Map = () => {
 
     const map = useRef();
-
-    const [{ address }, onChange] = useForm({
-        address:''
+    const [isLoading, setIsLoading] = useState(false)
+    const [center, setCenter] = useState([51.505, -0.09])
+    const [{ address, coors }, onChange] = useForm({
+        address: '',
+        coors: '',
     })
     const buttonOnClick = () => {
         map.current.classList.toggle('hidden')
     }
 
+    useEffect(() => {
+        setIsLoading(true);
+        setCenter([coors?.lat || 0, coors?.lng || 0])
+        waitTime(1200).then(() => { setIsLoading(false) })
+    }, [coors])
 
-    const onChangeSearch = (e) => {
-        onChange({
-            target: {
-                name: 'address',
-                value: e.target.value
-            }
-        });
-        if (e.target.value.length < 2) {
-            return
-        }
-        
-        fetchingAddresses(e.target.value)
-    }
+
+
 
     return (
         <>
@@ -78,27 +78,45 @@ export const Map = () => {
                                     </div>
                                 </fieldset>
                                 <div id='map' ref={map} className=''>
-                                  
-                                    <AutoCompletePlaces/>
-                                  
-                                    <MapContainer
-                                        center={center}
-                                        zoom={13}
-                                        scrollWheelZoom={false}
-                                        className='h-80 w-80 rounded'
-                                    >
-                                        <LayersControl position="topright">
-                                            <LayersControl.BaseLayer checked name="Mapa">
-                                                <TileLayer
-                                                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                                />
-                                            </LayersControl.BaseLayer>
-                                            <Circle center={center} pathOptions={fillBlueOptions} radius={200} />
 
+                                    <AutoCompletePlaces
+                                        onChange={onChange}
+                                    />
+                                    {
+                                        isLoading
+                                            ?
+                                            <div className='flex flex-col bg-transparent h-80 w-80 rounded items-center justify-center'>
+                                                <div className='spinner'></div>
+                                                <span className='text-ellipsis font-semibold mt-5 text-gray-300'>Cargando...</span>
+                                            </div>
+                                            :
+                                            <MapContainer
+                                                center={center}
+                                                zoom={13}
+                                                scrollWheelZoom={false}
+                                                className='h-80 w-80 rounded'
+                                            >
+                                                <LayersControl position="topright">
+                                                    <LayersControl.BaseLayer checked name="Mapa">
+                                                        <TileLayer
+                                                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                                        />
+                                                    </LayersControl.BaseLayer>
 
-                                        </LayersControl>
-                                    </MapContainer>
+                                                    <Marker
+                                                        position={center}
+                                                        icon={IconLocation}
+
+                                                    >
+                                                        <Popup>
+                                                            {address}
+                                                        </Popup>
+                                                    </Marker >
+                                                </LayersControl>
+                                            </MapContainer>
+                                    }
+
                                 </div>
 
                             </div>
@@ -119,3 +137,6 @@ export const Map = () => {
 
     )
 }
+
+
+{/* <Circle center={center} pathOptions={fillBlueOptions} radius={200} /> */ }

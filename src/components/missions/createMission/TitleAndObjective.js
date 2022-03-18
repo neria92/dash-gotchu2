@@ -7,7 +7,7 @@ export const TitleAndObjective = () => {
         objective: '',
         uri: ''
     })
-  
+
     const next = () => {
         console.log(
             title,
@@ -61,6 +61,11 @@ export const TitleAndObjective = () => {
                                     </div>
                                 </div>
                             </div>
+                            {
+                                uri
+                                &&
+                                <AddNewImage />
+                            }
                         </div>
                         <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                             <button
@@ -90,6 +95,24 @@ const ImagePreview = ({ uri }) => {
     </div>
 }
 
+const AddNewImage = () => {
+    return (
+        <div className="flex items-end justify-end text-sm text-gray-600 ">
+            <label className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                <span>
+                    otra imagen</span>
+                <input
+                    id="uri"
+                    name="uri"
+                    type="file"
+                    // onChange={imageHandler}
+                    className="sr-only"
+                />
+            </label>
+        </div>
+    )
+}
+
 const UpLoadImage = ({ onChange }) => {
 
     const imageHandler = (e) => {
@@ -114,7 +137,8 @@ const UpLoadImage = ({ onChange }) => {
             </svg>
             <div className="flex text-sm text-gray-600">
                 <label className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                    <span>subir archivo</span>
+                    <span>
+                        imagen</span>
                     <input
                         id="uri"
                         name="uri"
@@ -123,9 +147,9 @@ const UpLoadImage = ({ onChange }) => {
                         className="sr-only"
                     />
                 </label>
-                <p className="pl-1">or drag and drop</p>
+                {/* <p className="pl-1">or drag and drop</p> */}
             </div>
-            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+
         </>
     )
 }
