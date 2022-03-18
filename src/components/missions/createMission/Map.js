@@ -18,24 +18,39 @@ const waitTime = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export const Map = () => {
+export const Map = ({ userPosition }) => {
 
     const map = useRef();
+
     const [isLoading, setIsLoading] = useState(false)
-    const [center, setCenter] = useState([51.505, -0.09])
+    const [center, setCenter] = useState(userPosition)
+
     const [{ address, coors }, onChange] = useForm({
-        address: '',
+        address: 'Todo México',
         coors: '',
     })
+
     const buttonOnClick = () => {
         map.current.classList.toggle('hidden')
+        onChange({
+            target: {
+                name: 'address',
+                value: 'Todo México',
+            }
+        })
     }
 
     useEffect(() => {
         setIsLoading(true);
-        setCenter([coors?.lat || 0, coors?.lng || 0])
+        setCenter([coors?.lat || userPosition[0], coors?.lng || userPosition[1]])
         waitTime(1200).then(() => { setIsLoading(false) })
     }, [coors])
+
+    useEffect(() => {
+        setIsLoading(true);
+        setCenter(userPosition)
+        waitTime(1200).then(() => { setIsLoading(false) })
+    }, [userPosition])
 
 
 
@@ -62,6 +77,7 @@ export const Map = () => {
                                                 type="radio"
                                                 className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                                                 onClick={buttonOnClick}
+                                                defaultChecked={true}
                                             />
                                             <label className="ml-3 block text-sm font-medium text-gray-700"> Todo México </label>
                                         </div>
@@ -77,7 +93,7 @@ export const Map = () => {
                                         </div>
                                     </div>
                                 </fieldset>
-                                <div id='map' ref={map} className=''>
+                                <div id='map' ref={map} className='hidden'>
 
                                     <AutoCompletePlaces
                                         onChange={onChange}
@@ -139,4 +155,3 @@ export const Map = () => {
 }
 
 
-{/* <Circle center={center} pathOptions={fillBlueOptions} radius={200} /> */ }
