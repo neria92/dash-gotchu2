@@ -1,10 +1,21 @@
 import React from 'react'
-import { useForm } from '../hooks/useForm'
-import LoginForm from './ LoginForm';
+import { useDispatch } from 'react-redux';
+import { startLoginEmailPasword } from '../actions/auth';
+import { useForm } from '../hooks/useForm';
 
-export const Login = () => {
-
-
+export const Login=()=> {
+    
+    const dispatch = useDispatch();
+    
+    const [{ email, password }, handleInputChange] = useForm({
+        email: "",
+        password: "",
+    });
+   
+    const onSubmit = (e) => {
+        e.preventDefault();
+        dispatch(startLoginEmailPasword(email, password));
+    };
   return (
 
     <div class="container mx-auto">

@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from '../../../hooks/useForm'
+import { CreateMissionContext } from '../context/CreateMissionContext';
+import { addData } from '../accions/missionData'
 
 export const TitleAndObjective = () => {
+
+    const { missionData, dispatch, reset } = useContext(CreateMissionContext);
+
     const [{ title, objective, uri }, onChange] = useForm({
         title: '',
         objective: '',
@@ -9,12 +14,19 @@ export const TitleAndObjective = () => {
     })
 
     const next = () => {
-        console.log(
-            title,
-            objective,
-            uri,
-        )
+        dispatch(addData(
+            {
+                title,
+                objective,
+                uri,
+            }
+        ));
     }
+
+
+
+
+
     return (
         <>
             <div className="md:grid md:grid-cols-2 md:gap-6 p-10 ">
