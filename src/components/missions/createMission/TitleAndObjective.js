@@ -7,8 +7,7 @@ export const TitleAndObjective = () => {
         objective: '',
         uri: ''
     })
-
-
+  
     const next = () => {
         console.log(
             title,
