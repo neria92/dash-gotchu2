@@ -19,7 +19,7 @@ export const TypeEvidences = () => {
                                                 <input id="comments" name="comments" type="checkbox" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
                                             </div>
                                             <div className="ml-3 text-sm">
-                                                <label for="comments" className="font-medium text-gray-700">Fotos</label>
+                                                <label className="font-medium text-gray-700">Fotos</label>
                                                 
                                             </div>
                                         </div>
@@ -28,7 +28,7 @@ export const TypeEvidences = () => {
                                                 <input id="candidates" name="candidates" type="checkbox" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
                                             </div>
                                             <div className="ml-3 text-sm">
-                                                <label for="candidates" className="font-medium text-gray-700">Videos</label>
+                                                <label  className="font-medium text-gray-700">Videos</label>
                                                 {/* <p className="text-gray-500">Get notified when a candidate applies for a job.</p> */}
                                             </div>
                                         </div>

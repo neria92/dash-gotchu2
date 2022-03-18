@@ -1,11 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useState } from 'react'
 import { useForm } from '../../../hooks/useForm'
-import { CreateMissionContext } from '../context/CreateMissionContext';
-import { addData } from '../accions/missionData'
 
-export const TitleAndObjective = () => {
 
-    const { missionData, dispatch, reset } = useContext(CreateMissionContext);
+export const TitleAndObjective = ({ missionData, setMissionData }) => {
+
+    const [images, setImages] = useState([]);
 
     const [{ title, objective, uri }, onChange] = useForm({
         title: '',
@@ -13,19 +12,11 @@ export const TitleAndObjective = () => {
         uri: ''
     })
 
+
+
     const next = () => {
-        dispatch(addData(
-            {
-                title,
-                objective,
-                uri,
-            }
-        ));
+
     }
-
-
-
-
 
     return (
         <>
@@ -66,17 +57,17 @@ export const TitleAndObjective = () => {
                                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                     <div className="space-y-1 text-center">
                                         {
-                                            uri
-                                                ? <ImagePreview uri={uri} />
-                                                : <UpLoadImage onChange={onChange} />
+                                            images.length > 0
+                                                ? <ImagePreview images={images} />
+                                                : <UpLoadImage setImages={setImages} />
                                         }
                                     </div>
                                 </div>
                             </div>
                             {
-                                uri
+                                images.length > 0
                                 &&
-                                <AddNewImage />
+                                <AddNewImage setImages={setImages} />
                             }
                         </div>
                         <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -101,13 +92,30 @@ export const TitleAndObjective = () => {
 
     )
 }
-const ImagePreview = ({ uri }) => {
-    return <div className='bg-green-500 h-32 w-32 justify-center items-center p-10'>
-        <img alt="Placeholder" className="" src={uri} loading='lazy' />
-    </div>
+const ImagePreview = ({ images }) => {
+    return (
+        images.map(uri => {
+            return (
+                <div className='bg-green-500 h-40 w-40 justify-center items-center p-10'>
+                    <img alt="Placeholder" className="" src={uri} loading='lazy' />
+                </div>
+            )
+        })
+    )
 }
 
-const AddNewImage = () => {
+const AddNewImage = ({ setImages }) => {
+
+    const imageHandler = (e) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            if (reader.readyState === 2) {
+                setImages(prev => [...prev, reader.result])
+            }
+        }
+        reader.readAsDataURL(e.target.files[0])
+    }
+
     return (
         <div className="flex items-end justify-end text-sm text-gray-600 ">
             <label className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
@@ -117,7 +125,7 @@ const AddNewImage = () => {
                     id="uri"
                     name="uri"
                     type="file"
-                    // onChange={imageHandler}
+                    onChange={imageHandler}
                     className="sr-only"
                 />
             </label>
@@ -125,18 +133,13 @@ const AddNewImage = () => {
     )
 }
 
-const UpLoadImage = ({ onChange }) => {
+const UpLoadImage = ({ setImages }) => {
 
     const imageHandler = (e) => {
         const reader = new FileReader();
         reader.onloadend = () => {
             if (reader.readyState === 2) {
-                onChange({
-                    target: {
-                        name: 'uri',
-                        value: reader.result
-                    }
-                })
+                setImages(prev => [...prev, reader.result])
             }
         }
         reader.readAsDataURL(e.target.files[0])
@@ -149,8 +152,7 @@ const UpLoadImage = ({ onChange }) => {
             </svg>
             <div className="flex text-sm text-gray-600">
                 <label className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                    <span>
-                        imagen</span>
+                    <span>Agregar imagen</span>
                     <input
                         id="uri"
                         name="uri"

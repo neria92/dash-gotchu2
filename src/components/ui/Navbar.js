@@ -34,7 +34,6 @@ export const Navbar = () => {
                     <NavLink
                         className={({ isActive }) => `nav-item nav-link ${isActive ? 'active' : ''}`}
                         // className="nav-item nav-link"
-                        exact
                         to="/missions"
                     >
                         <Text text='Misiones' />
