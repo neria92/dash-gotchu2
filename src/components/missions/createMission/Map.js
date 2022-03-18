@@ -78,10 +78,9 @@ export const Map = () => {
                                     </div>
                                 </fieldset>
                                 <div id='map' ref={map} className=''>
-                                    {/* <Search
-                                        onChangeSearch={onChangeSearch}
-                                    /> */}
+                                  
                                     <AutoCompletePlaces/>
+                                  
                                     <MapContainer
                                         center={center}
                                         zoom={13}
