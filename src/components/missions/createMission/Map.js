@@ -9,6 +9,7 @@ import 'leaflet/dist/leaflet.css'
 import { Search } from './Search'
 import { useForm } from '../../../hooks/useForm'
 import { fetchingAddresses } from '../../../helpers/fetchingAddresses'
+import { AutoCompletePlaces } from './AutoCompletePlaces'
 
 const center = [51.505, -0.09]
 const fillBlueOptions = { fillColor: 'blue' }
@@ -77,9 +78,10 @@ export const Map = () => {
                                     </div>
                                 </fieldset>
                                 <div id='map' ref={map} className=''>
-                                    <Search
+                                    {/* <Search
                                         onChangeSearch={onChangeSearch}
-                                    />
+                                    /> */}
+                                    <AutoCompletePlaces/>
                                     <MapContainer
                                         center={center}
                                         zoom={13}
