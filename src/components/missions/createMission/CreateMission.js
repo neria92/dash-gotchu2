@@ -1,11 +1,11 @@
 import React, { useEffect, useReducer, useState } from 'react'
-import { getUserLocation } from '../../helpers/getUserLocation'
-import { DateMission } from './components/DateMission'
-import { Difficulty } from './components/Difficulty'
-import { Map } from './components/Map'
-import { Rewards } from './components/Rewards'
-import { TitleAndObjective } from './components/TitleAndObjective'
-import { TypeEvidences } from './components/TypeEvidences'
+import { getUserLocation } from '../../../helpers/getUserLocation'
+import { DateMission } from './DateMission'
+import { Difficulty } from './Difficulty'
+import { Map } from './Map'
+import { Rewards } from './Rewards'
+import { TitleAndObjective } from './TitleAndObjective'
+import { TypeEvidences } from './TypeEvidences'
 
 
 export const CreateMission = () => {
