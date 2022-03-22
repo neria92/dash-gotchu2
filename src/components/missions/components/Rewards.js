@@ -1,6 +1,13 @@
 import React from 'react'
+import { useForm } from '../../../hooks/useForm'
 
 export const Rewards = () => {
+    const [{ }, onChange] = useForm({
+        money: '',
+        gCoins: '',
+        xp: ''
+    })
+
     return (
         <>
             <div className="md:grid md:grid-cols-2 md:gap-6 p-10 ">
@@ -33,7 +40,7 @@ export const Rewards = () => {
                                 </fieldset>
                             </div>
                             <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+                                {/* <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button> */}
                             </div>
                         </div>
                     </div>
@@ -49,7 +56,7 @@ export const Rewards = () => {
     )
 }
 
-const Input = ({ title, name,placeHolder }) => {
+const Input = ({ title, name, placeHolder }) => {
     return (
         <div className="flex items-center">
             <label className='mr-1'>{`${title}: `}</label>

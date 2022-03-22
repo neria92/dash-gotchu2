@@ -4,18 +4,19 @@ import { useForm } from '../../../hooks/useForm'
 
 export const TitleAndObjective = ({ missionData, setMissionData }) => {
 
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState(missionData?.images || []);
 
-    const [{ title, objective, uri }, onChange] = useForm({
-        title: '',
-        objective: '',
-        uri: ''
+    const [{ title, objective, }, onChange] = useForm({
+        title: missionData?.title || '',
+        objective: missionData?.objective || '',
     })
 
 
 
     const next = () => {
-
+        setMissionData(prev => {
+            return { ...prev, objective, title, images }
+        })
     }
 
     return (
@@ -54,7 +55,7 @@ export const TitleAndObjective = ({ missionData, setMissionData }) => {
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700"> Imagen de misión </label>
-                                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md snap-x overflow-hidden ">
                                     <div className="space-y-1 text-center">
                                         {
                                             images.length > 0
@@ -71,12 +72,12 @@ export const TitleAndObjective = ({ missionData, setMissionData }) => {
                             }
                         </div>
                         <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                            <button
+                            {/* <button
                                 onClick={next}
                                 type="submit"
                                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Save
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                     {/* </form> */}
@@ -94,13 +95,17 @@ export const TitleAndObjective = ({ missionData, setMissionData }) => {
 }
 const ImagePreview = ({ images }) => {
     return (
-        images.map(uri => {
-            return (
-                <div className='bg-green-500 h-40 w-40 justify-center items-center p-10'>
-                    <img alt="Placeholder" className="" src={uri} loading='lazy' />
-                </div>
-            )
-        })
+        <section className='flex gap-4 p-4 w-full snap-x'>
+            {
+                images.map(uri => {
+                    return (
+                        <div className='bg-green-500 shrink-0 w-2/5 overflow-hidden rounded shadow-lg justify-center items-center'>
+                            <img alt="Placeholder" className="aspect-video object-cover" src={uri} loading='lazy' />
+                        </div>
+                    )
+                })
+            }
+        </section>
     )
 }
 

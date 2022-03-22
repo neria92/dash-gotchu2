@@ -8,7 +8,7 @@ export const Missions = () => {
     const [missions, setMissions] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
-        db.collection('missions2').limit(18).orderBy('date', 'desc').get()
+        db.collection('missions2').limit(34).orderBy('date', 'desc').get()
             .then((querySnapshot) => {
                 setMissions(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
             })

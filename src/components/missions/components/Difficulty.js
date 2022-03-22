@@ -1,6 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-export const Difficulty = () => {
+export const Difficulty = ({ missionData, setMissionData }) => {
+
+    const [level, setLevel] = useState(missionData?.level || 'baja')
+
+    const next = () => {
+        setMissionData(prev => {
+            return { ...prev, level }
+        })
+    }
     return (
         <>
             <div className="md:grid md:grid-cols-2 md:gap-6 p-10 ">
@@ -17,23 +25,28 @@ export const Difficulty = () => {
                                         <p className="text-sm text-gray-500">Será el nivel que se muestre</p>
                                     </div>
                                     <div className="mt-4 space-y-4">
-                                        <div className="flex items-center">
-                                            <input id="push-everything" name="push-notifications" type="radio" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                                            <label className="ml-3 block text-sm font-medium text-gray-700"> Baja </label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="push-email" name="push-notifications" type="radio" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                                            <label className="ml-3 block text-sm font-medium text-gray-700"> Media </label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="push-nothing" name="push-notifications" type="radio" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                                            <label className="ml-3 block text-sm font-medium text-gray-700"> Alta</label>
-                                        </div>
+
+                                        <Button
+                                            level='Baja'
+                                            onChage={setLevel}
+                                            isActive={level === 'baja'}
+                                        />
+                                        <Button
+                                            level='Media'
+                                            onChage={setLevel}
+                                            isActive={level === 'media'}
+                                        />
+                                        <Button
+                                            level='Alta'
+                                            onChage={setLevel}
+                                            isActive={level === 'alta'}
+                                        />
+
                                     </div>
                                 </fieldset>
                             </div>
                             <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+                                {/* <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button> */}
                             </div>
                         </div>
                     </div>
@@ -46,5 +59,21 @@ export const Difficulty = () => {
             </div>
         </>
 
+    )
+}
+
+const Button = ({ level, onChage, isActive }) => {
+    return (
+        <div className="flex items-center">
+            <input
+                id="push-everything"
+                name="push-notifications"
+                type="radio"
+                onChage={onChage}
+                defaultChecked={isActive}
+                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+            />
+            <label className="ml-3 block text-sm font-medium text-gray-700"> {level} </label>
+        </div>
     )
 }
