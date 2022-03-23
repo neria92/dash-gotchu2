@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Swal from "sweetalert2";
 import { Datepicker } from '../../datePicker/DatePicker';
 import Icon from '../../Icon';
 
 
 
-export const DateMission = ({ missionData, setMissionData }) => {
+export const DateMission = ({ missionData, setMissionData ,onReset}) => {
 
     const [initialDate, setInitialDate] = useState(missionData?.initialDate || null);
 
@@ -28,6 +28,12 @@ export const DateMission = ({ missionData, setMissionData }) => {
         })
         setIsCheck(true)
     }
+
+    useEffect(() => {
+        setInitialDate(null)
+        setFinishDate(null)
+        setIsCheck(false)
+    }, [onReset])
 
     return (
         <>

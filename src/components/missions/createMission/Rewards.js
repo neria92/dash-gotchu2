@@ -1,11 +1,11 @@
 import React from 'react'
-import { useState } from 'react'
+import {useState, useEffect } from 'react';
 import Swal from "sweetalert2";
 
 import { useForm } from '../../../hooks/useForm'
 import Icon from '../../Icon'
 
-export const Rewards = ({ missionData, setMissionData }) => {
+export const Rewards = ({ missionData, setMissionData,onReset }) => {
     const [{ money, gCoins, xp }, onChange] = useForm({
         money: missionData?.loot?.money || 0,
         gCoins: missionData?.loot?.gCoins || '',
@@ -40,6 +40,9 @@ export const Rewards = ({ missionData, setMissionData }) => {
         setMissionData(prev => ({ ...prev, loot: { money, gCoins, xp } }))
     }
 
+    useEffect(() => {
+        setIsCheck(false)
+    }, [onReset])
 
 
     return (
@@ -59,7 +62,7 @@ export const Rewards = ({ missionData, setMissionData }) => {
                                     <Input
                                         title={'pesos'}
                                         name='money'
-                                        placeHolder='Money'
+                                        placeHolder='Dinero'
                                         onChange={onChangeNumber}
                                     />
                                     <Input

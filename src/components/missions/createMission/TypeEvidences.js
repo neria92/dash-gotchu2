@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { db } from '../../../firebase/firebaseConfig';
 import Icon from '../../Icon';
 import Swal from "sweetalert2";
+import { useNavigate } from 'react-router-dom';
 
-export const TypeEvidences = ({ missionData, setMissionData }) => {
+export const TypeEvidences = ({ missionData, setMissionData, setOnReset, onReset }) => {
 
+    const navigate = useNavigate()
     const [checkboxValues, setCheckboxValues] = useState({
         photos: false,
         videos: false,
@@ -23,7 +25,6 @@ export const TypeEvidences = ({ missionData, setMissionData }) => {
 
 
     const goNext = () => {
-
         const {
             missionName,
             missionObjetive,
@@ -41,7 +42,7 @@ export const TypeEvidences = ({ missionData, setMissionData }) => {
             geoData,
             missionData: {
                 media: {
-                    images: [images.map(photo => ({ url: photo }))],
+                    images: images.map(photo => ({ url: photo })),
                     videos: [],
                 },
                 missionDescription: "",
@@ -66,11 +67,10 @@ export const TypeEvidences = ({ missionData, setMissionData }) => {
             `Se ha publicado la misión ${missionName}`,
             "success"
         );
-        console.log('mission', mission)
         setMissionData(null)
-        return
-
+        setOnReset(prev => !prev)
         db.collection("missions2").add(mission);
+        navigate('/missions')
         setIsCheck(true);
 
     };

@@ -17,7 +17,7 @@ const waitTime = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export const Map = ({ userPosition, missionData, setMissionData }) => {
+export const Map = ({ userPosition, missionData, setMissionData ,onReset}) => {
 
     const map = useRef();
 
@@ -41,7 +41,6 @@ export const Map = ({ userPosition, missionData, setMissionData }) => {
     useEffect(() => {
         setIsLoading(true);
         setCenter([coors?.lat || userPosition[0], coors?.lng || userPosition[1]])
-        setMissionData(prev => ({ ...prev, coors, address }))
         waitTime(1200).then(() => { setIsLoading(false) })
     }, [coors])
 
@@ -51,14 +50,20 @@ export const Map = ({ userPosition, missionData, setMissionData }) => {
         waitTime(1200).then(() => { setIsLoading(false) })
     }, [userPosition])
 
+    
+    useEffect(() => {
+        setAddress('Todo México')
+        setIsCheck(false);
+    }, [onReset])
+
 
     const next = () => {
         setMissionData(prev => ({
             ...prev, geoData: {
                 address,
                 geolocated: true,
-                latitude: coors[0],
-                longitude: coors[1]
+                latitude: center[0],
+                longitude: center[1]
             }
         }));
         setIsCheck(true);

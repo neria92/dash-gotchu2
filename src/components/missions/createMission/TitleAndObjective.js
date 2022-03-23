@@ -36,6 +36,7 @@ export const TitleAndObjective = ({ missionData, setMissionData,onReset }) => {
             }
         })
         setImages([])
+        setIsCheck(false)
     }, [onReset])
     
 

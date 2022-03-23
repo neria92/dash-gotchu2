@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Swal from "sweetalert2";
-
 import Icon from '../../Icon';
 
-export const Difficulty = ({ missionData, setMissionData }) => {
+export const Difficulty = ({ missionData, setMissionData,onReset }) => {
 
     const [difficulty, setDifficulty] = useState(missionData?.difficulty || 'Baja');
     const [isCheck, setIsCheck] = useState(false);
@@ -26,6 +25,11 @@ export const Difficulty = ({ missionData, setMissionData }) => {
         setIsCheck(true)
         setMissionData(prev => ({ ...prev, difficulty }))
     }
+
+    useEffect(() => {
+        setDifficulty('Baja')
+        setIsCheck(false)
+    }, [onReset])
     return (
         <>
             <div className="md:grid md:grid-cols-2 md:gap-6 p-10 ">
