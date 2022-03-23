@@ -1,17 +1,43 @@
 import React from 'react'
+import { useState } from 'react'
+import Swal from "sweetalert2";
+
 import { useForm } from '../../../hooks/useForm'
+import Icon from '../../Icon'
 
 export const Rewards = ({ missionData, setMissionData }) => {
     const [{ money, gCoins, xp }, onChange] = useForm({
-        money: missionData?.money || '',
-        gCoins: missionData?.gCoins || '',
-        xp: missionData?.xp || ''
+        money: missionData?.loot?.money || 0,
+        gCoins: missionData?.loot?.gCoins || '',
+        xp: missionData?.loot?.xp || ''
     })
+    const [isCheck, setIsCheck] = useState(false)
 
     const onChangeNumber = ({ target }) => {
         target.value = target.value.replace(/[^0-9]/g, '');
         onChange({ target });
-        setMissionData(prev => ({ ...prev, money, gCoins, xp }))
+    }
+
+    const next = () => {
+        
+        if (!gCoins) {
+            Swal.fire(
+                "Error",
+                "Ese necesario que la misión cuente con gCoins",
+                "error"
+            );
+            return
+        }
+        if (!xp) {
+            Swal.fire(
+                "Error",
+                "Ese necesario que la misión cuente con puntos de experiencia",
+                "error"
+            );
+            return
+        }
+        setIsCheck(true)
+        setMissionData(prev => ({ ...prev, loot: { money, gCoins, xp } }))
     }
 
 
@@ -31,7 +57,7 @@ export const Rewards = ({ missionData, setMissionData }) => {
                                         <legend className="text-base font-medium text-gray-900">Recopensas</legend>
                                     </div>
                                     <Input
-                                        title={'Money'}
+                                        title={'pesos'}
                                         name='money'
                                         placeHolder='Money'
                                         onChange={onChangeNumber}
@@ -43,7 +69,7 @@ export const Rewards = ({ missionData, setMissionData }) => {
                                         onChange={onChangeNumber}
                                     />
                                     <Input
-                                        title={'Puntos de experiencia'}
+                                        title={'xp'}
                                         name='xp'
                                         placeHolder='Xp'
                                         onChange={onChangeNumber}
@@ -51,7 +77,22 @@ export const Rewards = ({ missionData, setMissionData }) => {
                                 </fieldset>
                             </div>
                             <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                {/* <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button> */}
+                                {
+                                    !isCheck
+                                        ?
+                                        <button
+                                            onClick={next}
+                                            type="submit"
+                                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            Guardar
+                                        </button>
+                                        :
+                                        <Icon
+                                            style='w-12 h-12 bg-green-500 rounded inline-flex justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 '
+                                            name='check'
+                                            color='#fff'
+                                        />
+                                }
                             </div>
                         </div>
                     </div>
@@ -70,17 +111,17 @@ export const Rewards = ({ missionData, setMissionData }) => {
 const Input = ({ title, name, placeHolder, onChange }) => {
     return (
         <div className="flex items-center">
-            <label className='mr-1'>{`${title}: `}</label>
             <div className="mt-1 flex rounded-md shadow-sm">
                 <input
                     type="text"
                     name={name}
                     id={title}
                     onChange={onChange}
-                    className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                    className="focus:ring-indigo-500 focus:border-indigo-500 flex-1  block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                     placeholder={placeHolder}
                 />
             </div>
+            <label className='mr-1'>{`${title}: `}</label>
         </div>
     )
 }

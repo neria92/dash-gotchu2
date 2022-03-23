@@ -8,9 +8,9 @@ import {
     Popup
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { useForm } from '../../../hooks/useForm'
 import { AutoCompletePlaces } from './AutoCompletePlaces'
 import { IconLocation } from './IconLocation'
+import Icon from '../../Icon'
 
 
 const waitTime = (timeout) => {
@@ -21,11 +21,12 @@ export const Map = ({ userPosition, missionData, setMissionData }) => {
 
     const map = useRef();
 
-    const [isLoading, setIsLoading] = useState(false)
-    const [center, setCenter] = useState(userPosition)
+    const [isLoading, setIsLoading] = useState(false);
+    const [center, setCenter] = useState(userPosition);
+    const [isCheck, setIsCheck] = useState(false);
 
-    const [address, setAddress] = useState(missionData.address || 'Todo México');
-    const [coors, setCoors] = useState(missionData?.coors || [19.34, -99.3440])
+    const [address, setAddress] = useState(missionData?.geoData?.address || 'Todo México');
+    const [coors, setCoors] = useState([missionData?.geoData?.latitude || 19.34, missionData?.geoData?.longitude || -99.3440])
 
 
     const buttonOnClick = useCallback(
@@ -51,6 +52,17 @@ export const Map = ({ userPosition, missionData, setMissionData }) => {
     }, [userPosition])
 
 
+    const next = () => {
+        setMissionData(prev => ({
+            ...prev, geoData: {
+                address,
+                geolocated: true,
+                latitude: coors[0],
+                longitude: coors[1]
+            }
+        }));
+        setIsCheck(true);
+    }
 
 
     return (
@@ -136,7 +148,22 @@ export const Map = ({ userPosition, missionData, setMissionData }) => {
 
                             </div>
                             <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                {/* <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button> */}
+                                {
+                                    !isCheck
+                                        ?
+                                        <button
+                                            onClick={next}
+                                            type="submit"
+                                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            Guardar
+                                        </button>
+                                        :
+                                        <Icon
+                                            style='w-12 h-12 bg-green-500 rounded inline-flex justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 '
+                                            name='check'
+                                            color='#fff'
+                                        />
+                                }
                             </div>
                         </div>
                     </div>

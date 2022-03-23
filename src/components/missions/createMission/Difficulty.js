@@ -1,15 +1,30 @@
 import React, { useState } from 'react'
+import Swal from "sweetalert2";
+
+import Icon from '../../Icon';
 
 export const Difficulty = ({ missionData, setMissionData }) => {
 
-    const [difficulty, setDifficulty] = useState(missionData?.difficulty || 'Baja')
+    const [difficulty, setDifficulty] = useState(missionData?.difficulty || 'Baja');
+    const [isCheck, setIsCheck] = useState(false);
+
 
     const onChage = (e) => {
-        console.log('e.target.',e.target)
         setDifficulty(e.target.value)
-        setMissionData(prev => {
-            return { ...prev, difficulty: e.target.value }
-        })
+    }
+
+    const next = () => {
+
+        if (!difficulty) {
+            Swal.fire(
+                "Error",
+                "Ese necesario que tenga nivel de dificultad la misión",
+                "error"
+            );
+            return
+        }
+        setIsCheck(true)
+        setMissionData(prev => ({ ...prev, difficulty }))
     }
     return (
         <>
@@ -48,7 +63,22 @@ export const Difficulty = ({ missionData, setMissionData }) => {
                                 </fieldset>
                             </div>
                             <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                {/* <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button> */}
+                                {
+                                    !isCheck
+                                        ?
+                                        <button
+                                            onClick={next}
+                                            type="submit"
+                                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            Guardar
+                                        </button>
+                                        :
+                                        <Icon
+                                            style='w-12 h-12 bg-green-500 rounded inline-flex justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 '
+                                            name='check'
+                                            color='#fff'
+                                        />
+                                }
                             </div>
                         </div>
                     </div>

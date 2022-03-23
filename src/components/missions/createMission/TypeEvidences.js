@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
 import { db } from '../../../firebase/firebaseConfig';
+import Icon from '../../Icon';
+import Swal from "sweetalert2";
 
 export const TypeEvidences = ({ missionData, setMissionData }) => {
 
@@ -9,6 +11,7 @@ export const TypeEvidences = ({ missionData, setMissionData }) => {
         videos: false,
     });
 
+    const [isCheck, setIsCheck] = useState(false);
     const onChange = (e) => {
 
         const newValues = { ...checkboxValues };
@@ -20,19 +23,17 @@ export const TypeEvidences = ({ missionData, setMissionData }) => {
 
 
     const goNext = () => {
+
         const {
             missionName,
             missionObjetive,
-            fellows,
-            viewers,
-            groups,
-            isPrivate,
             loot,
             difficulty,
             geoData,
             typeEvidence,
-            startDate,
+            initialDate,
             finishDate,
+            images
         } = missionData;
 
         const mission = {
@@ -40,13 +41,13 @@ export const TypeEvidences = ({ missionData, setMissionData }) => {
             geoData,
             missionData: {
                 media: {
-                    images: [{ url: 'photoUrl' }],
+                    images: [images.map(photo => ({ url: photo }))],
                     videos: [],
                 },
                 missionDescription: "",
                 missionName,
                 missionObjetive,
-                startDate,
+                initialDate,
                 finishDate,
                 loot,
                 difficulty,
@@ -54,14 +55,23 @@ export const TypeEvidences = ({ missionData, setMissionData }) => {
             },
             userData,
             hide: false,
-            fellows,
-            viewers,
-            groups,
-            isPrivate,
+            fellows: [],
+            viewers: [],
+            groups: [],
+            isPrivate: false,
         };
+
+        Swal.fire(
+            "Listo",
+            `Se ha publicado la misión ${missionName}`,
+            "success"
+        );
+        console.log('mission', mission)
+        setMissionData(null)
+        return
+
         db.collection("missions2").add(mission);
-
-
+        setIsCheck(true);
 
     };
 
@@ -115,11 +125,22 @@ export const TypeEvidences = ({ missionData, setMissionData }) => {
 
                             </div>
                             <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                <button
-                                    type="submit"
-                                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    Crear misión
-                                </button>
+                                {
+                                    !isCheck
+                                        ?
+                                        <button
+                                            onClick={goNext}
+                                            type="submit"
+                                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            Crear misión
+                                        </button>
+                                        :
+                                        <Icon
+                                            style='w-12 h-12 bg-green-500 rounded inline-flex justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 '
+                                            name='check'
+                                            color='#fff'
+                                        />
+                                }
                             </div>
                         </div>
                     </div>

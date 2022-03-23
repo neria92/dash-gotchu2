@@ -11,7 +11,8 @@ import { TypeEvidences } from './TypeEvidences'
 export const CreateMission = () => {
 
     const [userPosition, setuserPosition] = useState([19.4337585, -99.1454316])
-    const [missionData, setMissionData] = useState({})
+    const [missionData, setMissionData] = useState({});
+    const [onReset, setOnReset] = useState(false);
 
 
     useEffect(() => {
@@ -23,32 +24,39 @@ export const CreateMission = () => {
             <TitleAndObjective
                 missionData={missionData}
                 setMissionData={setMissionData}
+                onReset={onReset}
             />
 
             <Difficulty
                 missionData={missionData}
                 setMissionData={setMissionData}
+                onReset={onReset}
             />
 
             <DateMission
                 missionData={missionData}
                 setMissionData={setMissionData}
+                onReset={onReset}
             />
 
             <Rewards
                 missionData={missionData}
                 setMissionData={setMissionData}
+                onReset={onReset}
             />
 
             <Map
                 missionData={missionData}
                 setMissionData={setMissionData}
                 userPosition={userPosition}
+                onReset={onReset}
             />
 
             <TypeEvidences
                 missionData={missionData}
                 setMissionData={setMissionData}
+                onReset={onReset}
+                setOnReset={setOnReset}
             />
 
 

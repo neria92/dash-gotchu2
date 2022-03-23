@@ -25,7 +25,6 @@ export const Datepicker = ({ date, getDate, placeholder ,}) => {
 };
 
 const InputDateSelect = forwardRef(({ value, onClick,placeholder='fecha' }, ref) => {
-    console.log('value', placeholder)
     return (
         <div className="relative" onClick={onClick}>
             <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
