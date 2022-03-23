@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, useCallback } from 'react'
 import {
     Circle,
     MapContainer,
@@ -13,36 +13,34 @@ import { AutoCompletePlaces } from './AutoCompletePlaces'
 import { IconLocation } from './IconLocation'
 
 
-const fillBlueOptions = { fillColor: 'blue' }
 const waitTime = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export const Map = ({ userPosition }) => {
+export const Map = ({ userPosition, missionData, setMissionData }) => {
 
     const map = useRef();
 
     const [isLoading, setIsLoading] = useState(false)
     const [center, setCenter] = useState(userPosition)
 
-    const [{ address, coors }, onChange] = useForm({
-        address: 'Todo México',
-        coors: '',
-    })
+    const [address, setAddress] = useState(missionData.address || 'Todo México');
+    const [coors, setCoors] = useState(missionData?.coors || [19.34, -99.3440])
 
-    const buttonOnClick = () => {
-        map.current.classList.toggle('hidden')
-        onChange({
-            target: {
-                name: 'address',
-                value: 'Todo México',
-            }
-        })
-    }
+
+    const buttonOnClick = useCallback(
+        () => {
+            map.current.classList.toggle('hidden')
+            setAddress('Todo México')
+        },
+        [],
+    )
+
 
     useEffect(() => {
         setIsLoading(true);
         setCenter([coors?.lat || userPosition[0], coors?.lng || userPosition[1]])
+        setMissionData(prev => ({ ...prev, coors, address }))
         waitTime(1200).then(() => { setIsLoading(false) })
     }, [coors])
 
@@ -96,7 +94,8 @@ export const Map = ({ userPosition }) => {
                                 <div id='map' ref={map} className='hidden'>
 
                                     <AutoCompletePlaces
-                                        onChange={onChange}
+                                        setAddress={setAddress}
+                                        setCoors={setCoors}
                                     />
                                     {
                                         isLoading

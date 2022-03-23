@@ -1,12 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-export const MissionBox = ({ image, title, user, userphoto, finishDate, likes }) => {
+export const MissionBox = ({ image, title, user, userphoto, finishDate, likes,id }) => {
 
     const dateString = new Intl.DateTimeFormat('es', { dateStyle: 'short' }).format(finishDate)
     const time = new Intl.DateTimeFormat('es', { timeStyle: 'short' }).format(finishDate)
 
     return (
-        <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 ">
+        
+        <Link className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" to={'/missions/' + id}>
 
             <article className="overflow-hidden rounded-lg shadow-lg bg-slate-100 cursor-pointer hover:bg-slate-400">
                 <div className=''>
@@ -47,7 +49,7 @@ export const MissionBox = ({ image, title, user, userphoto, finishDate, likes })
             </article>
 
 
-        </div>
+        </Link>
     )
 }
 

@@ -1,5 +1,13 @@
 import React, { useState } from 'react'
 import { useForm } from '../../../hooks/useForm'
+import {
+    ref,
+    uploadBytesResumable,
+    getDownloadURL,
+    getStorage,
+} from "@firebase/storage";
+import { uuid } from '../../../helpers/uuid';
+
 
 
 export const TitleAndObjective = ({ missionData, setMissionData }) => {
@@ -111,15 +119,51 @@ const ImagePreview = ({ images }) => {
 
 const AddNewImage = ({ setImages }) => {
 
-    const imageHandler = (e) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            if (reader.readyState === 2) {
-                setImages(prev => [...prev, reader.result])
-            }
+    const handleFireBaseUpload = e => {
+        console.log('subiendo')
+
+        let result = ''
+
+        if (e.target.files && e.target.files[0]) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                result = e.target.result;
+            };
+            const file = e.target.files[0];
+            reader.readAsDataURL(file);
+            console.log("Uploading...");
+            const storage = getStorage();
+            const storageRef = ref(storage, `missions2/gotchu/${uuid}${file.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, file, "data_url");
+
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(`Upload is  ${progress}% done`);
+                },
+                (error) => {
+                    // Handle unsuccessful uploads
+                    throw error;
+                },
+                () => {
+                    // Handle successful uploads on complete
+                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+
+
+                        setImages(prevObject => ([...prevObject, downloadURL]))
+
+
+                    });
+                }
+            );
         }
-        reader.readAsDataURL(e.target.files[0])
+
     }
+
+
 
     return (
         <div className="flex items-end justify-end text-sm text-gray-600 ">
@@ -130,7 +174,7 @@ const AddNewImage = ({ setImages }) => {
                     id="uri"
                     name="uri"
                     type="file"
-                    onChange={imageHandler}
+                    onChange={handleFireBaseUpload}
                     className="sr-only"
                 />
             </label>
@@ -140,15 +184,51 @@ const AddNewImage = ({ setImages }) => {
 
 const UpLoadImage = ({ setImages }) => {
 
-    const imageHandler = (e) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            if (reader.readyState === 2) {
-                setImages(prev => [...prev, reader.result])
-            }
+    const handleFireBaseUpload = e => {
+        console.log('subiendo')
+
+        let result = ''
+
+        if (e.target.files && e.target.files[0]) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                result = e.target.result;
+            };
+            const file = e.target.files[0];
+            reader.readAsDataURL(file);
+            console.log("Uploading...");
+            const storage = getStorage();
+            const storageRef = ref(storage, `missions2/gotchu/${uuid}${file.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, file, "data_url");
+
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(`Upload is  ${progress}% done`);
+                },
+                (error) => {
+                    // Handle unsuccessful uploads
+                    throw error;
+                },
+                () => {
+                    // Handle successful uploads on complete
+                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+
+
+                        setImages(prevObject => ([...prevObject, downloadURL]))
+
+
+                    });
+                }
+            );
         }
-        reader.readAsDataURL(e.target.files[0])
+
     }
+
+
 
     return (
         <>
@@ -162,7 +242,7 @@ const UpLoadImage = ({ setImages }) => {
                         id="uri"
                         name="uri"
                         type="file"
-                        onChange={imageHandler}
+                        onChange={handleFireBaseUpload}
                         className="sr-only"
                     />
                 </label>
@@ -172,3 +252,5 @@ const UpLoadImage = ({ setImages }) => {
         </>
     )
 }
+
+

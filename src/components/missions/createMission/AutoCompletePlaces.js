@@ -5,34 +5,24 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 
 
-export const AutoCompletePlaces = ({ onChange }) => {
+export const AutoCompletePlaces = ({ setCoors, setAddress }) => {
 
-    const [address, setAddress] = useState('')
+    const [location, setLocation] = useState('')
     const handleSelect = async (value) => {
         const results = await geocodeByAddress(value)
         const coors = await getLatLng(results[0])
-        
+
+        setLocation(results[0].formatted_address)
+
         setAddress(results[0].formatted_address)
-        onChange({
-            target: {
-                name: 'address',
-                value: results[0].formatted_address
-            }
-        })
-        
-        onChange({
-            target: {
-                name: 'coors',
-                value: coors
-            }
-        })
+        setCoors(coors)
 
     }
     return (
         <div>
             <PlacesAutocomplete
-                value={address}
-                onChange={setAddress}
+                value={location}
+                onChange={setLocation}
                 onSelect={handleSelect}
             >
                 {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
@@ -52,7 +42,7 @@ export const AutoCompletePlaces = ({ onChange }) => {
 
                         <div className=" overflow-hidden top-0 left-0 border border-gray-100  bg-white rounded-lg shadow-lg w-2/6">
                             {loading && <div>Loading...</div>}
-                            {suggestions.map(suggestion => {
+                            {suggestions.map((suggestion,index) => {
                                 const className = suggestion.active
                                     // ? 'hover:bg-blue-300 flex gap-4 p4 cursor-pointer bg-blue-500'
                                     ? 'suggestion-item--active'
@@ -64,6 +54,7 @@ export const AutoCompletePlaces = ({ onChange }) => {
                                     : { backgroundColor: 'white', display: 'flex', gap: '1rem', hover: 'yellow', padding: 4 }
                                 return (
                                     <div
+                                        key={index + 'location'}
                                         {...getSuggestionItemProps(suggestion, {
                                             className,
                                             style,

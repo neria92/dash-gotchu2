@@ -1,7 +1,70 @@
 import React from 'react'
+import { useState } from 'react';
+import { db } from '../../../firebase/firebaseConfig';
 
-export const TypeEvidences = () => {
-    
+export const TypeEvidences = ({ missionData, setMissionData }) => {
+
+    const [checkboxValues, setCheckboxValues] = useState({
+        photos: false,
+        videos: false,
+    });
+
+    const onChange = (e) => {
+
+        const newValues = { ...checkboxValues };
+        newValues[e.target.name] = !checkboxValues[e.target.name];
+        setCheckboxValues(newValues);
+        setMissionData(prev => ({ ...prev, typeEvidence: checkboxValues }))
+    }
+
+
+
+    const goNext = () => {
+        const {
+            missionName,
+            missionObjetive,
+            fellows,
+            viewers,
+            groups,
+            isPrivate,
+            loot,
+            difficulty,
+            geoData,
+            typeEvidence,
+            startDate,
+            finishDate,
+        } = missionData;
+
+        const mission = {
+            date: new Date(),
+            geoData,
+            missionData: {
+                media: {
+                    images: [{ url: 'photoUrl' }],
+                    videos: [],
+                },
+                missionDescription: "",
+                missionName,
+                missionObjetive,
+                startDate,
+                finishDate,
+                loot,
+                difficulty,
+                typeEvidence,
+            },
+            userData,
+            hide: false,
+            fellows,
+            viewers,
+            groups,
+            isPrivate,
+        };
+        db.collection("missions2").add(mission);
+
+
+
+    };
+
     return (
         <>
             <div className="md:grid md:grid-cols-2 md:gap-6 p-10 ">
@@ -16,19 +79,33 @@ export const TypeEvidences = () => {
                                     <div className="mt-4 space-y-4">
                                         <div className="flex items-start">
                                             <div className="flex items-center h-5">
-                                                <input id="comments" name="comments" type="checkbox" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
+                                                <input
+                                                    id="photos"
+                                                    name="photos"
+                                                    type="checkbox"
+                                                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                                                    onChange={onChange}
+                                                    value={checkboxValues.photos}
+                                                />
                                             </div>
                                             <div className="ml-3 text-sm">
                                                 <label className="font-medium text-gray-700">Fotos</label>
-                                                
+
                                             </div>
                                         </div>
                                         <div className="flex items-start">
                                             <div className="flex items-center h-5">
-                                                <input id="candidates" name="candidates" type="checkbox" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
+                                                <input
+                                                    id="videos"
+                                                    name="videos"
+                                                    type="checkbox"
+                                                    onChange={onChange}
+                                                    value={checkboxValues.videos}
+                                                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                                                />
                                             </div>
                                             <div className="ml-3 text-sm">
-                                                <label  className="font-medium text-gray-700">Videos</label>
+                                                <label className="font-medium text-gray-700">Videos</label>
                                                 {/* <p className="text-gray-500">Get notified when a candidate applies for a job.</p> */}
                                             </div>
                                         </div>
@@ -38,7 +115,11 @@ export const TypeEvidences = () => {
 
                             </div>
                             <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+                                <button
+                                    type="submit"
+                                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Crear misión
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -52,4 +133,12 @@ export const TypeEvidences = () => {
         </>
 
     )
+}
+
+
+const userData = {
+    photo: 'https://gchgame.page.link/gotchu-icon',
+    userDescription: 'Sígueme para enterarte de las misiones más recientes y así ganar con Gotchu!',
+    userId: '0',
+    username: 'Gotchu!'
 }

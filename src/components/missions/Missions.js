@@ -3,6 +3,7 @@ import { db } from '../../firebase/firebaseConfig'
 import { CreateMissionBox } from './CreatMissionBox'
 import { MissionBox } from './MissionBox'
 
+
 export const Missions = () => {
 
     const [missions, setMissions] = useState([])
@@ -35,6 +36,7 @@ export const Missions = () => {
                                 user={userData?.username || 'Edgar'}
                                 userphoto={userData?.photo}
                                 finishDate={new Date(finishDate.seconds * 100)}
+                                id={mission.id}
                             />
 
                         })

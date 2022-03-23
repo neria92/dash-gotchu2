@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 
 export const Difficulty = ({ missionData, setMissionData }) => {
 
-    const [level, setLevel] = useState(missionData?.level || 'baja')
+    const [difficulty, setDifficulty] = useState(missionData?.difficulty || 'Baja')
 
-    const next = () => {
+    const onChage = (e) => {
+        console.log('e.target.',e.target)
+        setDifficulty(e.target.value)
         setMissionData(prev => {
-            return { ...prev, level }
+            return { ...prev, difficulty: e.target.value }
         })
     }
     return (
@@ -28,18 +30,18 @@ export const Difficulty = ({ missionData, setMissionData }) => {
 
                                         <Button
                                             level='Baja'
-                                            onChage={setLevel}
-                                            isActive={level === 'baja'}
+                                            onChage={onChage}
+                                            isActive={difficulty === 'Baja'}
                                         />
                                         <Button
                                             level='Media'
-                                            onChage={setLevel}
-                                            isActive={level === 'media'}
+                                            onChage={onChage}
+                                            isActive={difficulty === 'Media'}
                                         />
                                         <Button
                                             level='Alta'
-                                            onChage={setLevel}
-                                            isActive={level === 'alta'}
+                                            onChage={onChage}
+                                            isActive={difficulty === 'Alta'}
                                         />
 
                                     </div>
@@ -69,7 +71,8 @@ const Button = ({ level, onChage, isActive }) => {
                 id="push-everything"
                 name="push-notifications"
                 type="radio"
-                onChage={onChage}
+                onChange={onChage}
+                value={level}
                 defaultChecked={isActive}
                 className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
             />

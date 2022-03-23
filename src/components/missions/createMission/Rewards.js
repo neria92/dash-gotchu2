@@ -1,12 +1,20 @@
 import React from 'react'
 import { useForm } from '../../../hooks/useForm'
 
-export const Rewards = () => {
-    const [{ }, onChange] = useForm({
-        money: '',
-        gCoins: '',
-        xp: ''
+export const Rewards = ({ missionData, setMissionData }) => {
+    const [{ money, gCoins, xp }, onChange] = useForm({
+        money: missionData?.money || '',
+        gCoins: missionData?.gCoins || '',
+        xp: missionData?.xp || ''
     })
+
+    const onChangeNumber = ({ target }) => {
+        target.value = target.value.replace(/[^0-9]/g, '');
+        onChange({ target });
+        setMissionData(prev => ({ ...prev, money, gCoins, xp }))
+    }
+
+
 
     return (
         <>
@@ -26,16 +34,19 @@ export const Rewards = () => {
                                         title={'Money'}
                                         name='money'
                                         placeHolder='Money'
+                                        onChange={onChangeNumber}
                                     />
                                     <Input
-                                        title={'Gcoins'}
-                                        name='gcoins'
+                                        title={'gCoins'}
+                                        name='gCoins'
                                         placeHolder='Gcoins'
+                                        onChange={onChangeNumber}
                                     />
                                     <Input
                                         title={'Puntos de experiencia'}
-                                        name='Xp'
-                                        placeHolder='xp'
+                                        name='xp'
+                                        placeHolder='Xp'
+                                        onChange={onChangeNumber}
                                     />
                                 </fieldset>
                             </div>
@@ -56,7 +67,7 @@ export const Rewards = () => {
     )
 }
 
-const Input = ({ title, name, placeHolder }) => {
+const Input = ({ title, name, placeHolder, onChange }) => {
     return (
         <div className="flex items-center">
             <label className='mr-1'>{`${title}: `}</label>
@@ -65,7 +76,7 @@ const Input = ({ title, name, placeHolder }) => {
                     type="text"
                     name={name}
                     id={title}
-                    // onChange={onChange}
+                    onChange={onChange}
                     className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                     placeholder={placeHolder}
                 />

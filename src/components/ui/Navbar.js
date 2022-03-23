@@ -32,15 +32,14 @@ export const Navbar = () => {
                 <div className="text-sm text-cyan-700 lg:flex-grow">
 
                     <NavLink
-                        className={({ isActive }) => `nav-item nav-link ${isActive ? 'active' : ''}`}
-                        // className="nav-item nav-link"
+                        className={({ isActive }) => `nav-item nav-link ${isActive ? 'text-blue-500' : ''}`}
                         to="/missions"
                     >
                         <Text text='Misiones' />
                     </NavLink>
 
                     <NavLink
-                        className={({ isActive }) => `nav-item nav-link ${isActive ? 'active' : ''}`}
+                        className={({ isActive }) => `nav-item nav-link ${isActive ? 'text-blue-500' : ''}`}
                         to="/appeal"
                     >
                         <Text text='Apelaciones' />
