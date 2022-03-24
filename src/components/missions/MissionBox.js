@@ -12,7 +12,7 @@ export const MissionBox = ({ image, title, user, userphoto, finishDate, likes,id
 
             <article className="overflow-hidden rounded-lg shadow-lg bg-slate-100 cursor-pointer hover:bg-slate-400">
                 <div className=''>
-                    <img alt="Placeholder" className="aspect-video object-cover block h-auto w-full" src={image} loading='lazy' />
+                    <img alt="imageMssion" className="aspect-video object-cover block h-auto w-full" src={image} loading='lazy' />
                 </div>
                 <header className="flex items-center justify-between leading-tight p-2 md:p-4">
                     <h1 className="text-lg">
