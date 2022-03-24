@@ -18,32 +18,40 @@ export const Missions = () => {
 
     return (
         <div className='max-w-5xl p-5 mx-auto mt-20  bg-blue-500 rounded shadow-2xl shadow-pink-200'>
+            {
+                isLoading
+                    ?
+                    <div className='flex flex-col bg-transparent w-full rounded items-center justify-center'>
+                        <div className='spinner'></div>
+                        <span className='text-ellipsis font-semibold mt-5 text-gray-300'>Cargando...</span>
+                    </div>
+                    :
+                    <div className='container my-12 mx-auto px-4 md:px-12'>
+                        <div className='flex flex-wrap -mx-1 lg:-mx-4'>
+                            <CreateMissionBox />
+                            {
+                                missions.length > 0
+                                &&
+                                missions.map(mission => {
+                                    const { missionData, userData, stats } = mission
+                                    const { missionName, media: { images }, finishDate } = missionData
+                                    return <MissionBox
+                                        key={mission.id}
+                                        title={missionName}
+                                        image={images[0]?.url}
+                                        likes={stats?.likesCount || 0}
+                                        user={userData?.username || 'Edgar'}
+                                        userphoto={userData?.photo}
+                                        finishDate={new Date(finishDate.seconds * 100)}
+                                        id={mission.id}
+                                    />
 
-            <div className='container my-12 mx-auto px-4 md:px-12'>
-                <div className='flex flex-wrap -mx-1 lg:-mx-4'>
-                    <CreateMissionBox />
-                    {
-                        missions.length > 0
-                        &&
-                        missions.map(mission => {
-                            const { missionData, userData, stats } = mission
-                            const { missionName, media: { images }, finishDate } = missionData
-                            return <MissionBox
-                                key={mission.id}
-                                title={missionName}
-                                image={images[0]?.url}
-                                likes={stats?.likesCount || 0}
-                                user={userData?.username || 'Edgar'}
-                                userphoto={userData?.photo}
-                                finishDate={new Date(finishDate.seconds * 100)}
-                                id={mission.id}
-                            />
+                                })
+                            }
+                        </div>
 
-                        })
-                    }
-                </div>
-
-            </div>
+                    </div>
+            }
 
 
         </div>

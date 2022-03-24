@@ -1,22 +1,27 @@
 import { ImagePreview } from "./ImagePreview"
+import { VideoPlayer } from "./VideoPlayer"
 
 
-export const Evidences = () => {
+export const Evidences = ({ media }) => {
     return (
         <section className='flex gap-4 p-4 h-52 items-center md:w-96 overflow-x-auto snap-x '>
-            <ImagePreview
-                image='https://files.worldwildlife.org/wwfcmsprod/images/African_Elephant_Walking/story_carousel/3arzfzjsw0_Medium_WW1113482.jpg'
-            />
-            <ImagePreview
-                image='https://files.worldwildlife.org/wwfcmsprod/images/African_Elephant_Walking/story_carousel/3arzfzjsw0_Medium_WW1113482.jpg'
-            />
-            <ImagePreview
-                image='https://files.worldwildlife.org/wwfcmsprod/images/African_Elephant_Walking/story_carousel/3arzfzjsw0_Medium_WW1113482.jpg'
-            />
-            <ImagePreview
-                image='https://files.worldwildlife.org/wwfcmsprod/images/African_Elephant_Walking/story_carousel/3arzfzjsw0_Medium_WW1113482.jpg'
-            />
 
+            {
+                media.map((item, index) => {
+                    const focus = media[index].uri === item.uri && item.video
+                    if (item.photo) {
+                        return <ImagePreview key={item.uri} image={item.uri} />
+                    } else {
+                        return (
+                            <VideoPlayer
+                                key={item.uri}
+                                src={item.uri}
+                                focus={focus}
+                            />
+                        )
+                    }
+                })
+            }
         </section>
     )
 }
