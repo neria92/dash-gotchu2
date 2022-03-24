@@ -72,7 +72,7 @@ export const AppealDetails = () => {
                             <span className='text-ellipsis font-semibold mt-5 text-gray-900'>Cargando...</span>
                         </div>
                         :
-                        <div className='flex flex-wrap   justify-between  -mx-1 lg:-mx-4'>
+                        <div className='flex flex-wrap justify-between -mx-1 lg:-mx-4'>
 
                             <User
                                 photo={userRejected?.photo}
@@ -84,7 +84,7 @@ export const AppealDetails = () => {
                                 button='rechazar apelación'
 
                             />
-                            <div className='bg-green-400/30 '>
+                            <div className='bg-green-400/30 rounded max-w-sm '>
                                 <h5 className='text-center text-2xl text-semibold text-pink-400'> {appeal?.missionData?.missionName}</h5>
 
                                 <Information title='Objetivo de la misión :' text={appeal?.missionData?.missionObjetive} />
@@ -105,7 +105,7 @@ export const AppealDetails = () => {
                                 reason={appeal?.reasonRejected}
                                 ranking={userAppeal?.stats?.ranking}
                                 type='apela'
-                                button='acceptar apelación'
+                                button='aceptar apelación'
                             />
 
                         </div>

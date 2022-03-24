@@ -158,7 +158,7 @@ export const TypeEvidences = ({ missionData, setMissionData, setOnReset, onReset
 
 
 const userData = {
-    photo: 'https://gchgame.page.link/gotchu-icon',
+    photo: 'https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/GotchuBW.jpg?alt=media&token=c7441686-2e57-4d8f-b6f5-7c97a045d6bb',
     userDescription: 'Sígueme para enterarte de las misiones más recientes y así ganar con Gotchu!',
     userId: '0',
     username: 'Gotchu!'

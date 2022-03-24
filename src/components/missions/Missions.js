@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from 'react'
+import { useRef } from 'react'
 import { db } from '../../firebase/firebaseConfig'
+import Icon from '../Icon'
 import { CreateMissionBox } from './CreatMissionBox'
 import { MissionBox } from './MissionBox'
 
 
 export const Missions = () => {
 
-    const [missions, setMissions] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
+    const container = useRef();
+    
+    const [missions, setMissions] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        db.collection('missions2').limit(34).orderBy('date', 'desc').get()
+        db.collection('missions2').limit(32).orderBy('date', 'desc').get()
             .then((querySnapshot) => {
                 setMissions(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
             })
             .finally(() => setIsLoading(false))
     }, [])
 
+
     return (
-        <div className='max-w-5xl p-5 mx-auto mt-20  bg-blue-500 rounded shadow-2xl shadow-pink-200'>
+        <div id='container' className='max-w-5xl p-5 mx-auto mt-20  bg-blue-500 rounded shadow-2xl shadow-pink-200' ref={container}>
             {
                 isLoading
                     ?
@@ -53,6 +58,13 @@ export const Missions = () => {
                     </div>
             }
 
+            {/* <div className='absolute bottom-2 right-2 cursor-pointer border-4 rounded-full hover:animate-bounce '>
+                <Icon
+                    name='next'
+                    style='w-12 h-12 rounded-full items-center justify-center bg-green-900 '
+                    color='#fff'
+                />
+            </div> */}
 
         </div>
     )
