@@ -38,7 +38,7 @@ const getTypeStars = (rating) => {
     if (fractionPart <= 8 && fractionPart > 0) {
         mediumStar = 1;
     } else {
-        if (star < 5) {
+        if (fractionPart!==0 && star < 5) {
             star++;
         }
     }
