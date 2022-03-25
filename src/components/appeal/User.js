@@ -1,8 +1,8 @@
 import { Ranking } from "../Ranking"
 
-export const User = ({ photo, name, ranking, reason, type,button }) => {
+export const User = ({ photo, name, ranking, reason, type, button, handle, isChange, status }) => {
     return (
-        <div className="max-w-sm w-60  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-blue-200 dark:border-gray-200">
+        <div className="max-w-sm w-80 md:w-60 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-blue-200 dark:border-gray-200">
 
             <div className="flex flex-col items-center pb-10 mt-20">
                 <img className="mb-3 w-24 h-24 rounded-full shadow-lg" src={photo} alt={`image ${name}`} loading='lazy' />
@@ -16,14 +16,32 @@ export const User = ({ photo, name, ranking, reason, type,button }) => {
 
             <div className="flex flex-col items-center pb-10 ">
 
-
-                <div className="flex mt-4 space-x-3 lg:mt-6 mb-0">
-                    <button className={`inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white ${type==='rechaza'?'bg-red-400 hover:bg-red-800 ':'bg-green-900 hover:bg-green-800'} rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 `}>{button}</button>
-                </div>
+                {
+                    isChange
+                        ? <Message status={status}/>
+                        :
+                        <div className="flex mt-4 space-x-3 lg:mt-6 mb-0">
+                            <button className={`inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white ${type === 'rechaza' ? 'bg-red-400 hover:bg-red-800 ' : 'bg-green-900 hover:bg-green-800'} rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 `} onClick={handle}>{button}</button>
+                        </div>
+                }
             </div>
 
         </div>
 
+    )
+}
+
+const Message = ({status}) => {
+    return (
+        <div>
+            <div className="flex items-center justify-center mt-10 mx-2">
+                <div className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-white rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                    <span className={`${status==='rechazado'?'text-red-700':'text-green-700'} font-bold `}>
+                        Ya se han {status} las evidencias
+                    </span>
+                </div>
+            </div>
+        </div>
     )
 }
 

@@ -2,20 +2,25 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { db } from '../../firebase/firebaseConfig'
 import { getMedia } from '../../helpers/getMedia'
+import { updateAppeal } from '../../helpers/updateAppeal'
 import { Evidences } from './Evidences'
 import { Map } from './Map'
 import { User } from './User'
 
 export const AppealDetails = () => {
 
-
-    const [isLoading, setIsLoading] = useState(true)
-    const [appeal, setAppeal] = useState({})
-    const [users, setUsers] = useState([])
-    const [capture, setCapture] = useState({})
-
     const location = useLocation()
     const id = location.pathname.split('/')[2]
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [appeal, setAppeal] = useState({});
+    const [users, setUsers] = useState([]);
+    const [capture, setCapture] = useState({});
+
+    const [isChange, setIsChange] = useState(false);
+    const [status, setStatus] = useState('')
+
+
 
 
     useEffect(() => {
@@ -59,6 +64,30 @@ export const AppealDetails = () => {
     const userAppeal = users.filter(element => element.userAppeal)[0]
     const userRejected = users.filter(element => !element.userAppeal)[0]
 
+    const handleAccepted = async () => {
+        setIsChange(true);
+        setStatus('aceptado')
+        updateAppeal({
+            appealId: appeal.id,
+            captureId: appeal?.captureId,
+            missionId: appeal?.missionData?.missionId,
+            status: 'Accepted',
+            userId: userAppeal?.userId,
+        })
+
+    }
+
+    const handleRejected = () => {
+        setIsChange(true);
+        setStatus('rechazado');
+        updateAppeal({
+            appealId: appeal.id,
+            captureId: appeal?.captureId,
+            missionId: appeal?.missionData?.missionId,
+            status: 'Rejected',
+            userId: userAppeal?.userId,
+        })
+    }
 
 
     return (
@@ -72,7 +101,7 @@ export const AppealDetails = () => {
                             <span className='text-ellipsis font-semibold mt-5 text-gray-900'>Cargando...</span>
                         </div>
                         :
-                        <div className='flex flex-wrap justify-between -mx-1 lg:-mx-4'>
+                        <div className='flex flex-wrap  justify-center md:justify-between -mx-1 lg:-mx-4'>
 
                             <User
                                 photo={userRejected?.photo}
@@ -82,9 +111,12 @@ export const AppealDetails = () => {
                                 ranking={userRejected?.stats?.ranking}
                                 type='rechaza'
                                 button='rechazar apelación'
+                                handle={handleRejected}
+                                isChange={isChange}
+                                status={status}
 
                             />
-                            <div className='bg-green-400/30 rounded max-w-sm '>
+                            <div className='bg-green-400/30 rounded w-80 md:w-96'>
                                 <h5 className='text-center text-2xl text-semibold text-pink-400'> {appeal?.missionData?.missionName}</h5>
 
                                 <Information title='Objetivo de la misión :' text={appeal?.missionData?.missionObjetive} />
@@ -106,6 +138,9 @@ export const AppealDetails = () => {
                                 ranking={userAppeal?.stats?.ranking}
                                 type='apela'
                                 button='aceptar apelación'
+                                handle={handleAccepted}
+                                isChange={isChange}
+                                status={status}
                             />
 
                         </div>
@@ -130,8 +165,8 @@ const Information = ({ title = '..', text = '..' }) => {
     return (
         <div className='md:w-96 ' >
             <h5 className="mt-4 ml-2 normal-case font-medium text-gray-900 dark:text-gray mb-4">{title}</h5>
-            <h1 className="text-lg ml-2 whitespace-nowrap  overflow-hidden text-ellipsis" id='infoText' ref={infoText}>
-                <span className="no-underline  overflow-hidden  text-black" >
+            <h1 className="text-lg ml-2  font-medium whitespace-nowrap  overflow-hidden text-ellipsis" id='infoText' ref={infoText}>
+                <span className="no-underline font-medium  overflow-hidden  text-black" >
                     {text}
 
                 </span>
