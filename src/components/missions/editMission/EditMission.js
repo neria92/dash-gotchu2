@@ -38,7 +38,11 @@ export const EditMission = () => {
   return (
 
     isLoading
-      ? <span>...</span>
+      ?
+      <div className='flex flex-col bg-transparent w-full items-center justify-center '>
+        <div className='spinner'></div>
+        <span className='text-ellipsis font-semibold mt-5 text-gray-900'>Cargando...</span>
+      </div>
       :
       <EditMissionContext.Provider value={{ mission, setMission, isEdit }}>
 
@@ -67,7 +71,7 @@ export const EditMission = () => {
             </div>
             <img className="aspect-video object-cover block h-auto w-full bg-cover" src={mission?.missionData?.media?.images[0]?.url} />
             <div className='flex justify-center items-center mt-2'>
-              <DatesMission/>
+              <DatesMission />
             </div>
             <div className="px-3 pb-2">
               <div className="pt-2">
@@ -94,7 +98,7 @@ export const EditMission = () => {
             </div>
           </div>
         </div>
-        <br/>
+        <br />
       </EditMissionContext.Provider>
 
 

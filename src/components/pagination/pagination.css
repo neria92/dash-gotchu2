@@ -14,13 +14,12 @@
 .paginationBttns a {
 	width: 35px;
 	height: 35px;
-	/* padding: 10px; */
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	margin: 8px;
 	border-radius: 20px;
-	/* border: 1px solid #FA6A02; */
+	/* border: 1px solid #E386E3; */
 	color: #fff;
 	cursor: pointer;
 	font-weight: 700;
@@ -28,17 +27,18 @@
 
 .paginationBttns a:hover{
 	color: #fff;
-	/* background-color:#FA6A02 ; */
+	/* background-color:#E386E3 ; */
 }
 
 .paginationActive{
 	color: #fff;
 	margin-top: auto;
-	background-color:#FA6A02 ;
+	background-color:#E386E3 ;
 }
 
 @media screen and (max-width: 1050px){
 	.paginationBttns{
 		width: 100%;
+		margin-right:10px
 	}
 }

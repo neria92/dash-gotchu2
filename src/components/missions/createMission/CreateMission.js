@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, useState } from 'react'
+import { CreatMissionContext } from './context/CreatMissionContext'
 import { getUserLocation } from '../../../helpers/getUserLocation'
 import { DateMission } from './DateMission'
 import { Difficulty } from './Difficulty'
@@ -11,7 +12,7 @@ import { TypeEvidences } from './TypeEvidences'
 export const CreateMission = () => {
 
     const [userPosition, setuserPosition] = useState([19.4337585, -99.1454316])
-    const [missionData, setMissionData] = useState({});
+    const [mission, setMission] = useState({});
     const [onReset, setOnReset] = useState(false);
 
 
@@ -19,47 +20,48 @@ export const CreateMission = () => {
         getUserLocation().then((res) => setuserPosition(res))
     }, [])
 
+    useEffect(() => {
+     console.log('mission',mission)
+    }, [mission])
+    
+
     return (
-        <div >
-            <TitleAndObjective
-                missionData={missionData}
-                setMissionData={setMissionData}
-                onReset={onReset}
-            />
+        <CreatMissionContext.Provider value={{  mission, setMission, onReset }}  >
+            <TitleAndObjective/>
 
             <Difficulty
-                missionData={missionData}
-                setMissionData={setMissionData}
+                missionData={mission}
+                setMissionData={setMission}
                 onReset={onReset}
             />
 
             <DateMission
-                missionData={missionData}
-                setMissionData={setMissionData}
+                missionData={mission}
+                setMissionData={setMission}
                 onReset={onReset}
             />
 
             <Rewards
-                missionData={missionData}
-                setMissionData={setMissionData}
+                missionData={mission}
+                setMissionData={setMission}
                 onReset={onReset}
             />
 
             <Map
-                missionData={missionData}
-                setMissionData={setMissionData}
+                missionData={mission}
+                setMissionData={setMission}
                 userPosition={userPosition}
                 onReset={onReset}
             />
 
             <TypeEvidences
-                missionData={missionData}
-                setMissionData={setMissionData}
+                missionData={mission}
+                setMissionData={setMission}
                 onReset={onReset}
                 setOnReset={setOnReset}
             />
 
 
-        </div>
+        </CreatMissionContext.Provider>
     )
 }
