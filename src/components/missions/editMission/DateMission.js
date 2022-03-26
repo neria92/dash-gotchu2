@@ -4,25 +4,35 @@ import { Datepicker } from '../../datePicker/DatePickerMission'
 import { EditMissionContext } from './context/EditMissionContext'
 
 
-export const DatesMission = ({ initial, finish }) => {
-    const { isEdit } = useContext(EditMissionContext)
+export const DatesMission = () => {
+    
+    const { mission, setMission, isEdit } = useContext(EditMissionContext)
+
+    const handleStartDate = (date) => {
+        setMission({ ...mission, missionData: { ...mission.missionData, startDate: date } })
+    }
+
+    const handleFinishDate = (date) => {
+        setMission({ ...mission, missionData: { ...mission.missionData, finishDate: date } })
+    }
+
+    const { startDate, finishDate } = mission?.missionData
 
     return (
         <div className="items-center">
 
             <div date-rangepicker="" className="flex items-center">
                 <Datepicker
-                    date={initial}
+                    date={new Date(startDate?.seconds * 1000||startDate)}
                     readOnly={!isEdit}
-                    // getDate={setInitialDate}
+                    getDate={handleStartDate}
                     placeholder='fin de misión'
                 />
                 <span className="mx-4 text-gray-500">a</span>
                 <Datepicker
-                    date={finish}
+                    date={new Date(finishDate?.seconds * 1000 || finishDate)}
                     readOnly={!isEdit}
-
-                    // getDate={setFinishDate}
+                    getDate={handleFinishDate}
                     placeholder='inico de misión'
                 />
 

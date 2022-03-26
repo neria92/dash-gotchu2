@@ -1,25 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { db } from '../../firebase/firebaseConfig'
+import useGetMissions from '../../hooks/useGetMissions'
 import Icon from '../Icon'
+import { Pagination } from '../pagination/Paginations'
 import { CreateMissionBox } from './CreatMissionBox'
 import { MissionBox } from './MissionBox'
+
+const Perpage = 11
 
 
 export const Missions = () => {
 
     const container = useRef();
-    
-    const [missions, setMissions] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    useEffect(() => {
-        db.collection('missions2').limit(32).orderBy('date', 'desc').get()
-            .then((querySnapshot) => {
-                setMissions(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-            })
-            .finally(() => setIsLoading(false))
-    }, [])
+    const [missions, getMoreMissions, isLoading] = useGetMissions()
+    const [pageNUmber, setPageNUmber] = useState(0);
 
+    const pagesVisited = pageNUmber * Perpage
+
+
+    const displayCaptures = missions?.slice(pagesVisited, pagesVisited + Perpage)
+
+    const pageCount = Math.ceil(missions?.length / Perpage)
+
+    const changePage = ({ selected }) => {
+        setPageNUmber(selected);
+    }
+
+    const handleChangePage = (e) => {
+        if (e.isNext) {
+
+            getMoreMissions()
+            setPageNUmber(prev => prev + 1)
+        }
+    }
+
+    useEffect(() => {
+    
+      return () => {
+        setPageNUmber(0)
+      }
+    }, [])
+    
 
     return (
         <div id='container' className='max-w-5xl p-5 mx-auto mt-20  bg-blue-500 rounded shadow-2xl shadow-pink-200' ref={container}>
@@ -32,12 +54,21 @@ export const Missions = () => {
                     </div>
                     :
                     <div className='container my-12 mx-auto px-4 md:px-12'>
+                        <div className='flex items-center justify-center'>
+
+                            <Pagination
+                                handleChangePage={handleChangePage}
+                                changePage={changePage}
+                                pageCount={pageCount}
+                                pageNUmber={pageNUmber}
+                            />
+                        </div>
                         <div className='flex flex-wrap -mx-1 lg:-mx-4'>
                             <CreateMissionBox />
                             {
-                                missions.length > 0
+                                displayCaptures.length > 0
                                 &&
-                                missions.map(mission => {
+                                displayCaptures.map(mission => {
                                     const { missionData, userData, stats } = mission
                                     const { missionName, media: { images }, finishDate } = missionData
                                     return <MissionBox
@@ -53,6 +84,15 @@ export const Missions = () => {
 
                                 })
                             }
+                        </div>
+                        <div className='flex items-center justify-center'>
+
+                            <Pagination
+                                handleChangePage={handleChangePage}
+                                changePage={changePage}
+                                pageCount={pageCount}
+                                pageNUmber={pageNUmber}
+                            />
                         </div>
 
                     </div>

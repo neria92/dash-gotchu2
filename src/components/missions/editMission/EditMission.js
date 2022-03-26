@@ -8,6 +8,7 @@ import { DatesMission } from './DateMission'
 import { Rewards } from './Rewards'
 import { Title } from './Title'
 import { Objective } from './Objective'
+import { Difficulty } from './Difficulty'
 
 
 export const EditMission = () => {
@@ -41,7 +42,7 @@ export const EditMission = () => {
       :
       <EditMissionContext.Provider value={{ mission, setMission, isEdit }}>
 
-        <div className='flex items-center justify-center my-2'>
+        <div className='flex items-center justify-center mt-10'>
 
           <div className=" rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
             <div className="w-full flex justify-between p-3">
@@ -66,20 +67,20 @@ export const EditMission = () => {
             </div>
             <img className="aspect-video object-cover block h-auto w-full bg-cover" src={mission?.missionData?.media?.images[0]?.url} />
             <div className='flex justify-center items-center mt-2'>
-              <DatesMission
-                initial={new Date(mission?.missionData?.startDate?.seconds * 1000)}
-                finish={new Date(mission?.missionData?.finishDate?.seconds * 1000)}
-              />
+              <DatesMission/>
             </div>
             <div className="px-3 pb-2">
               <div className="pt-2">
                 <i className="far fa-heart cursor-pointer"></i>
                 <span className="text-sm text-gray-400 font-medium">{mission?.stats?.likesCount > 0 && mission?.stats?.likesCount + ' me gusta'}</span>
                 <i className="far fa-heart cursor-pointer"></i>
-                <span className="ml-2 text-sm text-gray-400 font-medium cursor-pointer hover:bg-red-300" onClick={() => coments.current.classList.toggle('hidden')}>{mission?.stats?.commentsCount > 0 && mission?.stats?.commentsCount + ' comentarios'}</span>
+                <span className="ml-2 text-sm text-gray-400 font-medium cursor-pointer hover:text-red-300 hover:animate-bounce" onClick={() => coments.current.classList.toggle('hidden')}>{mission?.stats?.commentsCount > 0 && mission?.stats?.commentsCount + ' comentarios'}</span>
               </div>
               <div className="pt-1">
                 <Objective />
+              </div>
+              <div className="pt-1">
+                <Difficulty />
               </div>
               <span className="font-medium text-pink-600 mr-2 cursor-pointer" onClick={() => rewards.current.classList.toggle('hidden')}>Recompesas</span>
               <div className="hidden" ref={rewards} id='rewards'>
@@ -93,6 +94,7 @@ export const EditMission = () => {
             </div>
           </div>
         </div>
+        <br/>
       </EditMissionContext.Provider>
 
 
@@ -107,7 +109,6 @@ const Save = ({ setIsEdit }) => {
     setIsEdit(prev => !prev)
     const newMission = { ...mission }
     delete newMission.id
-    return
     db.doc(`missions2/${mission.id}`).update(newMission)
   }
   return (
