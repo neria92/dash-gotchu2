@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react'
+import React, { useRef, useEffect, useState, useCallback, useContext } from 'react'
 import {
     Circle,
     MapContainer,
@@ -10,23 +10,25 @@ import {
 import 'leaflet/dist/leaflet.css'
 import { AutoCompletePlaces } from './AutoCompletePlaces'
 import { IconLocation } from './IconLocation'
-import Icon from '../../Icon'
+import { CreatMissionContext } from './context/CreatMissionContext'
 
 
 const waitTime = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export const Map = ({ userPosition, missionData, setMissionData ,onReset}) => {
+export const Map = ({ userPosition }) => {
 
     const map = useRef();
 
+    const { mission, setMission } = useContext(CreatMissionContext)
+
+
     const [isLoading, setIsLoading] = useState(false);
     const [center, setCenter] = useState(userPosition);
-    const [isCheck, setIsCheck] = useState(false);
 
-    const [address, setAddress] = useState(missionData?.geoData?.address || 'Todo México');
-    const [coors, setCoors] = useState([missionData?.geoData?.latitude || 19.34, missionData?.geoData?.longitude || -99.3440])
+    const [address, setAddress] = useState(mission?.geoData?.address || 'Todo México');
+    const [coors, setCoors] = useState([mission?.geoData?.latitude || 19.34, mission?.geoData?.longitude || -99.3440])
 
 
     const buttonOnClick = useCallback(
@@ -40,6 +42,14 @@ export const Map = ({ userPosition, missionData, setMissionData ,onReset}) => {
 
     useEffect(() => {
         setIsLoading(true);
+        setMission({
+            ...mission, geoData: {
+                latitude: coors?.lat || userPosition[0],
+                longitude: coors?.lng || userPosition[1],
+                address,
+                geolocated: true,
+            }
+        })
         setCenter([coors?.lat || userPosition[0], coors?.lng || userPosition[1]])
         waitTime(1200).then(() => { setIsLoading(false) })
     }, [coors])
@@ -49,25 +59,6 @@ export const Map = ({ userPosition, missionData, setMissionData ,onReset}) => {
         setCenter(userPosition)
         waitTime(1200).then(() => { setIsLoading(false) })
     }, [userPosition])
-
-    
-    useEffect(() => {
-        setAddress('Todo México')
-        setIsCheck(false);
-    }, [onReset])
-
-
-    const next = () => {
-        setMissionData(prev => ({
-            ...prev, geoData: {
-                address,
-                geolocated: true,
-                latitude: center[0],
-                longitude: center[1]
-            }
-        }));
-        setIsCheck(true);
-    }
 
 
     return (
@@ -152,24 +143,7 @@ export const Map = ({ userPosition, missionData, setMissionData ,onReset}) => {
                                 </div>
 
                             </div>
-                            <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                {
-                                    !isCheck
-                                        ?
-                                        <button
-                                            onClick={next}
-                                            type="submit"
-                                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                            Guardar
-                                        </button>
-                                        :
-                                        <Icon
-                                            style='w-12 h-12 bg-green-500 rounded inline-flex justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 '
-                                            name='check'
-                                            color='#fff'
-                                        />
-                                }
-                            </div>
+                  
                         </div>
                     </div>
                 </div>
@@ -180,8 +154,6 @@ export const Map = ({ userPosition, missionData, setMissionData ,onReset}) => {
                 </div>
             </div>
         </>
-
-
     )
 }
 

@@ -13,53 +13,25 @@ export const CreateMission = () => {
 
     const [userPosition, setuserPosition] = useState([19.4337585, -99.1454316])
     const [mission, setMission] = useState({});
-    const [onReset, setOnReset] = useState(false);
 
 
     useEffect(() => {
         getUserLocation().then((res) => setuserPosition(res))
     }, [])
 
-    useEffect(() => {
-     console.log('mission',mission)
-    }, [mission])
-    
-
     return (
-        <CreatMissionContext.Provider value={{  mission, setMission, onReset }}  >
-            <TitleAndObjective/>
+        <CreatMissionContext.Provider value={{ mission, setMission }}  >
+            <TitleAndObjective />
 
-            <Difficulty
-                missionData={mission}
-                setMissionData={setMission}
-                onReset={onReset}
-            />
+            <Difficulty />
 
-            <DateMission
-                missionData={mission}
-                setMissionData={setMission}
-                onReset={onReset}
-            />
+            <DateMission />
 
-            <Rewards
-                missionData={mission}
-                setMissionData={setMission}
-                onReset={onReset}
-            />
+            <Rewards />
 
-            <Map
-                missionData={mission}
-                setMissionData={setMission}
-                userPosition={userPosition}
-                onReset={onReset}
-            />
+            <Map userPosition={userPosition} />
 
-            <TypeEvidences
-                missionData={mission}
-                setMissionData={setMission}
-                onReset={onReset}
-                setOnReset={setOnReset}
-            />
+            <TypeEvidences />
 
 
         </CreatMissionContext.Provider>

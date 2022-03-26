@@ -1,39 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import Swal from "sweetalert2";
+import React, { useContext } from 'react'
+
 import { Datepicker } from '../../datePicker/DatePicker';
 import Icon from '../../Icon';
+import { CreatMissionContext } from './context/CreatMissionContext';
 
 
 
-export const DateMission = ({ missionData, setMissionData ,onReset}) => {
+export const DateMission = () => {
 
-    const [initialDate, setInitialDate] = useState(missionData?.initialDate || null);
+    const { mission, setMission, onReset } = useContext(CreatMissionContext)
 
-    const [finishDate, setFinishDate] = useState(missionData?.finishDate || null);
-
-    const [isCheck, setIsCheck] = useState(false)
-
-    const next = () => {
-        if (initialDate.getTime() > finishDate.getTime()) {
-            Swal.fire(
-                "Error",
-                "Lo sentimos la misión debe tener una fecha de termino mayor a la incial",
-                "error"
-            );
-            return
-        }
-
-        setMissionData(prev => {
-            return { ...prev, initialDate, finishDate }
-        })
-        setIsCheck(true)
+    const handleStartDate = (date) => {
+        setMission({ ...mission, missionData: { ...mission.missionData, startDate: date } })
     }
 
-    useEffect(() => {
-        setInitialDate(null)
-        setFinishDate(null)
-        setIsCheck(false)
-    }, [onReset])
+    const handleFinishDate = (date) => {
+        setMission({ ...mission, missionData: { ...mission.missionData, finishDate: date } })
+    }
+
+    const startDate = mission?.missionData?.startDate || null
+    const finishDate = mission?.missionData?.finishDate || null
 
     return (
         <>
@@ -50,14 +36,14 @@ export const DateMission = ({ missionData, setMissionData ,onReset}) => {
                                 </div>
                                 <div date-rangepicker="" className="flex items-center">
                                     <Datepicker
-                                        date={initialDate}
-                                        getDate={setInitialDate}
+                                        date={startDate}
+                                        getDate={handleStartDate}
                                         placeholder='fin de misión'
                                     />
                                     <span className="mx-4 text-gray-500">a</span>
                                     <Datepicker
                                         date={finishDate}
-                                        getDate={setFinishDate}
+                                        getDate={handleFinishDate}
                                         placeholder='inico de misión'
                                     />
 
@@ -65,24 +51,7 @@ export const DateMission = ({ missionData, setMissionData ,onReset}) => {
                                 </div>
 
                             </div>
-                            <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                {
-                                    !isCheck
-                                        ?
-                                        <button
-                                            onClick={next}
-                                            type="submit"
-                                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                            Guardar
-                                        </button>
-                                        :
-                                        <Icon
-                                            style='w-12 h-12 bg-green-500 rounded inline-flex justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 '
-                                            name='check'
-                                            color='#fff'
-                                        />
-                                }
-                            </div>
+
                         </div>
                     </div>
                 </div>

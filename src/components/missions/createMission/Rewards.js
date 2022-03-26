@@ -1,48 +1,22 @@
-import React from 'react'
-import {useState, useEffect } from 'react';
-import Swal from "sweetalert2";
+import React, { useContext } from 'react'
+import { CreatMissionContext } from './context/CreatMissionContext';
 
-import { useForm } from '../../../hooks/useForm'
-import Icon from '../../Icon'
+export const Rewards = () => {
+    const { mission, setMission } = useContext(CreatMissionContext)
 
-export const Rewards = ({ missionData, setMissionData,onReset }) => {
-    const [{ money, gCoins, xp }, onChange] = useForm({
-        money: missionData?.loot?.money || 0,
-        gCoins: missionData?.loot?.gCoins || '',
-        xp: missionData?.loot?.xp || ''
-    })
-    const [isCheck, setIsCheck] = useState(false)
+    const money = mission?.missionData?.loot?.money || ''
+    const gCoins = mission?.missionData?.loot?.gCoins || ''
+    const xp = mission?.missionData?.loot?.xp || ''
 
-    const onChangeNumber = ({ target }) => {
-        target.value = target.value.replace(/[^0-9]/g, '');
-        onChange({ target });
-    }
-
-    const next = () => {
-        
-        if (!gCoins) {
-            Swal.fire(
-                "Error",
-                "Ese necesario que la misión cuente con gCoins",
-                "error"
-            );
-            return
+    const onChangeValues = ({ target }) => {
+        const value = parseInt(target.value.replace(/[^0-9]/g, ''));
+        if (!mission?.missionData?.loot) {
+            setMission({ ...mission, missionData: { ...mission.missionData, loot: { [target.name]: value } } })
         }
-        if (!xp) {
-            Swal.fire(
-                "Error",
-                "Ese necesario que la misión cuente con puntos de experiencia",
-                "error"
-            );
-            return
-        }
-        setIsCheck(true)
-        setMissionData(prev => ({ ...prev, loot: { money, gCoins, xp } }))
-    }
+        setMission({ ...mission, missionData: { ...mission.missionData, loot: { ...mission.missionData.loot, [target.name]: value } } })
 
-    useEffect(() => {
-        setIsCheck(false)
-    }, [onReset])
+
+    }
 
 
     return (
@@ -63,40 +37,26 @@ export const Rewards = ({ missionData, setMissionData,onReset }) => {
                                         title={'pesos'}
                                         name='money'
                                         placeHolder='Dinero'
-                                        onChange={onChangeNumber}
+                                        onChange={onChangeValues}
+                                        value={money}
                                     />
                                     <Input
                                         title={'gCoins'}
                                         name='gCoins'
                                         placeHolder='Gcoins'
-                                        onChange={onChangeNumber}
+                                        onChange={onChangeValues}
+                                        value={gCoins}
                                     />
                                     <Input
                                         title={'xp'}
                                         name='xp'
                                         placeHolder='Xp'
-                                        onChange={onChangeNumber}
+                                        onChange={onChangeValues}
+                                        value={xp}
                                     />
                                 </fieldset>
                             </div>
-                            <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                {
-                                    !isCheck
-                                        ?
-                                        <button
-                                            onClick={next}
-                                            type="submit"
-                                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                            Guardar
-                                        </button>
-                                        :
-                                        <Icon
-                                            style='w-12 h-12 bg-green-500 rounded inline-flex justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 '
-                                            name='check'
-                                            color='#fff'
-                                        />
-                                }
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -111,7 +71,7 @@ export const Rewards = ({ missionData, setMissionData,onReset }) => {
     )
 }
 
-const Input = ({ title, name, placeHolder, onChange }) => {
+const Input = ({ title, name, placeHolder, onChange, value }) => {
     return (
         <div className="flex items-center">
             <div className="mt-1 flex rounded-md shadow-sm">
@@ -122,6 +82,7 @@ const Input = ({ title, name, placeHolder, onChange }) => {
                     onChange={onChange}
                     className="focus:ring-indigo-500 focus:border-indigo-500 flex-1  block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                     placeholder={placeHolder}
+                    value={value}
                 />
             </div>
             <label className='mr-1'>{`${title}: `}</label>

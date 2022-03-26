@@ -1,35 +1,21 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Swal from "sweetalert2";
 import Icon from '../../Icon';
+import { CreatMissionContext } from './context/CreatMissionContext';
 
-export const Difficulty = ({ missionData, setMissionData,onReset }) => {
+export const Difficulty = () => {
 
-    const [difficulty, setDifficulty] = useState(missionData?.difficulty || 'Baja');
-    const [isCheck, setIsCheck] = useState(false);
+    const { mission, setMission, onReset } = useContext(CreatMissionContext)
 
+    const difficulty = mission?.missionData?.difficulty || 'Baja'
 
-    const onChage = (e) => {
-        setDifficulty(e.target.value)
+    const onChangeValues = ({ target }) => {
+        const value = target.value
+        setMission({ ...mission, missionData: { ...mission.missionData, [target.name]: value } })
+
     }
 
-    const next = () => {
 
-        if (!difficulty) {
-            Swal.fire(
-                "Error",
-                "Ese necesario que tenga nivel de dificultad la misión",
-                "error"
-            );
-            return
-        }
-        setIsCheck(true)
-        setMissionData(prev => ({ ...prev, difficulty }))
-    }
-
-    useEffect(() => {
-        setDifficulty('Baja')
-        setIsCheck(false)
-    }, [onReset])
     return (
         <>
             <div className="md:grid md:grid-cols-2 md:gap-6 p-10 ">
@@ -49,41 +35,24 @@ export const Difficulty = ({ missionData, setMissionData,onReset }) => {
 
                                         <Button
                                             level='Baja'
-                                            onChage={onChage}
+                                            onChage={onChangeValues}
                                             isActive={difficulty === 'Baja'}
                                         />
                                         <Button
                                             level='Media'
-                                            onChage={onChage}
+                                            onChage={onChangeValues}
                                             isActive={difficulty === 'Media'}
                                         />
                                         <Button
                                             level='Alta'
-                                            onChage={onChage}
+                                            onChage={onChangeValues}
                                             isActive={difficulty === 'Alta'}
                                         />
 
                                     </div>
                                 </fieldset>
                             </div>
-                            <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                {
-                                    !isCheck
-                                        ?
-                                        <button
-                                            onClick={next}
-                                            type="submit"
-                                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                            Guardar
-                                        </button>
-                                        :
-                                        <Icon
-                                            style='w-12 h-12 bg-green-500 rounded inline-flex justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 '
-                                            name='check'
-                                            color='#fff'
-                                        />
-                                }
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -103,7 +72,7 @@ const Button = ({ level, onChage, isActive }) => {
         <div className="flex items-center">
             <input
                 id="push-everything"
-                name="push-notifications"
+                name="difficulty"
                 type="radio"
                 onChange={onChage}
                 value={level}

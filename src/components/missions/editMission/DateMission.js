@@ -16,7 +16,7 @@ export const DatesMission = () => {
         setMission({ ...mission, missionData: { ...mission.missionData, finishDate: date } })
     }
 
-    const { startDate, finishDate } = mission?.missionData
+    const { startDate, finishDate } = mission?.missionData?.startDate
 
     return (
         <div className="items-center">

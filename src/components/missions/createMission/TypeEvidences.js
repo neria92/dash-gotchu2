@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react';
 import { db } from '../../../firebase/firebaseConfig';
 import Icon from '../../Icon';
 import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom';
+import { CreatMissionContext } from './context/CreatMissionContext';
+import { validateData } from './validateData';
 
-export const TypeEvidences = ({ missionData, setMissionData, setOnReset, onReset }) => {
+export const TypeEvidences = () => {
 
     const navigate = useNavigate()
+
+    const { mission, setMission } = useContext(CreatMissionContext);
+    const [isLoading, setIsLoading] = useState(false);
+
     const [checkboxValues, setCheckboxValues] = useState({
         photos: false,
         videos: false,
@@ -19,40 +25,36 @@ export const TypeEvidences = ({ missionData, setMissionData, setOnReset, onReset
         const newValues = { ...checkboxValues };
         newValues[e.target.name] = !checkboxValues[e.target.name];
         setCheckboxValues(newValues);
-        setMissionData(prev => ({ ...prev, typeEvidence: checkboxValues }))
+        setMission({ ...mission, missionData: { ...mission.missionData, typeEvidence: checkboxValues } })
     }
 
 
 
     const goNext = () => {
-        const {
-            missionName,
-            missionObjetive,
-            loot,
-            difficulty,
-            geoData,
-            typeEvidence,
-            initialDate,
-            finishDate,
-            images
-        } = missionData;
+        setIsLoading(true);
+        const [flag, error] = validateData(mission)
+        if (flag) {
+            Swal.fire(
+                "Lo sentimos",
+                error,
+                "error"
+            );
+            setIsLoading(false);
+            return
+        }
+        const { missionData } = mission;
+        const { missionName } = missionData
 
-        const mission = {
+        const newMission = {
+            ...mission,
             date: new Date(),
-            geoData,
             missionData: {
+                ...missionData,
                 media: {
-                    images: images.map(photo => ({ url: photo })),
+                    ...mission.missionData.media,
                     videos: [],
                 },
                 missionDescription: "",
-                missionName,
-                missionObjetive,
-                initialDate,
-                finishDate,
-                loot,
-                difficulty,
-                typeEvidence,
             },
             userData,
             hide: false,
@@ -61,17 +63,29 @@ export const TypeEvidences = ({ missionData, setMissionData, setOnReset, onReset
             groups: [],
             isPrivate: false,
         };
+        
+        db.collection("missions2").add(newMission).then((doc) => {
+            if (doc.id) {
 
-        Swal.fire(
-            "Listo",
-            `Se ha publicado la misión ${missionName}`,
-            "success"
-        );
-        setMissionData(null)
-        setOnReset(prev => !prev)
-        db.collection("missions2").add(mission);
-        navigate('/missions')
-        setIsCheck(true);
+                Swal.fire(
+                    "Listo",
+                    `Se ha publicado la misión ${missionName}`,
+                    "success"
+                )
+                setMission({})
+                navigate('/missions')
+                setIsCheck(true);
+                setIsLoading(false);
+            }
+
+        }).catch(() => {
+            Swal.fire(
+                "Lo sentimos ocurrio un error inesperado",
+                `Se ha publicado la misión ${missionName}`,
+                "error"
+            );
+            setIsLoading(false);
+        })
 
     };
 
@@ -135,11 +149,18 @@ export const TypeEvidences = ({ missionData, setMissionData, setOnReset, onReset
                                             Crear misión
                                         </button>
                                         :
-                                        <Icon
-                                            style='w-12 h-12 bg-green-500 rounded inline-flex justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 '
-                                            name='check'
-                                            color='#fff'
-                                        />
+                                        isLoading
+                                            ?
+                                            <div className=' flex-col bg-transparent w-12 h-12  inline-flex rounded items-center justify-center'>
+                                                <div className='spinner'></div>
+                                                
+                                            </div>
+                                            :
+                                            <Icon
+                                                style='w-12 h-12 bg-green-500 rounded inline-flex justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 '
+                                                name='check'
+                                                color='#fff'
+                                            />
                                 }
                             </div>
                         </div>
