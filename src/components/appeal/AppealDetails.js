@@ -91,7 +91,7 @@ export const AppealDetails = () => {
 
 
     return (
-        <div className='max-w-5xl p-5 mx-auto mt-20 bg-white py-10 rounded shadow-2xl shadow-pink-200'>
+        <div className='max-w-5xl p-5 mx-auto mt-20 bg-white  py-10 rounded shadow-2xl shadow-pink-200'>
             <div className='container  my-12 mx-auto px-4 md:px-12'>
                 {
                     isLoading
@@ -101,7 +101,7 @@ export const AppealDetails = () => {
                             <span className='text-ellipsis font-semibold mt-5 text-gray-900'>Cargando...</span>
                         </div>
                         :
-                        <div className='flex flex-wrap  justify-center md:justify-between -mx-1 lg:-mx-4'>
+                        <div className='flex flex-wrap  justify-center md:justify-between -mx-1 lg:-mx-4 '>
 
                             <User
                                 photo={userRejected?.photo}

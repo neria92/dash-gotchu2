@@ -34,17 +34,20 @@ export const Navbar = () => {
                     <div className="text-sm text-cyan-700 lg:flex-grow">
 
                         <NavLink
-                            className={({ isActive }) => `nav-item nav-link ${isActive ? 'text-blue-500' : ''}`}
+                            className={({ isActive }) => `block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4 font-bold text-lg ${isActive ? 'text-white' : 'text-gray-900'}`}
                             to="/missions"
                         >
-                            <Text text='Misiones' />
+                            Misiones
+                            
                         </NavLink>
 
                         <NavLink
-                            className={({ isActive }) => `nav-item nav-link ${isActive ? 'text-blue-500' : ''}`}
+                            className={({ isActive }) => `block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4 font-bold text-lg ${isActive ? 'text-white' : 'text-gray-900'}`}
+                           
                             to="/appeal"
                         >
-                            <Text text='Apelaciones' />
+                            Apelaciones
+                            
                         </NavLink>
 
                     </div>
@@ -57,8 +60,3 @@ export const Navbar = () => {
     )
 }
 
-const Text = ({ text }) => {
-    return <span className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4 font-bold text-lg" >
-        {text}
-    </span>
-}

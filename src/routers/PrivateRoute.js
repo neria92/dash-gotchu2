@@ -5,8 +5,9 @@ import { Login } from '../login/Login';
 
 export const PrivateRoute = ({ children }) => {
 
+    const { isAdmin } = useSelector(state => state.auth)
 
-    return true
+    return isAdmin
         ? children
         : <Login />
 

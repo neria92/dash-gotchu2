@@ -15,7 +15,6 @@ export const Appeal = () => {
             .finally(() => setIsLoading(false))
     }, [])
 
-    console.log('appeals', appeals)
 
     return (
         <div>

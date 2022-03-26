@@ -4,7 +4,6 @@ import useGetComments from '../../../hooks/useGetComments'
 export const Comments = ({ id,countComments}) => {
 
     const [comments, getMoreComments, isLoading] = useGetComments({ id })
-    console.log('comments', comments)
     return (
         <div>
             <div className="mb-2">

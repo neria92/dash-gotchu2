@@ -37,15 +37,15 @@ export const startGoogleLogin = () => {
   };
 };
 
-export const startLoadinLogin=(uid)=>{
-  return async(dispatch)=>{
+export const startLoadinLogin = (uid) => {
+  return async (dispatch) => {
     const doc = await getDocumentUser(uid)
-    dispatch(login(doc.uid, doc.userData.email,doc.userData.photo,doc.userData.username,'nothing'));
+    dispatch(login(doc.uid, doc.userData.email, doc.userData.photo, doc.userData.username, doc.privileges.isAdmin));
   }
 
 }
 
-export const login = (uid,email,photoURL,displayName) => {
+export const login = (uid, email, photoURL, displayName,isAdmin) => {
   return {
     type: types.login,
     payload: {
@@ -53,6 +53,7 @@ export const login = (uid,email,photoURL,displayName) => {
       displayName,
       photoURL,
       email,
+      isAdmin
     },
   };
 };
