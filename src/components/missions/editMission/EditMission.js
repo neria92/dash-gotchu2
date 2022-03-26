@@ -28,11 +28,11 @@ export const EditMission = () => {
     setIsLoading(true)
     db.collection('missions2').doc(id).get()
       .then((doc) => {
+        console.log(doc.exists)
         if (doc.exists) { setMission({ ...doc.data(), id: doc.id }) }
       })
       .finally(() => setIsLoading(false))
   }, [])
-
 
 
   return (

@@ -5,7 +5,7 @@ import { EditMissionContext } from './context/EditMissionContext'
 
 
 export const DatesMission = () => {
-    
+
     const { mission, setMission, isEdit } = useContext(EditMissionContext)
 
     const handleStartDate = (date) => {
@@ -16,21 +16,23 @@ export const DatesMission = () => {
         setMission({ ...mission, missionData: { ...mission.missionData, finishDate: date } })
     }
 
-    const { startDate, finishDate } = mission?.missionData?.startDate
-
+    let { startDate, finishDate } = mission?.missionData
+    startDate = startDate?.seconds * 1000 || startDate
+    finishDate = finishDate?.seconds * 1000 || finishDate
+    
     return (
         <div className="items-center">
 
             <div date-rangepicker="" className="flex items-center">
                 <Datepicker
-                    date={new Date(startDate?.seconds * 1000||startDate)}
+                    date={new Date(startDate)}
                     readOnly={!isEdit}
                     getDate={handleStartDate}
                     placeholder='fin de misión'
                 />
                 <span className="mx-4 text-gray-500">a</span>
                 <Datepicker
-                    date={new Date(finishDate?.seconds * 1000 || finishDate)}
+                    date={new Date(finishDate)}
                     readOnly={!isEdit}
                     getDate={handleFinishDate}
                     placeholder='inico de misión'

@@ -36,12 +36,12 @@ export const Missions = () => {
     }
 
     useEffect(() => {
-    
-      return () => {
-        setPageNUmber(0)
-      }
+
+        return () => {
+            setPageNUmber(0)
+        }
     }, [])
-    
+
 
     return (
         <div id='container' className='max-w-5xl p-5 mx-auto mt-20  bg-blue-500 rounded shadow-2xl shadow-pink-200' ref={container}>
@@ -70,7 +70,9 @@ export const Missions = () => {
                                 &&
                                 displayCaptures.map(mission => {
                                     const { missionData, userData, stats } = mission
-                                    const { missionName, media: { images }, finishDate } = missionData
+                                    let { missionName, media: { images }, finishDate, startDate } = missionData
+                                    startDate = startDate?.seconds ? new Date(startDate?.seconds * 1000) : new Date()
+                                    finishDate = finishDate?.seconds ? new Date(finishDate?.seconds * 1000) : new Date()
                                     return <MissionBox
                                         key={mission.id}
                                         title={missionName}
@@ -78,7 +80,8 @@ export const Missions = () => {
                                         likes={stats?.likesCount || 0}
                                         user={userData?.username || 'Edgar'}
                                         userphoto={userData?.photo}
-                                        finishDate={new Date(finishDate.seconds * 100)}
+                                        startDate={startDate}
+                                        finishDate={finishDate}
                                         id={mission.id}
                                     />
 

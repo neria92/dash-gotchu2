@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const MissionBox = ({ image, title, user, userphoto, finishDate, likes,id }) => {
+export const MissionBox = ({ image, title, user, userphoto, finishDate, likes,id,startDate }) => {
 
     const dateString = new Intl.DateTimeFormat('es', { dateStyle: 'short' }).format(finishDate)
-    const time = new Intl.DateTimeFormat('es', { timeStyle: 'short' }).format(finishDate)
+    const startDateString = new Intl.DateTimeFormat('es', { dateStyle: 'short' }).format(startDate)
+    
 
     return (
         
@@ -20,12 +21,12 @@ export const MissionBox = ({ image, title, user, userphoto, finishDate, likes,id
                             {shorName(title)}
                         </span>
                     </h1>
-                    <div className='flex flex-col items-center justify-center '>
+                    <div className='flex  items-center justify-center '>
                         <p className="text-grey-darker text-sm">
-                            {dateString}
+                            {startDateString+'-'}
                         </p>
                         <p className="text-grey-darker text-sm">
-                            {time}
+                            {dateString}
                         </p>
                     </div>
                 </header>
