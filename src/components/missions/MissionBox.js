@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+
 export const MissionBox = ({ image, title, user, userphoto, finishDate, likes,id,startDate }) => {
 
     const dateString = new Intl.DateTimeFormat('es', { dateStyle: 'short' }).format(finishDate)
@@ -32,7 +33,7 @@ export const MissionBox = ({ image, title, user, userphoto, finishDate, likes,id
                 </header>
 
                 <footer className="flex items-center justify-between leading-none p-2 md:p-4">
-                    <a className="flex items-center no-underline hover:underline text-black" >
+                    <div className="flex items-center no-underline hover:underline text-black" >
 
                         <div className='h-8 w-8'>
                             <img alt="Placeholder" className="block rounded-full" src={userphoto} />
@@ -40,11 +41,11 @@ export const MissionBox = ({ image, title, user, userphoto, finishDate, likes,id
                         <p className="ml-2 text-sm">
                             {user}
                         </p>
-                    </a>
-                    <a className="no-underline text-grey-darker hover:text-red-dark" href="#">
-                        <img alt='like' src='like.svg' />
-                        <span className="text-blue-500 text-sm">{likes}</span>
-                    </a>
+                    </div>
+                    <div className="flex items-center justify-between no-underline w-6 text-grey-darker hover:text-red-dark  mr-2">
+                        <img alt='like' src='like.svg' className='flex' />
+                        <span className="flex text-blue-500 text-sm ml-1 ">{likes}</span>
+                    </div>
                 </footer>
 
             </article>

@@ -40,7 +40,7 @@ export const startGoogleLogin = () => {
 export const startLoadinLogin=(uid)=>{
   return async(dispatch)=>{
     const doc = await getDocumentUser(uid)
-    dispatch(login(doc.uid, doc.userData.email,doc.userData.photo,doc.userData.name,));
+    dispatch(login(doc.uid, doc.userData.email,doc.userData.photo,doc.userData.username,'nothing'));
   }
 
 }

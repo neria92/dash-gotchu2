@@ -1,21 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import useGetComments from '../../../hooks/useGetComments'
 
-export const Comments = ({ id }) => {
-    
+export const Comments = ({ id,countComments}) => {
+
+    const [comments, getMoreComments, isLoading] = useGetComments({ id })
+    console.log('comments', comments)
     return (
         <div>
-            <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">ver los 3 comentarios</div>
             <div className="mb-2">
-                <Comment />
+                <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">{countComments} comentarios</div>
+                {
+                    isLoading
+                        ? <span>...</span>
+                        :
+                        comments.map(comment => {
+                            return <Comment comment={comment} key={comment.id} />
+                        })
+                }
             </div>
+            <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium hover:text-blue-300" onClick={getMoreComments}>ver más comentarios...</div>
+
         </div>
     )
 }
 
-const Comment = () => {
+const Comment = ({ comment }) => {
+    const { userData, message } = comment
     return (
         <div className="mb-2 text-sm">
-            <span className="font-medium mr-2">nombre</span>comentario
+            <span className="font-medium mr-2">{userData.username}</span>{message}
         </div>
     )
 }

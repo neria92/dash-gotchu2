@@ -8,9 +8,7 @@ export const authReducer=(state={},action)=>{
                 name:action.payload.displayName,
                 photoURL:action.payload.photoURL,
                 email:action.payload.email,
-                company:action.payload.company,
                 isAdmi:action.payload.isAdmi,
-                supervisor:action.payload.supervisor
             }
             
         case types.logout:

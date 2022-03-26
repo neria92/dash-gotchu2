@@ -40,6 +40,7 @@ import { ReactComponent as CameraPhoto } from '../assets/icons/cameraPhoto.svg';
 import { ReactComponent as CrossDelete } from '../assets/icons/crossDelete.svg';
 import { ReactComponent as Send } from '../assets/icons/send.svg';
 import { ReactComponent as AddGroup } from '../assets/icons/addGroup.svg';
+import { ReactComponent as Down } from '../assets/icons/down.svg';
 
 const dimensions = { height: "100%", width: "100%" };
 
@@ -87,6 +88,7 @@ export default function Icon({ name = 'pencil', size = 30, style = {}, color = '
         crossDelete: <CrossDelete {...dimensions} fill={color} />,
         send: <Send {...dimensions} fill={color} />,
         addGroup: <AddGroup {...dimensions} fill={color} />,
+        down: <Down {...dimensions} fill={color} />,
 
     }
     return (

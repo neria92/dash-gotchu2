@@ -92,6 +92,7 @@ export const EditMission = () => {
               </div>
               <div className='hidden' id='coments' ref={coments} >
                 <Comments
+                  countComments={mission?.stats?.commentsCount}
                   id={mission.id}
                 />
               </div>

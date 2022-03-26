@@ -2,8 +2,9 @@ import React from 'react'
 import { NavLink, Outlet } from "react-router-dom";
 import Icon from '../Icon'
 
-export const CreateMissionBox = () => {
+const SRC='https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/GotchuBW.jpg?alt=media&token=c7441686-2e57-4d8f-b6f5-7c97a045d6bb'
 
+export const CreateMissionBox = () => {
 
     return (
         <NavLink
@@ -25,27 +26,24 @@ export const CreateMissionBox = () => {
                         <p className="text-grey-darker text-sm">
                             fecha
                         </p>
-                        <p className="text-grey-darker text-sm">
-                            hora
-                        </p>
+                       
                     </div>
                 </header>
 
                 <footer className="flex items-center justify-between leading-none p-2 md:p-4">
-                    <a className="flex items-center no-underline hover:underline text-black" >
+                    <div className="flex items-center no-underline hover:underline text-black" >
 
                         <div className='h-8 w-8'>
-                            <Icon style="block rounded-full" name='gotchu' color={'blue'} />
-
+                            <img alt="Placeholder" className="block rounded-full" src={SRC} />
                         </div>
                         <p className="ml-2 text-sm">
-                            Gotchu
+                            Gotchu!
                         </p>
-                    </a>
-                    <a className="no-underline text-grey-darker hover:text-red-dark" href="#">
-                        <img alt='like' src='like.svg' />
-                        <span className="text-blue-500 text-sm">1k</span>
-                    </a>
+                    </div>
+                    <div className="flex items-center justify-between no-underline w-4 h-2 text-grey-darker hover:text-red-dark  mr-2">
+                        <img alt='like' src='like.svg' className='flex' />
+                        <span className="flex text-blue-500 text-sm ml-1 ">1k</span>
+                    </div>
                 </footer>
 
             </article>
