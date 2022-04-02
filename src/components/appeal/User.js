@@ -17,7 +17,7 @@ export const User = ({ photo, name, ranking, reason, type, button, handle, isCha
             <div className="flex flex-col items-center pb-10 ">
 
                 {
-                    isChange
+                    status
                         ? <Message status={status}/>
                         :
                         <div className="flex mt-4 space-x-3 lg:mt-6 mb-0">

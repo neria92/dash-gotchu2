@@ -18,7 +18,7 @@ export const AppealDetails = () => {
     const [capture, setCapture] = useState({});
 
     const [isChange, setIsChange] = useState(false);
-    const [status, setStatus] = useState('')
+    const [status, setStatus] = useState(capture?.status === 'Accepted' ? 'aceptado' : capture?.status === 'Rejected' ? 'rechazado' : '')
 
 
 
@@ -56,6 +56,7 @@ export const AppealDetails = () => {
             .then((doc) => {
                 if (doc.exists) {
                     setCapture({ ...doc.data(), uid: doc.id })
+                    setStatus(doc.data()?.status === 'Accepted' ? 'aceptado' : doc.data()?.status === 'Rejected' ? 'rechazado' : '')
                 }
             })
             .finally(() => setIsLoading(false))

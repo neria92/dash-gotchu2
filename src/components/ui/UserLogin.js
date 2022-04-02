@@ -19,7 +19,7 @@ export const UserLogin = () => {
     }
 
     return (
-        <Menu as='div'>
+        <Menu as='div' >
             <div>
                 <Menu.Button className='flex items-center text-sm rounded-full hover:opacity-80'>
                     <span className='sr-only'> Abrir preferencias</span>
@@ -43,7 +43,7 @@ export const UserLogin = () => {
                 leave='transition ease-in duration-75'
                 leaveFrom='opacity-100 scale-100'
             >
-                <Menu.Items className='absolute block right-0 w-36 mt-2 origin-to-rigth bg-white 
+                <Menu.Items className='absolute block right-0 w-36 mt-4 origin-to-rigth bg-white 
                  divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5
                  focus:outline-none z-10'>
 

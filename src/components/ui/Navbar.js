@@ -14,7 +14,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <div className='flex items-center justify-between flex-wrap bg-pink-500  p-6'>
+            <div className='flex items-center justify-between flex-wrap bg-pink-500  p-3'>
                 <div className="flex items-center flex-shrink-0 text-white mr-6">
                     <div className='fill-current h-8 w-8 mr-2'>
                         <img src={'gotchu.svg'} alt='gotchu' />

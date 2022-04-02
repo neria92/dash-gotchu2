@@ -11,7 +11,8 @@ export const updateAppeal = async ({ missionId, userId, captureId, status, appea
 
     evidences = {
         ...evidences,
-        status
+        status,
+        appeal:{...evidences.appeal,status:'finish'}
     }
 
     const evidenceRoute = `evidences.${userId}`
