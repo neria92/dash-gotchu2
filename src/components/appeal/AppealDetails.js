@@ -60,7 +60,7 @@ export const AppealDetails = () => {
                 }
             })
             .finally(() => setIsLoading(false))
-    }, [appeal])
+    }, [appeal,id])
 
     const userAppeal = users.filter(element => element.userAppeal)[0]
     const userRejected = users.filter(element => !element.userAppeal)[0]
@@ -108,7 +108,7 @@ export const AppealDetails = () => {
                                 photo={userRejected?.photo}
                                 name={userRejected?.username}
                                 typeUser={'Usuario que rechazo'}
-                                reason={appeal?.reasonAppeal}
+                                reason={appeal?.reasonRejected}
                                 ranking={userRejected?.stats?.ranking}
                                 type='rechaza'
                                 button='rechazar apelación'
@@ -135,7 +135,7 @@ export const AppealDetails = () => {
                                 photo={userAppeal?.photo}
                                 name={userAppeal?.username}
                                 typeUser={'Usuario que apela'}
-                                reason={appeal?.reasonRejected}
+                                reason={appeal?.reasonAppeal}
                                 ranking={userAppeal?.stats?.ranking}
                                 type='apela'
                                 button='aceptar apelación'
