@@ -5,6 +5,7 @@ import { CreateMission } from '../components/missions/createMission/CreateMissio
 import { Appeal } from '../components/appeal/Appeal';
 import { EditMission } from '../components/missions/editMission/EditMission';
 import { AppealDetails } from '../components/appeal/AppealDetails';
+import { Captures } from '../components/captures/Captures';
 
 export const DashboardRoutes = () => {
   return (
@@ -16,6 +17,7 @@ export const DashboardRoutes = () => {
         <Route excat path="/appeal/:id" element={<AppealDetails />} />
         <Route excat path="/createMission" element={<CreateMission />} />
         <Route excat path="/appeal" element={<Appeal />} />
+        <Route excat path="/captures" element={<Captures />} />
         <Route excat path="/" element={<Missions />} />
 
       </Routes>

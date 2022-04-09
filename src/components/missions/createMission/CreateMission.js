@@ -7,6 +7,7 @@ import { Map } from './Map'
 import { Rewards } from './Rewards'
 import { TitleAndObjective } from './TitleAndObjective'
 import { TypeEvidences } from './TypeEvidences'
+import { TypeServices } from './TypeServices'
 
 
 export const CreateMission = () => {
@@ -17,22 +18,18 @@ export const CreateMission = () => {
 
     useEffect(() => {
         getUserLocation().then((res) => setuserPosition(res))
-    }, [])
+    }, [])    
 
     return (
         <CreatMissionContext.Provider value={{ mission, setMission }}  >
+            
             <TitleAndObjective />
-
             <Difficulty />
-
             <DateMission />
-
             <Rewards />
-
             <Map userPosition={userPosition} />
-
+            <TypeServices />
             <TypeEvidences />
-
 
         </CreatMissionContext.Provider>
     )
