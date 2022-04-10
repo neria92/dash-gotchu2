@@ -13,8 +13,9 @@ export const DropDown = () => {
                 <Menu.Button className='flex items-center text-sm rounded-full hover:opacity-80'>
                     
                     <Icon
-                        name='pencil'
+                        name='settings'
                         style='w-8 h-8'
+                        color='#fff'
                     />
 
                 </Menu.Button>
@@ -27,7 +28,7 @@ export const DropDown = () => {
                 leave='transition ease-in duration-75'
                 leaveFrom='opacity-100 scale-100'
             >
-                <Menu.Items className='absolute block right-0 md:right-auto w-36 mt-4 origin-to-rigth bg-white 
+                <Menu.Items className='absolute block right-0 md:right-auto w-36 mt-2 origin-to-rigth bg-gray-300
              divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5
              focus:outline-none z-10'>
 
@@ -46,7 +47,7 @@ export const DropDown = () => {
                                 }
                             >
                                 <Icon
-                                    name='exit'
+                                    name='pencil'
                                     style='w-4 h-4'
                                 />
                                 Editar
@@ -68,7 +69,7 @@ export const DropDown = () => {
                                 }
                             >
                                 <Icon
-                                    name='exit'
+                                    name='close'
                                     style='w-4 h-4'
                                 />
                                 Ocultar

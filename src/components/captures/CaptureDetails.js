@@ -5,11 +5,10 @@ import { db } from '../../firebase/firebaseConfig'
 import { EditCaptureContext } from './context/EditCaptureContext'
 import { Comments } from '../missions/editMission/Comments'
 import { MediaPreview } from './MediaPreview'
-import { Save } from './Save'
-import { Edit } from './Edit'
 import { Stats } from './Stats'
 import { timeAgo } from '../../helpers/timeAgo'
 import { DropDown } from './DropDown'
+import { Map } from './Map'
 
 
 export const CaptureDetails = () => {
@@ -20,6 +19,7 @@ export const CaptureDetails = () => {
 
     const [capture, setCapture] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [mission, setMission] = useState({})
     const [isEdit, setIsEdit] = useState(false);
 
 
@@ -32,6 +32,16 @@ export const CaptureDetails = () => {
             .finally(() => setIsLoading(false))
     }, [])
 
+    useEffect(() => {
+        if (!capture?.missionData) return
+        db.collection('missions2').doc(capture.missionData.missionId).get()
+            .then((doc) => {
+                if (doc.exists) { setMission({ ...doc.data(), id: doc.id }) }
+            })
+    }, [capture])
+
+    console.log('mission', mission)
+
 
     return (
 
@@ -42,7 +52,7 @@ export const CaptureDetails = () => {
                 <span className='text-ellipsis font-semibold mt-5 text-gray-900'>Cargando...</span>
             </div>
             :
-            <EditCaptureContext.Provider value={{ capture, setCapture, isEdit }}>
+            <EditCaptureContext.Provider value={{ capture, setCapture, mission, isEdit }}>
 
                 <div className='flex items-center justify-center mt-10 '>
 
@@ -58,20 +68,17 @@ export const CaptureDetails = () => {
                                 </div>
                             </div>
                             <div className="flex w-1/3  justify-center items-center flex-col ">
-                                <span className="text-lg text-gray-600 text-left">Missión</span>
-                                <span className='text-bold text-pink-600 font-bold text-xl'>{capture?.missionData?.missionName}</span>
+                                {
+                                    capture?.missionData?.missionName
+                                    &&
+                                    <>
+                                        <span className="text-lg text-gray-600 text-left">Missión</span>
+                                        <span className='text-bold text-pink-600 font-bold text-xl'>{capture?.missionData?.missionName}</span>
+                                    </>
+                                }
                             </div>
                             <div className='w-1/3 flex justify-end'>
-
                                 <DropDown />
-                                {/* {
-                                    !isEdit
-                                        ?
-                                        <Edit setIsEdit={setIsEdit} />
-                                        :
-                                        <Save setIsEdit={setIsEdit} />
-
-                                } */}
                             </div>
 
                         </div>
@@ -91,6 +98,14 @@ export const CaptureDetails = () => {
                                     id={capture.id}
                                     type='captures2'
                                 />
+                            </div>
+                        </div>
+
+
+                        <div className='flex flex-col md:flex-row justify-center items-center mt-2'>
+                            <Map />
+                            <div className={`${!capture?.missionData && 'hidden'} h-80 w-80 rounded my-10 bg-red-300`}>
+
                             </div>
                         </div>
                     </div>

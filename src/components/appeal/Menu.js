@@ -24,9 +24,6 @@ export const Menu = ({ selectTypeAppeal, setSelectTypeAppeal }) => {
 
     }
 
-    useEffect(() => {
-        console.log('missions', missions)
-    }, [missions])
 
 
     return (

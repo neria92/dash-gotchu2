@@ -44,6 +44,7 @@ import { ReactComponent as Down } from '../assets/icons/down.svg';
 import { ReactComponent as Pause } from '../assets/icons/pause.svg';
 import { ReactComponent as PointActive } from '../assets/icons/pointActive.svg';
 import { ReactComponent as PointInactive } from '../assets/icons/pointInactive.svg';
+import { ReactComponent as Settings } from '../assets/icons/settings.svg';
 
 const dimensions = { height: "100%", width: "100%" };
 
@@ -95,6 +96,7 @@ export default function Icon({ name = 'pencil', size = 30, style = {}, color = '
         pause: <Pause {...dimensions} fill={color} />,
         pointActive: <PointActive {...dimensions} fill={color} />,
         pointInactive: <PointInactive {...dimensions} fill={color} />,
+        settings: <Settings {...dimensions} fill={color} />,
 
     }
     return (
