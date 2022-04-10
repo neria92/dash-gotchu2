@@ -9,6 +9,7 @@ import { Stats } from './Stats'
 import { timeAgo } from '../../helpers/timeAgo'
 import { DropDown } from './DropDown'
 import { Map } from './Map'
+import { UbicationIformation } from './UbicationIformation'
 
 
 export const CaptureDetails = () => {
@@ -104,9 +105,7 @@ export const CaptureDetails = () => {
 
                         <div className='flex flex-col md:flex-row justify-center items-center mt-2'>
                             <Map />
-                            <div className={`${!capture?.missionData && 'hidden'} h-80 w-80 rounded my-10 bg-red-300`}>
-
-                            </div>
+                            <UbicationIformation />
                         </div>
                     </div>
                 </div>

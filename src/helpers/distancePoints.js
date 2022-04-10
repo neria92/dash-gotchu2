@@ -34,5 +34,5 @@ export const distanceEarth = (lat1, long1, lat2, long2) => {
     // Calculate the result 
     ans = ans * R;
 
-    return ans;
+    return Math.round(ans * 100) / 100;
 }

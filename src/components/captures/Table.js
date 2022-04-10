@@ -62,7 +62,7 @@ export const Table = ({ displayCaptures = [], columns = [{ title: "Nombre", fiel
                                         } else {
                                             return (
 
-                                                <td scope="row" className={`px-6 py-4 font-medium text-gray-900 ${element.title === 'Ver más' && 'hover:text-green-200 underline cursor-pointer'}   dark:text-white whitespace-nowrap`} key={index + 'key'} >
+                                                <td scope="row" className={`px-6 py-4 font-medium  ${element.title === 'Ver más' ? 'text-blue-900 dark:text-[#5F9E] hover:text-green-200 underline cursor-pointer ':'text-gray-900 dark:text-white'}    whitespace-nowrap`} key={index + 'key'} >
                                                     {
                                                         element.title === 'Misión'
                                                             ? capture?.missionData?.missionName || 'Captura libre'
