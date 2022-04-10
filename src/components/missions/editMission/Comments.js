@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import useGetComments from '../../../hooks/useGetComments'
 
-export const Comments = ({ id,countComments}) => {
+export const Comments = ({ id,countComments,type='missions2'}) => {
 
-    const [comments, getMoreComments, isLoading] = useGetComments({ id })
+    const [comments, getMoreComments, isLoading] = useGetComments({ id,type})
     return (
         <div>
             <div className="mb-2">

@@ -7,16 +7,17 @@ export const Captures = () => {
 
     const [captures, setCaptures] = useState([])
     const [isLoading, setIsLoading] = useState(true);
-    const [typeEvidences, setTypeEvidences] = useState('all')
+    const [typeEvidences, setTypeEvidences] = useState('Accepted');
 
     useEffect(() => {
+        setIsLoading(true)
         if (typeEvidences === 'all') {
-            db.collection('captures2').orderBy('date', 'desc').limit(10).get().then((querySnapshot) => {
+            db.collection('captures2').orderBy('date', 'desc').limit(50).get().then((querySnapshot) => {
                 setCaptures(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
             })
                 .finally(() => setIsLoading(false))
         } else {
-            db.collection('captures2').where('status', '==', typeEvidences).orderBy('date', 'desc').limit(10).get().then((querySnapshot) => {
+            db.collection('captures2').where('status', '==', typeEvidences).orderBy('date', 'desc').limit(50).get().then((querySnapshot) => {
                 setCaptures(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
             })
                 .finally(() => setIsLoading(false))

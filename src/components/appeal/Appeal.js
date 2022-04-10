@@ -21,7 +21,7 @@ export const Appeal = () => {
 
 
     return (
-        <div>
+        <div >
             {
                 isLoading
                     ?
@@ -50,6 +50,7 @@ export const Appeal = () => {
                         }
                     </>
             }
+            <br/>
         </div>
     )
 }

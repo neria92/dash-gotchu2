@@ -41,6 +41,9 @@ import { ReactComponent as CrossDelete } from '../assets/icons/crossDelete.svg';
 import { ReactComponent as Send } from '../assets/icons/send.svg';
 import { ReactComponent as AddGroup } from '../assets/icons/addGroup.svg';
 import { ReactComponent as Down } from '../assets/icons/down.svg';
+import { ReactComponent as Pause } from '../assets/icons/pause.svg';
+import { ReactComponent as PointActive } from '../assets/icons/pointActive.svg';
+import { ReactComponent as PointInactive } from '../assets/icons/pointInactive.svg';
 
 const dimensions = { height: "100%", width: "100%" };
 
@@ -89,6 +92,9 @@ export default function Icon({ name = 'pencil', size = 30, style = {}, color = '
         send: <Send {...dimensions} fill={color} />,
         addGroup: <AddGroup {...dimensions} fill={color} />,
         down: <Down {...dimensions} fill={color} />,
+        pause: <Pause {...dimensions} fill={color} />,
+        pointActive: <PointActive {...dimensions} fill={color} />,
+        pointInactive: <PointInactive {...dimensions} fill={color} />,
 
     }
     return (
