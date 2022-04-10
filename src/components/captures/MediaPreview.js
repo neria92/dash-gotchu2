@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import { Navigation, Pagination, Scrollbar, A11y, EffectFade } from 'swiper';
+import React, { useContext } from 'react'
+import { EditCaptureContext } from './context/EditCaptureContext'
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { getMedia } from '../../helpers/getMedia'
 import { VideoPlayer } from './VideoPlayer'
@@ -9,8 +10,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 
-export const MediaPreview = ({ media }) => {
+export const MediaPreview = () => {
 
+    const { capture } = useContext(EditCaptureContext);
+    const media = capture.evidences
     const multimedia = getMedia(media)
 
 

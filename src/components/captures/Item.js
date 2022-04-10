@@ -1,6 +1,6 @@
 import Icon from "../Icon"
 
-export const Stats = ({ name = 'heart', color = '', title = '', onClick = () => { } }) => {
+export const Item = ({ name = 'heart', color = '', title = '', onClick = () => { } }) => {
     return (
         <div onClick={onClick} className='flex flex-row p-2' >
             <Icon style="w-4 h-4 mr-2" name={name} color={color} />

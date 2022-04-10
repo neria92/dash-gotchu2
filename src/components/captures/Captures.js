@@ -47,7 +47,7 @@ export const Captures = () => {
                                     { title: 'photo', field: 'userData', subField: 'photo' },
                                     { title: 'Usuario', field: 'userData', subField: 'username' },
                                     { title: 'fecha', field: 'userData', subField: 'username' },
-                                    { title: 'Estatus', field: 'status' },
+                                    { title: 'Estado', field: 'status' },
                                     { title: 'Misión', field: 'missionData' },
                                     { title: 'Ver más' },
                                 ]}
