@@ -30,7 +30,7 @@ export const VideoPlayer = ({ src, focus = false }) => {
             <video
                 className='aspect-video object-cover '
                 src={src}
-                muted={!isActiveSound}
+                muted={isActiveSound}
                 controls={false}
                 ref={video}
                 loop
@@ -52,7 +52,7 @@ const PlayButton = ({ onClick, playing }) => {
         <div className='absolute z-10 bg-gray-400  rounded-full w-8 h-8 top-0 m-auto inset-0' onClick={onClick}>
             <Icon
                 style='w-8 h-8 bg-black-200 rounded  '
-                name={`${playing?'play':'pause'}`}
+                name={`${!playing?'play':'pause'}`}
                 color='#fff'
 
             />
@@ -67,7 +67,7 @@ const SoundButton = ({ onClick, isActiveSound }) => {
         <div className='absolute z-10 bg-gray-400  rounded-full w-8 h-8 bottom-0 right-0' onClick={() => onClick(prev => !prev)}>
             <Icon
                 style='w-8 h-8 bg-black-200 rounded  '
-                name={`${!isActiveSound ? 'soundInactive' : 'soundActive'}`}
+                name={`${isActiveSound ? 'soundInactive' : 'soundActive'}`}
                 color='#fff'
             />
 

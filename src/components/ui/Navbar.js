@@ -2,7 +2,7 @@ import React, { useRef, Fragment } from 'react'
 import { NavLink, Outlet } from "react-router-dom";
 import { UserLogin } from './UserLogin';
 
-
+const SRC='https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/GotchuBW.jpg?alt=media&token=c7441686-2e57-4d8f-b6f5-7c97a045d6bb'
 
 export const Navbar = () => {
 
@@ -16,8 +16,8 @@ export const Navbar = () => {
         <>
             <div className='flex items-center justify-between flex-wrap bg-pink-500  p-3'>
                 <div className="flex items-center flex-shrink-0 text-white mr-6">
-                    <div className='fill-current h-8 w-8 mr-2'>
-                        <img src={'gotchu.svg'} alt='gotchu' />
+                    <div className='fill-current h-10 w-10 mr-2'>
+                        <img src={SRC} alt='gotchu' className='rounded-full ' />
                     </div>
                     <span className="font-semibold text-xl tracking-tight">Gotchu!</span>
                 </div>

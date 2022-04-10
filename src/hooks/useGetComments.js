@@ -19,7 +19,7 @@ export default function useGetComments({type='missions2',id}) {
         db.collection(type)
             .doc(id)
             .collection('messages')
-            .orderBy('timestamp', 'asc')
+            .orderBy('date', 'asc')
             .limit(2)
             .get()
             .then((querySnapshot) => {

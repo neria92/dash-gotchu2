@@ -7,7 +7,7 @@ export const Captures = () => {
 
     const [captures, setCaptures] = useState([])
     const [isLoading, setIsLoading] = useState(true);
-    const [typeEvidences, setTypeEvidences] = useState('Accepted');
+    const [typeEvidences, setTypeEvidences] = useState('all');
 
     useEffect(() => {
         setIsLoading(true)

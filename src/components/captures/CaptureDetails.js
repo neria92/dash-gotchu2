@@ -5,6 +5,10 @@ import { db } from '../../firebase/firebaseConfig'
 import { EditCaptureContext } from './context/EditCaptureContext'
 import { Comments } from '../missions/editMission/Comments'
 import { MediaPreview } from './MediaPreview'
+import Icon from '../Icon'
+import { Save } from './Save'
+import { Edit } from './Edit'
+import { Stats } from './Sats'
 
 
 export const CaptureDetails = () => {
@@ -72,11 +76,38 @@ export const CaptureDetails = () => {
                             {/* <DatesMission /> */}
                         </div>
                         <div className="px-3 pb-2">
-                            <div className="pt-2">
-                                <i className="far fa-heart cursor-pointer"></i>
-                                <span className="text-sm text-gray-400 font-medium">{capture?.stats?.likesCount > 0 && capture?.stats?.likesCount + ' me gusta'}</span>
-                                <i className="far fa-heart cursor-pointer"></i>
-                                <span className="ml-2 text-sm text-gray-400 font-medium cursor-pointer hover:text-red-300 hover:animate-bounce" onClick={() => coments.current.classList.toggle('hidden')}>{capture?.stats?.commentsCount > 0 && capture?.stats?.commentsCount + ' comentarios'}</span>
+                            <div className="pt-2 flex flex-row">
+                                <Stats
+                                    name='heart'
+                                    color='#E00F10'
+                                    title={capture?.stats?.likesCount + ' me gusta'}
+                                />
+                                <Stats
+                                    name='send'
+                                    color='blue'
+                                    title={capture?.stats?.commentsCount + ' comentarios'}
+                                    onClick={() => coments.current.classList.toggle('hidden')}
+                                />
+                                <Stats
+                                    name='coin'
+                                    color='blak'
+                                    title={capture?.missionData?.loot?.gCoins || 0}
+
+                                />
+
+                                <Stats
+                                    name='xp'
+                                    color='blue'
+                                    title={capture?.missionData?.loot?.xp || 0}
+
+                                />
+                                <Stats
+                                    name='money'
+                                    color='blue'
+                                    title={capture?.missionData?.loot?.money || 0}
+
+                                />
+
                             </div>
                             <div className="pt-1">
                                 {/* <Objective /> */}
@@ -84,10 +115,7 @@ export const CaptureDetails = () => {
                             <div className="pt-1">
                                 {/* <Difficulty /> */}
                             </div>
-                            <span className="font-medium text-pink-600 mr-2 cursor-pointer" onClick={() => rewards.current.classList.toggle('hidden')}>Recompesas</span>
-                            <div className="hidden" ref={rewards} id='rewards'>
-                                {/* <Rewards /> */}
-                            </div>
+                           
                             <div className='hidden' id='coments' ref={coments} >
                                 <Comments
                                     countComments={capture?.stats?.commentsCount}
@@ -105,28 +133,5 @@ export const CaptureDetails = () => {
     )
 }
 
-const Save = ({ setIsEdit }) => {
 
-    const { mission } = useContext(EditCaptureContext)
-
-    const updateChange = () => {
-        setIsEdit(prev => !prev)
-        const newMission = { ...mission }
-        delete newMission.id
-        db.doc(`captures/${mission.id}`).update(newMission)
-    }
-    return (
-        <span className="px-2 bg-green-700/20 hover:bg-green-300 cursor-pointer rounded"
-            onClick={updateChange}
-        >Guardar<i className="fas fa-ellipsis-h pt-2 text-lg"></i></span>
-    )
-}
-
-const Edit = ({ setIsEdit }) => {
-    return (
-        <span className="px-2 hover:bg-gray-300 cursor-pointer rounded"
-            onClick={() => setIsEdit(prev => !prev)}
-        >Editar<i className="fas fa-ellipsis-h pt-2 text-lg"></i></span>
-    )
-}
 

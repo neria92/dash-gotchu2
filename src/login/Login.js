@@ -4,6 +4,8 @@ import { startLoginEmailPasword } from '../actions/auth';
 import { Loading } from '../components/Loading';
 import { useForm } from '../hooks/useForm';
 
+const SRC='https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/GotchuBW.jpg?alt=media&token=c7441686-2e57-4d8f-b6f5-7c97a045d6bb'
+
 export const Login = () => {
 
   const dispatch = useDispatch();
@@ -31,7 +33,7 @@ export const Login = () => {
 
         <img
           className="w-full h-auto bg-red-200 rounded mr-2 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
-          src='gotchu.svg'
+          src={SRC}
         />
         <div className="w-full lg:w-2/2 bg-white p-10 rounded-lg lg:rounded">
           <div className="px-8 mb-4 text-center">
