@@ -3,10 +3,10 @@ import ReactPaginate from 'react-paginate'
 import './pagination.css'
 
 
-export const Pagination = ({ pageCount, changePage, pageNUmber,handleChangePage }) => {
+export const Pagination = ({ pageCount, changePage, pageNUmber, handleChangePage }) => {
 
-    return (        
-
+    return (
+        <div className='flex justify-center items-center py-5 mb-20 md:mb-0 w-full'>
             <ReactPaginate
                 previousLabel={'<'}
                 nextLabel={'>'}
@@ -21,6 +21,7 @@ export const Pagination = ({ pageCount, changePage, pageNUmber,handleChangePage 
                 activeLinkClassName='paginationActive'
 
             />
+        </div>
 
     )
 }

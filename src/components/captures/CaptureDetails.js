@@ -41,7 +41,6 @@ export const CaptureDetails = () => {
             })
     }, [capture])
 
-    console.log('mission', mission)
 
 
     return (

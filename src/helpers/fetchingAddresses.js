@@ -3,7 +3,7 @@ import React from 'react'
 
 
 export const fetchingAddresses = async (text) => {
-    console.log('text', text)
+    
     if (text.length < 2) return;
 
     let myInit = {
@@ -27,12 +27,10 @@ export const fetchingAddresses = async (text) => {
             mode: 'no-cors',
         })
         .then((response) => {
-            console.log('response', response);
             return (response.json())
         })
         .then((result) => {
-            console.log("-----------------------------------------");
-            result.predictions.map((e) => console.log(e.description));
+            
             return (result.predictions);
         })
         .catch((error) => console.log("error", error));

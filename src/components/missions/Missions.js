@@ -54,15 +54,13 @@ export const Missions = () => {
                     </div>
                     :
                     <div className='container my-12 mx-auto px-4 md:px-12'>
-                        <div className='flex flex-wrap   md:w-full items-center justify-center'>
 
-                            <Pagination
-                                handleChangePage={handleChangePage}
-                                changePage={changePage}
-                                pageCount={pageCount}
-                                pageNUmber={pageNUmber}
-                            />
-                        </div>
+                        <Pagination
+                            handleChangePage={handleChangePage}
+                            changePage={changePage}
+                            pageCount={pageCount}
+                            pageNUmber={pageNUmber}
+                        />
                         <div className='flex flex-wrap -mx-1 lg:-mx-4'>
                             <CreateMissionBox />
                             {
@@ -88,15 +86,13 @@ export const Missions = () => {
                                 })
                             }
                         </div>
-                        <div className='flex items-center justify-center'>
 
-                            <Pagination
-                                handleChangePage={handleChangePage}
-                                changePage={changePage}
-                                pageCount={pageCount}
-                                pageNUmber={pageNUmber}
-                            />
-                        </div>
+                        <Pagination
+                            handleChangePage={handleChangePage}
+                            changePage={changePage}
+                            pageCount={pageCount}
+                            pageNUmber={pageNUmber}
+                        />
 
                     </div>
             }

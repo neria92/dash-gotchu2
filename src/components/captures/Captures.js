@@ -1,27 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '../../firebase/firebaseConfig'
+import useGetCaptures from '../../hooks/useGetCaptures'
+import { Pagination } from '../pagination/Paginations'
 import { Menu } from './Menu'
 import { Table } from './Table'
 
+const Perpage = 10
+
 export const Captures = () => {
 
-    const [captures, setCaptures] = useState([])
-    const [isLoading, setIsLoading] = useState(true);
     const [typeEvidences, setTypeEvidences] = useState('all');
+    const [captures, getMoreCaptures, isLoading] = useGetCaptures(typeEvidences)
+
+
+    const [pageNUmber, setPageNUmber] = useState(0);
+
+    const pagesVisited = pageNUmber * Perpage
+
+
+    const displayCaptures = captures?.slice(pagesVisited, pagesVisited + Perpage)
+
+    const pageCount = Math.ceil(captures?.length / Perpage)
+
+    const changePage = ({ selected }) => {
+        setPageNUmber(selected);
+    }
+
+    const handleChangePage = (e) => {
+        if (e.isNext) {
+            setPageNUmber(prev => prev + 1)
+            getMoreCaptures(typeEvidences)
+        }
+    }
 
     useEffect(() => {
-        setIsLoading(true)
-        if (typeEvidences === 'all') {
-            db.collection('captures2').orderBy('date', 'desc').limit(50).get().then((querySnapshot) => {
-                setCaptures(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-            })
-                .finally(() => setIsLoading(false))
-        } else {
-            db.collection('captures2').where('status', '==', typeEvidences).orderBy('date', 'desc').limit(50).get().then((querySnapshot) => {
-                setCaptures(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-            })
-                .finally(() => setIsLoading(false))
-        }
+        setPageNUmber(0)
     }, [typeEvidences])
 
 
@@ -36,13 +49,21 @@ export const Captures = () => {
                     </div>
                     :
                     <>
+
                         <Menu
                             selectType={typeEvidences}
                             setSelectType={setTypeEvidences}
                         />
-                        <div className=' p-10'>
+
+                        <div className='p-10'>
+                            <Pagination
+                                handleChangePage={handleChangePage}
+                                changePage={changePage}
+                                pageCount={pageCount}
+                                pageNUmber={pageNUmber}
+                            />
                             <Table
-                                displayCaptures={captures}
+                                displayCaptures={displayCaptures}
                                 columns={[
                                     { title: 'photo', field: 'userData', subField: 'photo' },
                                     { title: 'Usuario', field: 'userData', subField: 'username' },
@@ -52,6 +73,12 @@ export const Captures = () => {
                                     { title: 'Ver más' },
                                 ]}
 
+                            />
+                            <Pagination
+                                handleChangePage={handleChangePage}
+                                changePage={changePage}
+                                pageCount={pageCount}
+                                pageNUmber={pageNUmber}
                             />
                         </div>
                     </>

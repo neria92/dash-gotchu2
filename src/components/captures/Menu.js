@@ -66,6 +66,18 @@ export const Menu = ({ selectType, setSelectType }) => {
                             title='Aceptadas'
                             value='Accepted'
                         />
+                        <Button
+                            isActive={selectType === 'Rejected'}
+                            onChange={setSelectType}
+                            title='Rechazadas'
+                            value='Rejected'
+                        />
+                        <Button
+                            isActive={selectType === 'Pending'}
+                            onChange={setSelectType}
+                            title='Pendientes'
+                            value='Pending'
+                        />
 
                     </ul>
                 </div>
