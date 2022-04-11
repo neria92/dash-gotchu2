@@ -20,7 +20,7 @@ export const Captures = () => {
 
     const displayCaptures = captures?.slice(pagesVisited, pagesVisited + Perpage)
 
-    const pageCount = Math.ceil(captures?.length / Perpage)
+    const pageCount = Math.ceil(captures?.length / Perpage) || 1
 
     const changePage = ({ selected }) => {
         setPageNUmber(selected);

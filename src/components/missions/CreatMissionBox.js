@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink, Outlet } from "react-router-dom";
 import Icon from '../Icon'
 
-const SRC='https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/GotchuBW.jpg?alt=media&token=c7441686-2e57-4d8f-b6f5-7c97a045d6bb'
+const SRC = 'https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/GotchuBW.jpg?alt=media&token=c7441686-2e57-4d8f-b6f5-7c97a045d6bb'
 
 export const CreateMissionBox = () => {
 
@@ -26,7 +26,7 @@ export const CreateMissionBox = () => {
                         <p className="text-grey-darker text-sm">
                             fecha
                         </p>
-                       
+
                     </div>
                 </header>
 
@@ -40,8 +40,12 @@ export const CreateMissionBox = () => {
                             Gotchu!
                         </p>
                     </div>
-                    <div className="flex items-center justify-between no-underline w-4 h-2 text-grey-darker hover:text-red-dark  mr-2">
-                        <img alt='like' src='like.svg' className='flex' />
+                    <div className="flex items-center justify-between  no-underline w-1/5 h-2 text-grey-darker hover:text-red-dark  mr-2">
+                        <Icon
+                            name='heart'
+                            style='w-6 h-6'
+                            color='red'
+                        />
                         <span className="flex text-blue-500 text-sm ml-1 ">1k</span>
                     </div>
                 </footer>

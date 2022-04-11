@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSearchMissions } from '../../hooks/useSearchMissions'
 import { useForm } from '../../hooks/useForm'
+import { Link } from 'react-router-dom'
 
 
-export const Searcher = ({ setSelectType }) => {
+export const Searcher = () => {
 
 
     const [missions, searchMissions, isLoading] = useSearchMissions()
@@ -16,6 +17,10 @@ export const Searcher = ({ setSelectType }) => {
         onChange({ target })
         searchMissions(target.value)
     }
+
+    useEffect(() => {
+        console.log('missions', missions)
+    }, [missions])
 
     return (
         <div className=" relative mr-3 md:mr-0 md:block">
@@ -30,7 +35,7 @@ export const Searcher = ({ setSelectType }) => {
                 onChange={handleOnchange}
                 autoComplete='off'
                 className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-300 dark:border-gray-300 dark:placeholder-gray-400 dark:text-gray-700 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Buscar por misión..."
+                placeholder="Buscar misión..."
             />
             {
                 missions.length > 0
@@ -39,7 +44,7 @@ export const Searcher = ({ setSelectType }) => {
                     {
                         missions.map(({ mission, id }, index) => (
                             <section key={index}>
-                                <Item mission={mission} id={id} setSelectType={setSelectType} />
+                                <Item mission={mission} id={id} />
                             </section>
                         ))
                     }
@@ -51,16 +56,19 @@ export const Searcher = ({ setSelectType }) => {
     )
 }
 
-const Item = ({ mission, setSelectType, id }) => {
+const Item = ({ mission, id }) => {
     const { missionData: { media: { images }, missionName } } = mission
     const image = images[0]?.url
     return (
-        <div className='hover:bg-blue-200 flex gap-4 p-4' onClick={() => setSelectType(id)}>
-            <img src={image} className='w-8 h-8 rounded object-contain' alt='image_mission' />
-            <div>
-                <h3 className='text-sm font-semibold'>{missionName}</h3>
-            </div>
 
-        </div>
+        <Link to={`/missions/${id}`}>
+            <a className='hover:bg-blue-200 flex gap-4 p-4'>
+                <img src={image} className='w-8 h-8 rounded object-contain' alt='image_mission' />
+                <div>
+                    <h3 className='text-sm font-semibold'>{missionName}</h3>
+                </div>
+            </a>
+
+        </Link>
     )
 }

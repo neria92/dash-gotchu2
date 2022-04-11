@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { startLoginEmailPasword } from '../actions/auth';
 import { Loading } from '../components/Loading';
 import { useForm } from '../hooks/useForm';
 
-const SRC='https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/GotchuBW.jpg?alt=media&token=c7441686-2e57-4d8f-b6f5-7c97a045d6bb'
+const SRC = 'https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/GotchuBW.jpg?alt=media&token=c7441686-2e57-4d8f-b6f5-7c97a045d6bb'
 
 export const Login = () => {
 
   const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading } = useSelector(state => state.auth);
 
   const [{ email, password }, handleInputChange] = useForm({
     email: "",
@@ -18,10 +18,8 @@ export const Login = () => {
   });
 
   const onSubmit = (e) => {
-    setIsLoading(true);
     e.preventDefault();
     dispatch(startLoginEmailPasword(email, password));
-    setIsLoading(false);
   };
 
   return (
@@ -70,7 +68,7 @@ export const Login = () => {
             <div className="mb-6 text-center">
               {
                 isLoading
-                  ? <Loading w='30' h='30' bg='bg-green-200'  />
+                  ? <Loading w='30' h='30' bg='bg-green-200' />
                   :
                   <button
                     className="w-full px-4 py-2 font-bold text-white bg-green-700 rounded-full hover:bg-green-500 focus:outline-none focus:shadow-outline"

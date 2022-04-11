@@ -99,8 +99,8 @@ const status = {
 }
 
 const statusColor = {
-    Rejected: 'text-red-900 dark:text-red-900',
-    Accepted: 'text-green-900 dark:text-green-900',
+    Rejected: 'text-red-900 dark:text-red-900  hover:text-red-500',
+    Accepted: 'text-green-900 dark:text-green-900  hover:text-green-500',
     Pending: 'text-orange-800 dark:text-orange-800 hover:text-orange-500',
     Appeal: 'text-orange-800 dark:text-orange-800 hover:text-orange-500',
 }

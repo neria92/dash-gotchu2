@@ -39,13 +39,15 @@ export const startGoogleLogin = () => {
 
 export const startLoadinLogin = (uid) => {
   return async (dispatch) => {
+    dispatch(startLoadingAction())
     const doc = await getDocumentUser(uid)
     dispatch(login(doc.uid, doc.userData.email, doc.userData.photo, doc.userData.username, doc.privileges.isAdmin));
+    dispatch(finishLoadingAction())
   }
 
 }
 
-export const login = (uid, email, photoURL, displayName,isAdmin) => {
+export const login = (uid, email, photoURL, displayName, isAdmin) => {
   return {
     type: types.login,
     payload: {
@@ -67,5 +69,12 @@ export const startLogout = () => {
 
 export const logout = () => ({
   type: types.logout,
+});
+
+export const startLoadingAction = () => ({
+  type: types.startLoading,
+});
+export const finishLoadingAction = () => ({
+  type: types.finishLoading,
 });
 

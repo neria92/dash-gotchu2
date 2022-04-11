@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '../firebase/firebaseConfig';
 
-export default function useGetCaptures(type='all') {
+
+const typeStatus = ['Pending', 'Accepted', 'Rejected']
+
+export default function useGetCaptures(type = 'all') {
 
     const [captures, setCaptures] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -24,9 +27,21 @@ export default function useGetCaptures(type='all') {
                     setCaptures(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
                 })
                 .finally(() => setIsLoading(false))
-        } else {
+        }
+        else if (typeStatus.includes(type)) {
             db.collection("captures2")
                 .where('status', '==', type)
+                .orderBy('date', 'desc')
+                .limit(10)
+                .get()
+                .then((querySnapshot) => {
+                    setLastDocumentGenral(querySnapshot.docs[querySnapshot.docs.length - 1] || null)
+                    setCaptures(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+                })
+                .finally(() => setIsLoading(false))
+        } else {
+            db.collection("captures2")
+                .where('missionData.missionId', '==', type)
                 .orderBy('date', 'desc')
                 .limit(10)
                 .get()
@@ -52,7 +67,8 @@ export default function useGetCaptures(type='all') {
                     setCaptures(prev => [...prev, ...querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }))]);
                 })
                 .finally(() => setIsLoading(false))
-        } else {
+        }
+        else if (typeStatus.includes(type)) {
             db.collection('captures2')
                 .where('status', '==', type)
                 .orderBy('date', 'desc')
@@ -62,6 +78,18 @@ export default function useGetCaptures(type='all') {
                 .then((querySnapshot) => {
                     setLastDocumentGenral(querySnapshot.docs[querySnapshot.docs.length - 1] || null)
                     setCaptures(prev => [...prev, ...querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }))]);
+                })
+                .finally(() => setIsLoading(false))
+        } else {
+            db.collection("captures2")
+                .where('missionData.missionId', '==', type)
+                .orderBy('date', 'desc')
+                .limit(10)
+                .startAfter(lastDocumentGenral)
+                .get()
+                .then((querySnapshot) => {
+                    setLastDocumentGenral(querySnapshot.docs[querySnapshot.docs.length - 1] || null)
+                    setCaptures(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
                 })
                 .finally(() => setIsLoading(false))
         }

@@ -39,24 +39,6 @@ export const useSearchMissions = () => {
                 // Mandamos a traer de Firestore todas las misiones
                 let missions = await Promise.all(paths.map(path => db.doc(path).get().then(doc => ({ mission: doc.data(), id: doc.id }))));
 
-                // Filtramos las misiones para mostrar solo aquellas que esten disponibles para este usuario
-                missions = missions.filter(({ mission: { hide, missionData: { endDate }, isPrivate, fellows } }) => {
-                    if (hide) return false;
-                    if (endDate) {
-                        const now = new Date();
-                        endDate = new Date(endDate.seconds * 1000);
-                        if (endDate < now) return false;
-                    }
-                    if (isPrivate) {
-                        if (fellows) {
-                            fellows = Object.keys(fellows);
-                            return fellows.includes(userId);
-                        } else {
-                            return false;
-                        }
-                    }
-                    return true;
-                });
                 setMissions(missions);
                 setIsLoading(false)
             }, 500)
