@@ -39,7 +39,7 @@ export const Captures = () => {
 
 
     return (
-        <div>
+        <div className='animate__animated animate__fadeIn'>
             {
                 isLoading
                     ?

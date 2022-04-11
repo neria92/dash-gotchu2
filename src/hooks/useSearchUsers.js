@@ -9,7 +9,7 @@ const ALGOLIA_INDEX = 'gotchu_users2'
 const client = algoliasearch(APPLICATION_ID, SEARCH_API_KEY)
 const index = client.initIndex(ALGOLIA_INDEX)
 
-export default function useSearchUsers() {
+export const useSearchUsers = () => {
 
     const [users, setUsers] = useState([]);
     const [typingTimeout, setTypingTimeout] = useState(0);
@@ -45,6 +45,6 @@ export default function useSearchUsers() {
         )
     };
 
-    return [users, searchUsers,isLoading];
+    return [users, searchUsers, isLoading];
 
 }

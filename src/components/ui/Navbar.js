@@ -55,6 +55,14 @@ export const Navbar = () => {
                             Capturas
                             
                         </NavLink>
+                        <NavLink
+                            className={({ isActive }) => `block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4 font-bold text-lg ${isActive ? 'text-white' : 'text-gray-900'}`}
+                           
+                            to="/users"
+                        >
+                            Usuarios
+                            
+                        </NavLink>
 
                     </div>
                     <UserLogin />

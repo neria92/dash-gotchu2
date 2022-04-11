@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { Link } from 'react-router-dom'
+import Icon from "../Icon";
 
 
 dayjs.locale("es");
@@ -62,7 +63,7 @@ export const Table = ({ displayCaptures = [], columns = [{ title: "Nombre", fiel
                                         } else {
                                             return (
 
-                                                <td scope="row" className={`px-6 py-4 font-medium  ${element.title === 'Ver más' && 'text-blue-900 dark:text-[#5F9E] hover:text-green-200 underline cursor-pointer '} ${statusColor[capture[element.field]] || 'dark:text-white'}   whitespace-nowrap`} key={index + 'key'} >
+                                                <td scope="row" className={`px-6 py-4 font-medium  ${element.title === 'Ver más' && 'text-blue-900 dark:text-[#5F9E] hover:text-green-200 underline cursor-pointer '} ${statusColor[capture[element.field]] || 'dark:text-white'} ${element.title === 'Estado' && 'justify-center items-center flex'}  whitespace-nowrap`} key={index + 'key'} >
                                                     {
                                                         element.title === 'Misión'
                                                             ? capture?.missionData?.missionName || 'Captura libre'
@@ -71,7 +72,12 @@ export const Table = ({ displayCaptures = [], columns = [{ title: "Nombre", fiel
                                                                     Ver más
                                                                 </Link>
                                                                 : element.title === 'Estado'
-                                                                    ? status[capture[element.field]]
+                                                                    ? <div className="bg-white rounded-full w-8 h-8 justify-center items-center flex">
+                                                                        <Icon
+                                                                            name={`${statusIcon[capture[element.field]] || 'free'}`}
+                                                                            style='w-8 h-8 rounded-full'
+                                                                            color={colorIcon[capture[element.field]] || 'red'} />
+                                                                    </div>
                                                                     : capture[element.field]
                                                     }
                                                 </td>
@@ -91,11 +97,11 @@ export const Table = ({ displayCaptures = [], columns = [{ title: "Nombre", fiel
     )
 }
 
-const status = {
-    Rejected: 'Rechzada',
-    Accepted: 'Aceptada',
-    Pending: 'Pendiente',
-    Appeal: 'Proceso de apelación'
+const colorIcon = {
+    Rejected: 'red',
+    Accepted: 'green',
+    Pending: 'orange',
+    Appeal: 'orange'
 }
 
 const statusColor = {
@@ -103,4 +109,10 @@ const statusColor = {
     Accepted: 'text-green-900 dark:text-green-900  hover:text-green-500',
     Pending: 'text-orange-800 dark:text-orange-800 hover:text-orange-500',
     Appeal: 'text-orange-800 dark:text-orange-800 hover:text-orange-500',
+}
+const statusIcon = {
+    Rejected: 'close',
+    Accepted: 'check',
+    Pending: 'time',
+    Appeal: 'time',
 }

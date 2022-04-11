@@ -57,7 +57,7 @@ export const Missions = () => {
                             <span className='text-ellipsis font-semibold mt-5 text-gray-300'>Cargando...</span>
                         </div>
                         :
-                        <div className='container my-12 mx-auto px-4 md:px-12'>
+                        <div className='container my-12 mx-auto px-4 md:px-12 animate__animated animate__fadeIn'>
 
                             <Pagination
                                 handleChangePage={handleChangePage}
@@ -108,8 +108,12 @@ export const Missions = () => {
                     color='#fff'
                 />
             </div> */}
-
+                
             </div>
+            <br/>
+            <br/>
+            <br/>
+
         </>
 
     )

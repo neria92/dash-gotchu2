@@ -22,7 +22,6 @@ export const CreateMission = () => {
 
     return (
         <CreatMissionContext.Provider value={{ mission, setMission }}  >
-            
             <TitleAndObjective />
             <Difficulty />
             <DateMission />
