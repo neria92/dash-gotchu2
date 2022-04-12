@@ -10,7 +10,7 @@ const Perpage = 10
 export const Captures = () => {
 
     const [typeEvidences, setTypeEvidences] = useState('all');
-    const [captures, getMoreCaptures, isLoading] = useGetCaptures(typeEvidences)
+    const [captures, setCaptures, getMoreCaptures, isLoading] = useGetCaptures(typeEvidences)
 
 
     const [pageNUmber, setPageNUmber] = useState(0);
@@ -64,12 +64,14 @@ export const Captures = () => {
                             />
                             <Table
                                 displayCaptures={displayCaptures}
+                                setCaptures={setCaptures}
                                 columns={[
                                     { title: 'photo', field: 'userData', subField: 'photo' },
                                     { title: 'Usuario', field: 'userData', subField: 'username' },
                                     { title: 'fecha', field: 'userData', subField: 'username' },
                                     { title: 'Estado', field: 'status' },
                                     { title: 'Misión', field: 'missionData' },
+                                    { title: 'pago', field: '' },
                                     { title: 'Ver más' },
                                 ]}
 

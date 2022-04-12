@@ -3,7 +3,7 @@ import Icon from './Icon'
 
 export const Ranking = ({ rating = .673, style = '' }) => {
     return (
-        <div className={` flex flex-row h-20 w-30  ${style}`}>
+        <div className={` flex flex-row h-20 w-30 flex-wrap  ${style}`}>
             {
                 getTypeStars(rating)
             }
@@ -16,7 +16,7 @@ const Star = ({ type }) => {
     return (
         <div className='flex items-center justify-center'>
             <Icon
-                style='h-8 w-8'
+                style='h-4 w-4 md:h-8 md:w-8'
                 name={type} 
                 color='#DBC311'
             />

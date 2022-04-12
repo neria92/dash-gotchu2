@@ -18,8 +18,6 @@ export const UserList = () => {
             .finally(() => setIsLoading(false))
     }, [])
 
-    console.log('users', users)
-
     return (
 
         <div className='mx-5 md:mx-40 mt-10 animate__animated animate__fadeIn  rounded shadow-2xl shadow-blue-600 col-span-2 grid grid-cols-2 md:grid-cols-3 gap-3' >
@@ -30,7 +28,7 @@ export const UserList = () => {
                 {
                     users.map((item, index) => (
 
-                        <UserCard item={item} />
+                        <UserCard item={item} key={index}/>
                     ))
                 }
 

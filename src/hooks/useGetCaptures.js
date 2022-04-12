@@ -98,7 +98,7 @@ export default function useGetCaptures(type = 'all') {
 
 
 
-    return [captures, getMoreCaptures, isLoading]
+    return [captures, setCaptures, getMoreCaptures, isLoading]
 }
 
 

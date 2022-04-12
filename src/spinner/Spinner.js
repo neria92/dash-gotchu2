@@ -11,3 +11,12 @@ export const Spinner = () => {
         </div>
     )
 }
+
+export const SpinnerRounded = () => {
+    return (
+        <div className='flex flex-col bg-transparent w-full rounded items-center justify-center '>
+            <div className='spinner'></div>
+            
+        </div>
+    )
+}

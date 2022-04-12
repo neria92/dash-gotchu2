@@ -1,12 +1,18 @@
-import dayjs from "dayjs";
+import { useState } from "react";
 import { Link } from 'react-router-dom'
+import dayjs from "dayjs";
+import { SpinnerRounded } from "../../spinner/Spinner";
 import Icon from "../Icon";
+import { Modal } from "./Modal";
 
 
 dayjs.locale("es");
 
 
-export const Table = ({ displayCaptures = [], columns = [{ title: "Nombre", field: "User_name" }] }) => {
+export const Table = ({ displayCaptures = [], setCaptures, columns = [{ title: "Nombre", field: "User_name" }] }) => {
+
+    const [isOpenModal, setIsOpenModal] = useState(false);
+
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400' >
@@ -35,6 +41,9 @@ export const Table = ({ displayCaptures = [], columns = [{ title: "Nombre", fiel
                         displayCaptures.map((item, i) => {
 
                             const capture = item
+                            // se valida si es de pago y es de gotchu!
+                            const isPayAndGotchu = (item?.missionData?.loot?.money > 0 && item.missionData.userId === '0')
+                            // validamos si ya esta pagada 
                             return (<tr className="bg-white border-b dark:bg-[#6173aa] dark:border-gray-700 hover:bg-blue-900  hover:text-gray-900 text-center" key={i + 'ed'} >
                                 {
                                     columns.map((element, index) => {
@@ -78,7 +87,21 @@ export const Table = ({ displayCaptures = [], columns = [{ title: "Nombre", fiel
                                                                             style='w-8 h-8 rounded-full'
                                                                             color={colorIcon[capture[element.field]] || 'red'} />
                                                                     </div>
-                                                                    : capture[element.field]
+                                                                    : element.title === 'pago'
+                                                                        ?
+                                                                        isPayAndGotchu
+                                                                        &&
+                                                                        <>
+                                                                            <ButtonPay setCaptures={setCaptures} item={item} />
+                                                                            {
+                                                                                isOpenModal
+                                                                                &&
+                                                                                <Modal />
+                                                                            }
+                                                                        </>
+
+
+                                                                        : capture[element.field]
                                                     }
                                                 </td>
                                             )
@@ -93,9 +116,53 @@ export const Table = ({ displayCaptures = [], columns = [{ title: "Nombre", fiel
                 </tbody>
             </table>
 
+
         </div>
     )
 }
+
+
+const ButtonPay = ({ setCaptures, item }) => {
+
+    const [isLoading, setIsLoading] = useState(false)
+    const onChange = (item) => {
+
+        setCaptures(prev => {
+            setIsLoading(true)
+            return prev.map(capture => {
+                if (capture.id === item.id) {
+                    capture['payOut'] = true
+                    return capture
+                } else {
+                    return capture
+                }
+            })
+
+        })
+        waitTime(200).then(() => { setIsLoading(false) })
+    }
+    const isPayOut = item?.payOut
+    return (
+        isLoading
+            ? <SpinnerRounded />
+            :
+            !isPayOut
+                ?
+                <button
+                    className=" px-4 py-2 font-bold text-white bg-green-700 rounded-full hover:bg-green-500 focus:outline-none focus:shadow-outline"
+                    type="button"
+                    onClick={onChange}
+                >
+                    pagar
+                </button>
+                :
+                <span>Pagada</span>
+
+    )
+}
+const waitTime = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 const colorIcon = {
     Rejected: 'red',
