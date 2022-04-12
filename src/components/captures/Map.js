@@ -8,7 +8,7 @@ import {
     Popup
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { IconLocation } from '../IconLocation'
+import { IconLocation,IconLocationMission } from '../IconLocation'
 import { EditCaptureContext } from './context/EditCaptureContext';
 
 
@@ -61,10 +61,12 @@ export const Map = () => {
                             <MarkerMap
                                 point={missionPoint}
                                 location='other'
+                                icon={IconLocation}
                             />
                             <MarkerMap
                                 point={evidencesPoint}
                                 location='klmdslkd'
+                                icon={IconLocationMission}
                             />
 
                             <Circle center={missionPoint} pathOptions={fillBlueOptions} radius={200} />
@@ -79,10 +81,10 @@ export const Map = () => {
 }
 
 
-const MarkerMap = ({ point, location }) => (
+const MarkerMap = ({ point, location,icon }) => (
     <Marker
         position={point}
-        icon={IconLocation}
+        icon={icon}
 
     >
         <Popup>

@@ -3,7 +3,7 @@ import { CreatMissionContext } from './context/CreatMissionContext'
 import { getUserLocation } from '../../../helpers/getUserLocation'
 import { DateMission } from './DateMission'
 import { Difficulty } from './Difficulty'
-import { Map } from './Map'
+import { LocationMission } from './LocationMission'
 import { Rewards } from './Rewards'
 import { TitleAndObjective } from './TitleAndObjective'
 import { TypeEvidences } from './TypeEvidences'
@@ -20,13 +20,17 @@ export const CreateMission = () => {
         getUserLocation().then((res) => setuserPosition(res))
     }, [])    
 
+    useEffect(() => {
+        console.log('mission',mission)
+    }, [mission])
+    
     return (
         <CreatMissionContext.Provider value={{ mission, setMission }}  >
             <TitleAndObjective />
             <Difficulty />
             <DateMission />
             <Rewards />
-            <Map userPosition={userPosition} />
+            <LocationMission userPosition={userPosition} />
             <TypeServices />
             <TypeEvidences />
 

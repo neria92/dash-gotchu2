@@ -25,7 +25,7 @@ export const TypeEvidences = () => {
         const newValues = { ...checkboxValues };
         newValues[e.target.name] = !checkboxValues[e.target.name];
         setCheckboxValues(newValues);
-        setMission({ ...mission, missionData: { ...mission.missionData, typeEvidence: checkboxValues } })
+
     }
 
 
@@ -63,7 +63,7 @@ export const TypeEvidences = () => {
             groups: [],
             isPrivate: false,
         };
-        
+
         db.collection("missions2").add(newMission).then((doc) => {
             if (doc.id) {
 
@@ -101,38 +101,24 @@ export const TypeEvidences = () => {
                                 <fieldset>
                                     <legend className="text-base font-medium text-gray-900">Tipo de evidencia</legend>
                                     <div className="mt-4 space-y-4">
-                                        <div className="flex items-start">
-                                            <div className="flex items-center h-5">
-                                                <input
-                                                    id="photos"
-                                                    name="photos"
-                                                    type="checkbox"
-                                                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                                                    onChange={onChange}
-                                                    value={checkboxValues.photos}
-                                                />
-                                            </div>
-                                            <div className="ml-3 text-sm">
-                                                <label className="font-medium text-gray-700">Fotos</label>
 
-                                            </div>
-                                        </div>
-                                        <div className="flex items-start">
-                                            <div className="flex items-center h-5">
-                                                <input
-                                                    id="videos"
-                                                    name="videos"
-                                                    type="checkbox"
-                                                    onChange={onChange}
-                                                    value={checkboxValues.videos}
-                                                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                                                />
-                                            </div>
-                                            <div className="ml-3 text-sm">
-                                                <label className="font-medium text-gray-700">Videos</label>
-                                                {/* <p className="text-gray-500">Get notified when a candidate applies for a job.</p> */}
-                                            </div>
-                                        </div>
+                                        <Button
+                                            value={checkboxValues.photos}
+                                            onChange={onChange}
+                                            title='Fotos'
+                                            name='photos'
+                                            placeHolder='Cantidad de fotos'
+                                        />
+
+                                        <Button
+                                            value={checkboxValues.videos}
+                                            onChange={onChange}
+                                            title='Videos'
+                                            name='videos'
+                                            placeHolder='Cantidad de segundos'
+                                        />
+
+
                                     </div>
                                 </fieldset>
 
@@ -153,7 +139,7 @@ export const TypeEvidences = () => {
                                             ?
                                             <div className=' flex-col bg-transparent w-12 h-12  inline-flex rounded items-center justify-center'>
                                                 <div className='spinner'></div>
-                                                
+
                                             </div>
                                             :
                                             <Icon
@@ -177,6 +163,49 @@ export const TypeEvidences = () => {
     )
 }
 
+const Button = ({ onChange, value, name, title, placeHolder }) => {
+
+    const { mission, setMission } = useContext(CreatMissionContext);
+
+    const onChangeValues = ({ target }) => {
+        const value = parseInt(target.value.replace(/[^0-9]/g, ''));
+        if (!mission?.missionData?.typeEvidence) {
+            setMission({ ...mission, missionData: { ...mission.missionData, typeEvidence: { [target.name]: value } } })
+        } else {
+            setMission({ ...mission, missionData: { ...mission.missionData, typeEvidence: { ...mission.missionData.typeEvidence, [target.name]: value } } })
+        }
+
+    }
+
+    return (
+        <div className="flex items-start">
+            <div className="flex items-center h-5">
+                <input
+                    id={name}
+                    name={name}
+                    type="checkbox"
+                    onChange={onChange}
+                    value={value}
+                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
+            </div>
+            <div className="ml-3 text-sm flex flex-col">
+                <label className="font-medium text-gray-700">{title}</label>
+                {
+                    value
+                    &&
+                    <input
+                        className='border border-1 border-gray-400 rounded outline-none text-gray-500'
+                        placeholder={placeHolder}
+                        onChange={onChangeValues}
+                        name={name}
+                        value={mission?.missionData?.typeEvidence[name] || ''}
+                    />
+                }
+            </div>
+        </div>
+    )
+}
 
 const userData = {
     photo: 'https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/GotchuBW.jpg?alt=media&token=c7441686-2e57-4d8f-b6f5-7c97a045d6bb',

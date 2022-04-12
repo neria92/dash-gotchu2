@@ -9,6 +9,7 @@ import { Rewards } from './Rewards'
 import { Title } from './Title'
 import { Objective } from './Objective'
 import { Difficulty } from './Difficulty'
+import { Stats } from './Stats'
 
 
 export const EditMission = () => {
@@ -69,9 +70,12 @@ export const EditMission = () => {
               <Title />
             </div>
             <img className="aspect-video object-cover block h-auto w-full bg-cover" src={mission?.missionData?.media?.images[0]?.url} />
+            <Stats />
             <div className='flex justify-center items-center mt-2'>
               <DatesMission />
             </div>
+          
+
             <div className="px-3 pb-2">
               <div className="pt-2">
                 <i className="far fa-heart cursor-pointer"></i>
@@ -85,10 +89,8 @@ export const EditMission = () => {
               <div className="pt-1">
                 <Difficulty />
               </div>
-              <span className="font-medium text-pink-600 mr-2 cursor-pointer" onClick={() => rewards.current.classList.toggle('hidden')}>Recompesas</span>
-              <div className="hidden" ref={rewards} id='rewards'>
-                <Rewards />
-              </div>
+            
+            
               <div className='hidden' id='coments' ref={coments} >
                 <Comments
                   countComments={mission?.stats?.commentsCount}

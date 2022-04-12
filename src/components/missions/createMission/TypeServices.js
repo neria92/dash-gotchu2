@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { CreatMissionContext } from './context/CreatMissionContext';
 
 const typeServices = {
-    ubicacion: 'https://gotchu-ai-dot-gchgame.uc.r.appspot.com/location',
-    tiempo: 'https://gotchu-ai-dot-gchgame.uc.r.appspot.com/time'
+    ubicacion: 'location',
+    tiempo: 'time'
 }
 export const TypeServices = () => {
 
@@ -96,9 +96,3 @@ export const TypeServices = () => {
 }
 
 
-const userData = {
-    photo: 'https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/GotchuBW.jpg?alt=media&token=c7441686-2e57-4d8f-b6f5-7c97a045d6bb',
-    userDescription: 'Sígueme para enterarte de las misiones más recientes y así ganar con Gotchu!',
-    userId: '0',
-    username: 'Gotchu!'
-}
