@@ -15,12 +15,12 @@ export const Navbar = () => {
     return (
         <>
             <div className='flex items-center justify-between flex-wrap bg-pink-500  p-3'>
-                <div className="flex items-center flex-shrink-0 text-white mr-6">
-                    <div className='fill-current h-10 w-10 mr-2'>
+                <NavLink className="flex items-center flex-shrink-0 text-white mr-6" to="/missions">
+                    <div className='fill-current h-10 w-10 mr-2' >
                         <img src={SRC} alt='gotchu' className='rounded-full ' />
                     </div>
                     <span className="font-semibold text-xl tracking-tight">Gotchu!</span>
-                </div>
+                </NavLink>
                 <div className="block lg:hidden">
                     <button
                         id='boton'

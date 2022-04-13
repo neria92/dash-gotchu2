@@ -5,7 +5,6 @@ import {
     getDownloadURL,
     getStorage,
 } from "@firebase/storage";
-import Icon from '../../Icon';
 import { useContext } from 'react';
 import { CreatMissionContext } from './context/CreatMissionContext';
 import { IconMap } from './IconMap';
@@ -15,7 +14,7 @@ import { IconMap } from './IconMap';
 
 export const TitleAndObjective = () => {
 
-    const { mission, setMission, onReset } = useContext(CreatMissionContext);
+    const { mission, setMission } = useContext(CreatMissionContext);
 
 
 
@@ -75,24 +74,7 @@ export const TitleAndObjective = () => {
                             <IconMap/>
                          
                         </div>
-                        {/* <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                            {
-                                !isCheck
-                                    ?
-                                    <button
-                                        onClick={next}
-                                        type="submit"
-                                        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                        Guardar
-                                    </button>
-                                    :
-                                    <Icon
-                                        style='w-12 h-12 bg-green-500 rounded inline-flex justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 '
-                                        name='check'
-                                        color='#fff'
-                                    />
-                            }
-                        </div> */}
+                    
                     </div>
                     {/* </form> */}
                 </div>
@@ -215,9 +197,9 @@ const UpLoadImage = () => {
 
     const handleFireBaseUpload = e => {
 
-        let result = ''
-
+        
         if (e.target.files && e.target.files[0]) {
+            let result = ''
             let reader = new FileReader();
             reader.onload = (e) => {
                 result = e.target.result;
