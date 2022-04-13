@@ -24,6 +24,17 @@ export const TypeEvidences = () => {
 
         const newValues = { ...checkboxValues };
         newValues[e.target.name] = !checkboxValues[e.target.name];
+
+
+        if (!checkboxValues[e.target.name]) {
+            setMission({ ...mission, missionData: { ...mission.missionData, typeEvidence: { ...mission?.missionData?.typeEvidence, [e.target.name]: 0 } } })
+
+        } else {
+            let typeEvidence = { ...mission?.missionData?.typeEvidence }
+            delete typeEvidence[e.target.name]
+            setMission({ ...mission, missionData: { ...mission.missionData, typeEvidence } })
+        }
+
         setCheckboxValues(newValues);
 
     }
@@ -172,7 +183,7 @@ const Button = ({ onChange, value, name, title, placeHolder }) => {
         if (!mission?.missionData?.typeEvidence) {
             setMission({ ...mission, missionData: { ...mission.missionData, typeEvidence: { [target.name]: value } } })
         } else {
-            setMission({ ...mission, missionData: { ...mission.missionData, typeEvidence: { ...mission.missionData.typeEvidence, [target.name]: value } } })
+            setMission({ ...mission, missionData: { ...mission.missionData, typeEvidence: { ...mission?.missionData?.typeEvidence, [target.name]: value } } })
         }
 
     }
@@ -199,7 +210,7 @@ const Button = ({ onChange, value, name, title, placeHolder }) => {
                         placeholder={placeHolder}
                         onChange={onChangeValues}
                         name={name}
-                        value={mission?.missionData?.typeEvidence[name] || ''}
+                        value={mission?.missionData?.typeEvidence?.[name] || ''}
                     />
                 }
             </div>

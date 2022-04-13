@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
     ref,
     uploadBytesResumable,
@@ -8,13 +8,14 @@ import {
 import Icon from '../../Icon';
 import { useContext } from 'react';
 import { CreatMissionContext } from './context/CreatMissionContext';
+import { IconMap } from './IconMap';
 
 
 
 
 export const TitleAndObjective = () => {
 
-    const { mission, setMission, onReset } = useContext(CreatMissionContext)
+    const { mission, setMission, onReset } = useContext(CreatMissionContext);
 
 
 
@@ -71,6 +72,7 @@ export const TitleAndObjective = () => {
                                     </div>
                                 </div>
                             </div>
+                            <IconMap/>
                          
                         </div>
                         {/* <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -181,14 +183,14 @@ const AddNewImage = () => {
                 {
                     pross === 0
                         ?
-                        <label label className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                            <span>Agregar imagen</span>
+                        <label className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                            
                             <input
                                 id="uri"
                                 name="uri"
                                 type="file"
                                 onChange={handleFireBaseUpload}
-                                className="sr-only"
+                                className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                             />
                         </label>
                         :
@@ -263,14 +265,13 @@ const UpLoadImage = () => {
                 {
                     pross === 0
                         ?
-                        <label label className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                            <span>Agregar imagen</span>
+                        <label  className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                             <input
                                 id="uri"
                                 name="uri"
                                 type="file"
                                 onChange={handleFireBaseUpload}
-                                className="sr-only"
+                                className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                             />
                         </label>
                         :

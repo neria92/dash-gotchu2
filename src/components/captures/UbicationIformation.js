@@ -2,10 +2,11 @@
 import React, { useContext } from 'react'
 import { distanceEarth } from '../../helpers/distancePoints'
 import { EditCaptureContext } from './context/EditCaptureContext'
+import {ChangeStatus} from './ChangeStatus'
 
 export const UbicationIformation = () => {
 
-    const { mission, capture } = useContext(EditCaptureContext)
+    const { mission, capture } = useContext(EditCaptureContext);
 
     const { geoData: { coords: { latitude, longitude } } } = capture
     const latitudeMission = mission?.geoData?.latitude || latitude
@@ -21,7 +22,7 @@ export const UbicationIformation = () => {
                 
                 <Data
                     distance={distance}
-                    status={'Aceptada'}
+                    status={capture?.status}
                 />
             </div>
         </div>
@@ -52,8 +53,9 @@ const Data = ({distance,status}) => {
                         <th scope="row" className="px-6 py-4 font-medium text-white dark:text-white whitespace-nowrap">
                             Estado
                         </th>
-                        <td className="px-6 py-4 text-white">
-                            {status}
+                        <td className="flex fels-row px-6 py-4 text-white">
+                            
+                            <ChangeStatus status={status}/>
                         </td>
 
                     </tr>
@@ -62,7 +64,7 @@ const Data = ({distance,status}) => {
                             Mensaje
                         </th>
                         <td className="px-6 py-4">
-                            White
+                            
                         </td>
 
                     </tr>
@@ -74,3 +76,4 @@ const Data = ({distance,status}) => {
         </div>
     )
 }
+
