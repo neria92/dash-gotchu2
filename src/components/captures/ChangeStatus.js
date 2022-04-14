@@ -9,9 +9,11 @@ import { updateStatus } from './helpers/updateStatus';
 export const ChangeStatus = ({ status }) => {
     const { setCapture, capture, mission } = useContext(EditCaptureContext);
 
-    const onChange = (status) => {
-        setCapture(prev => ({ ...prev, status }))
-        updateStatus({ status, captureId: capture.id, mission, userId: capture.userData.userId })
+    const onChange = (value) => {
+
+        if (value === status) return
+        setCapture(prev => ({ ...prev, status: value }))
+        updateStatus({ status: value, captureId: capture.id, mission, userId: capture.userData.userId })
     }
 
     return (
