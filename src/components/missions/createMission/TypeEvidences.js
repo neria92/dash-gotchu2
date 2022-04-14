@@ -55,7 +55,8 @@ export const TypeEvidences = () => {
         }
         const { missionData } = mission;
         const { missionName } = missionData
-
+        const isRally = mission?.isRally || false
+        const isPrivate = mission?.isPrivate || false
         const newMission = {
             ...mission,
             date: new Date(),
@@ -66,13 +67,15 @@ export const TypeEvidences = () => {
                     videos: [],
                 },
                 missionDescription: "",
+                ...(isRally && { type: missionData.type, nextMission: '' }),
+                ...(!!missionData?.iconMap && { iconMap: missionData?.iconMap})
             },
             userData,
             hide: false,
             fellows: [],
             viewers: [],
             groups: [],
-            isPrivate: false,
+            isPrivate
         };
 
         db.collection("missions2").add(newMission).then((doc) => {

@@ -12,6 +12,7 @@ export const validateData = (data) => {
     const money = data?.missionData?.loot?.money
     const gCoins = data?.missionData?.loot?.gCoins
     const xp = data?.missionData?.loot?.xp
+    const isRally=data?.isRally
 
   
 

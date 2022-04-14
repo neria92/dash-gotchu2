@@ -5,7 +5,7 @@ import { CreatMissionContext } from './context/CreatMissionContext';
 
 export const Difficulty = () => {
 
-    const { mission, setMission, onReset } = useContext(CreatMissionContext)
+    const { mission, setMission } = useContext(CreatMissionContext)
 
     const difficulty = mission?.missionData?.difficulty || 'Baja'
 
@@ -76,7 +76,7 @@ const Button = ({ level, onChage, isActive }) => {
                 type="radio"
                 onChange={onChage}
                 value={level}
-                defaultChecked={isActive}
+                checked={isActive}
                 className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
             />
             <label className="ml-3 block text-sm font-medium text-gray-700"> {level} </label>

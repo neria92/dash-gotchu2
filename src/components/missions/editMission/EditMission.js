@@ -10,6 +10,7 @@ import { Title } from './Title'
 import { Objective } from './Objective'
 import { Difficulty } from './Difficulty'
 import { Stats } from './Stats'
+import { Rally } from './Rally'
 
 
 export const EditMission = () => {
@@ -69,12 +70,19 @@ export const EditMission = () => {
             <div className="my-2">
               <Title />
             </div>
+            {
+              !!mission.missionData.type
+              &&
+              <div className="pt-1">
+                <Rally />
+              </div>
+            }
             <img className="aspect-video object-cover block h-auto w-full bg-cover" src={mission?.missionData?.media?.images[0]?.url} />
             <Stats />
             <div className='flex justify-center items-center mt-2'>
               <DatesMission />
             </div>
-          
+
 
             <div className="px-3 pb-2">
               <div className="pt-2">
@@ -89,8 +97,10 @@ export const EditMission = () => {
               <div className="pt-1">
                 <Difficulty />
               </div>
-            
-            
+
+
+
+
               <div className='hidden' id='coments' ref={coments} >
                 <Comments
                   countComments={mission?.stats?.commentsCount}
@@ -101,7 +111,7 @@ export const EditMission = () => {
           </div>
         </div>
         <br />
-      </EditMissionContext.Provider>
+      </EditMissionContext.Provider >
 
 
   )

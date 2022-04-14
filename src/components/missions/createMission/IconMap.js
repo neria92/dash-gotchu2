@@ -116,17 +116,16 @@ const UpLoadImage = () => {
 const ImagePreview = () => {
     const { mission } = useContext(CreatMissionContext)
 
-    const { images } = mission?.missionData?.media
-
+    const iconMap = mission?.missionData?.iconMap
     return (
         <section className='flex gap-4 p-4 w-full snap-x overflow-x-auto'>
 
             {
-                images.map(item => {
-
+                [iconMap].map(item => {
+                    console.log('item',item)
                     return (
-                        <div className='bg-green-500 shrink-0 w-2/5 overflow-hidden rounded shadow-lg justify-center items-center' key={item.url}>
-                            <img alt="Placeholder" className="aspect-video object-cover" src={item.url} loading='lazy' />
+                        <div className='bg-green-500 shrink-0 w-2/5 overflow-hidden rounded shadow-lg justify-center items-center' key={item}>
+                            <img alt="Placeholder" className="aspect-video object-cover" src={item} loading='lazy' />
                         </div>
                     )
                 })

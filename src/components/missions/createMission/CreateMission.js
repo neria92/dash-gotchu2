@@ -8,6 +8,7 @@ import { Rewards } from './Rewards'
 import { TitleAndObjective } from './TitleAndObjective'
 import { TypeEvidences } from './TypeEvidences'
 import { TypeServices } from './TypeServices'
+import { Rally } from './Rally'
 
 
 export const CreateMission = () => {
@@ -31,6 +32,7 @@ export const CreateMission = () => {
             <DateMission />
             <Rewards />
             <LocationMission userPosition={userPosition} />
+            <Rally/>
             <TypeServices />
             <TypeEvidences />
 

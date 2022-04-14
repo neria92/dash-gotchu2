@@ -53,7 +53,7 @@ export const LocationMission = ({ userPosition }) => {
         waitTime(1200).then(() => { setIsLoading(false) })
     }, [userPosition])
 
-    const onChage = ({ target }) => {
+    const onChange = ({ target }) => {
         setTypeLocation(target.value)
     }
 
@@ -87,18 +87,22 @@ export const LocationMission = ({ userPosition }) => {
                                     <div className="mt-4 space-y-4">
                                         <Button
                                             level='Todo México'
-                                            onChage={onChage}
+                                            onChage={onChange}
                                             isActive={typeLocation === 'allMex'}
+                                            value={'allMex'}
                                         />
                                         <Button
                                             level='Ubicación'
-                                            onChage={onChage}
+                                            onChage={onChange}
+                                            value={'ubication'}
                                             isActive={typeLocation === 'ubication'}
                                         />
                                         <Button
                                             level='Multiple ubicaciones'
-                                            onChage={onChage}
+                                            onChage={onChange}
                                             isActive={typeLocation === 'multipleLocations'}
+                                            value={'multipleLocations'}
+
                                         />
 
                                     </div>
@@ -106,7 +110,7 @@ export const LocationMission = ({ userPosition }) => {
                                 <>
 
                                     {
-                                        typeLocation === 'Ubicación'
+                                        typeLocation === 'ubication'
                                             ?
 
                                             <>
@@ -152,7 +156,7 @@ export const LocationMission = ({ userPosition }) => {
                                                 }
                                             </>
                                             :
-                                            typeLocation === 'Multiple ubicaciones'
+                                            typeLocation === 'multipleLocations'
                                             &&
                                             <input
                                                 className='border border-1 border-gray-400 rounded outline-none'
@@ -180,16 +184,16 @@ export const LocationMission = ({ userPosition }) => {
     )
 }
 
-const Button = ({ level, onChage, isActive }) => {
+const Button = ({ level, value, onChage, isActive }) => {
     return (
         <div className="flex items-center">
             <input
-                id="push-everything"
-                name="difficulty"
+                id="location"
+                name="location"
                 type="radio"
                 onChange={onChage}
-                value={level}
-                defaultChecked={isActive}
+                value={value}
+                checked={isActive}
                 className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
             />
             <label className="ml-3 block text-sm font-medium text-gray-700"> {level} </label>

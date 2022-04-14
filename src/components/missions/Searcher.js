@@ -18,9 +18,6 @@ export const Searcher = () => {
         searchMissions(target.value)
     }
 
-    useEffect(() => {
-        console.log('missions', missions)
-    }, [missions])
 
     return (
         <div className=" relative mr-3 md:mr-0 md:block">
