@@ -4,7 +4,7 @@ import { startLoginEmailPasword } from '../actions/auth';
 import { Loading } from '../components/Loading';
 import { useForm } from '../hooks/useForm';
 
-const SRC = 'https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/GotchuBW.jpg?alt=media&token=c7441686-2e57-4d8f-b6f5-7c97a045d6bb'
+const SRC = 'https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/gotchu2dise%C3%B1o%2Ffoto_de_perfil_gotchu.png?alt=media&token=0b92afb9-e169-4fda-8275-de60d59d8d7f'
 
 export const Login = () => {
 

@@ -9,6 +9,7 @@ import { TitleAndObjective } from './TitleAndObjective'
 import { TypeEvidences } from './TypeEvidences'
 import { TypeServices } from './TypeServices'
 import { Rally } from './Rally'
+import { FlagInheritedHide } from './FlagInheritedHide'
 
 
 export const CreateMission = () => {
@@ -33,6 +34,7 @@ export const CreateMission = () => {
             <Rewards />
             <LocationMission userPosition={userPosition} />
             <Rally/>
+            <FlagInheritedHide/>
             <TypeServices />
             <TypeEvidences />
 

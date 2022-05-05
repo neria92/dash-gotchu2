@@ -70,6 +70,7 @@ export const TypeEvidences = () => {
                 ...(isRally && { type: missionData.type, nextMission: '' }),
                 ...(!!missionData?.iconMap && { iconMap: missionData?.iconMap})
             },
+            ...(!!missionData?.inheritedHide && { inheritedHide: missionData?.inheritedHide}),
             userData,
             hide: false,
             fellows: [],

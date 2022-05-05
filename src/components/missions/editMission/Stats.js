@@ -29,7 +29,7 @@ export const Stats = ({ coments }) => {
                 onClick={() => coments.current.classList.toggle('hidden')}
             />
             <Item
-                name='coin'
+                name='gCoins'
                 color='blak'
                 title={mission?.missionData?.loot?.gCoins || 0}
 

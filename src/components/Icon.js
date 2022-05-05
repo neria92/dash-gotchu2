@@ -85,6 +85,7 @@ export default function Icon({ name = 'pencil', size = 30, style = {}, color = '
         exit: <Exit {...dimensions} fill={color} />,
         menuPoints: <MenuPoints {...dimensions} fill={color} />,
         gCoin: <GCoin {...dimensions} fill={color} />,
+        gCoins: <GCoin {...dimensions} fill={color} />,
         reward: <Reward {...dimensions} fill={color} />,
         mxn: <Mxn {...dimensions} fill={color} />,
         heart: <Heart {...dimensions} fill={color} />,

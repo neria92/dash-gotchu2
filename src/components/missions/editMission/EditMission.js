@@ -5,7 +5,6 @@ import { db } from '../../../firebase/firebaseConfig'
 import { Comments } from './Comments'
 import { EditMissionContext } from './context/EditMissionContext'
 import { DatesMission } from './DateMission'
-import { Rewards } from './Rewards'
 import { Title } from './Title'
 import { Objective } from './Objective'
 import { Difficulty } from './Difficulty'
@@ -15,9 +14,6 @@ import { Rally } from './Rally'
 
 export const EditMission = () => {
   const coments = useRef();
-  const rewards = useRef();
-
-
   const location = useLocation()
   const id = location.pathname.split('/')[2]
 
