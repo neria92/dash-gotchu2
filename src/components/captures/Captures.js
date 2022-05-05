@@ -10,7 +10,7 @@ const Perpage = 10
 export const Captures = () => {
 
     const [typeEvidences, setTypeEvidences] = useState('all');
-    const [captures, setCaptures, getMoreCaptures, isLoading] = useGetCaptures(typeEvidences)
+    const [captures, setCaptures, getMoreCaptures, isLoading, lastDocumentGenral] = useGetCaptures(typeEvidences)
 
 
     const [pageNUmber, setPageNUmber] = useState(0);
@@ -27,7 +27,11 @@ export const Captures = () => {
     }
 
     const handleChangePage = (e) => {
-        if (e.isNext) {
+        if (!lastDocumentGenral ) {
+            setPageNUmber(prev => prev - 1)  
+            return
+        } 
+        if (!!lastDocumentGenral && e.isNext) {
             setPageNUmber(prev => prev + 1)
             getMoreCaptures(typeEvidences)
         }

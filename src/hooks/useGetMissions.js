@@ -48,7 +48,7 @@ export default function useGetMissions() {
 
 
 
-    return [missions, getMoreMissions, isLoading]
+    return [missions, getMoreMissions, isLoading,lastDocumentGenral]
 }
 
 
