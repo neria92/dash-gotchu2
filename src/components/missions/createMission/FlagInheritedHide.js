@@ -22,7 +22,7 @@ export const FlagInheritedHide = () => {
                         <div className="shadow overflow-hidden sm:rounded-md">
                             <div className=" bg-white space-y-6 sm:p-6 px-4 py-5">
                                 <fieldset>
-                                    <legend className="text-base font-medium text-gray-900">Rally</legend>
+                                    <legend className="text-base font-medium text-gray-900">Mostar capturas</legend>
                                     <div className="mt-4 space-y-4">
 
                                         <div className="flex items-start">
@@ -37,7 +37,7 @@ export const FlagInheritedHide = () => {
                                                 />
                                             </div>
                                             <div className="ml-3 text-sm">
-                                                <label className="font-medium text-gray-700">¿Quieres que se muestren las Capturas?</label>
+                                                <label className="font-medium text-gray-700">¿Quieres que se oculten las capturas?</label>
                                                 <p className="text-gray-500">Cuando se active no se mostraran las capturas de esta misión</p>
                                             </div>
                                         </div>

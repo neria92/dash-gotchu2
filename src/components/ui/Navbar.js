@@ -2,7 +2,7 @@ import React, { useRef, Fragment } from 'react'
 import { NavLink, Outlet } from "react-router-dom";
 import { UserLogin } from './UserLogin';
 
-const SRC='https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/gotchu2dise%C3%B1o%2Ffoto_de_perfil_gotchu.png?alt=media&token=0b92afb9-e169-4fda-8275-de60d59d8d7f'
+const SRC = 'https://firebasestorage.googleapis.com/v0/b/gchgame.appspot.com/o/gotchu2dise%C3%B1o%2Ffoto_de_perfil_gotchu.png?alt=media&token=0b92afb9-e169-4fda-8275-de60d59d8d7f'
 
 export const Navbar = () => {
 
@@ -33,36 +33,28 @@ export const Navbar = () => {
                 <div id='menu' ref={menu} className="w-full block flex-grow lg:flex lg:items-center text-center lg:w-auto hidden">
                     <div className="text-sm text-cyan-700 lg:flex-grow">
 
-                        <NavLink
-                            className={({ isActive }) => `block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4 font-bold text-lg ${isActive ? 'text-white' : 'text-gray-900'}`}
+                        <ItemNav
                             to="/missions"
-                        >
-                            Misiones
-                            
-                        </NavLink>
-
-                        <NavLink
-                            className={({ isActive }) => `block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4 font-bold text-lg ${isActive ? 'text-white' : 'text-gray-900'}`}   
+                            title='Misiones'
+                        />
+                        <ItemNav
                             to="/appeal"
-                        >
-                            Apelaciones    
-                        </NavLink>
-                        <NavLink
-                            className={({ isActive }) => `block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4 font-bold text-lg ${isActive ? 'text-white' : 'text-gray-900'}`}
-                           
+                            title='Apelaciones'
+                        />
+
+                        <ItemNav
                             to="/captures"
-                        >
-                            Capturas
-                            
-                        </NavLink>
-                        <NavLink
-                            className={({ isActive }) => `block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4 font-bold text-lg ${isActive ? 'text-white' : 'text-gray-900'}`}
-                           
+                            title='Capturas'
+                        />
+                        <ItemNav
                             to="/users"
-                        >
-                            Usuarios
-                            
-                        </NavLink>
+                            title='Usuarios'
+                        />
+
+                        <ItemNav
+                            to="/ContentReports"
+                            title='Reportes'
+                        />
 
                     </div>
                     <UserLogin />
@@ -73,4 +65,15 @@ export const Navbar = () => {
         </>
     )
 }
+const ItemNav = ({ to = '/', title = 'Misiones' }) => {
+    return (
+        <NavLink
+            className={({ isActive }) => `block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4 font-bold text-lg ${isActive ? 'text-white' : 'text-gray-900'}`}
 
+            to={to}
+        >
+            {title}
+
+        </NavLink>
+    )
+}

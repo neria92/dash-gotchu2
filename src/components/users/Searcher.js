@@ -19,9 +19,7 @@ export const Searcher = () => {
         searchUsers(target.value)
     }
 
-    useEffect(() => {
-        console.log('usersSearching', usersSearching)
-    }, [usersSearching])
+   
 
 
     return (
