@@ -34,8 +34,8 @@ export const useSearchMissions = () => {
                 });
 
                 // Extraemos las rutas de las misiones que coincidan en la busqueda
+                console.log('hits',hits)
                 const paths = hits.map(hit => hit.path);
-
                 // Mandamos a traer de Firestore todas las misiones
                 let missions = await Promise.all(paths.map(path => db.doc(path).get().then(doc => ({ mission: doc.data(), id: doc.id }))));
 

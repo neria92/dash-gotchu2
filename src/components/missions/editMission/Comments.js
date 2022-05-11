@@ -20,7 +20,6 @@ export const Comments = ({ id, countComments, type = 'missions2' }) => {
                 }
             </div>
             <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium hover:text-blue-300" onClick={getMoreComments}>ver más comentarios...</div>
-
         </div>
     )
 }

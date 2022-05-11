@@ -3,92 +3,58 @@ import { db } from '../firebase/firebaseConfig';
 
 
 
-export default function useGetCaptures() {
+export default function useGetCaptures(type) {
 
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [lastDocumentCaptures, setLastDocumentCaptures] = useState(null);
-    const [lastDocumentMissions, setLastDocumentMissions] = useState(null);
+
 
     useEffect(() => {
-        getCaptures()
-    }, [])
+        getCaptures(type)
+        setLastDocumentCaptures(null)
+    }, [type])
 
-    const getCaptures = () => {
+    const getCaptures = (type) => {
         setIsLoading(true)
-        Promise.all([
-            db.collection("captures2")
-                .orderBy("reports", "desc")
-                .limit(10)
-                .get()
-                .then((querySnapshot) => {
-                    setLastDocumentCaptures(querySnapshot.docs[querySnapshot.docs.length - 1] || null)
-                    return (querySnapshot.docs.map(doc => ({ capture: doc.data(), id: doc.id })));
-                }),
-            db.collection("missions2")
-                .orderBy("reports", "desc")
-                .limit(10)
-                .get()
-                .then((querySnapshot) => {
-                    setLastDocumentMissions(querySnapshot.docs[querySnapshot.docs.length - 1] || null)
-                    return (querySnapshot.docs.map(doc => ({ mission: doc.data(), id: doc.id })));
-                })
 
-        ])
-            .then(res => {
-                let newData = [];
-                for (const dataQuery of res) {
-                    newData = [...newData, ...dataQuery];
-                }
-                setData(newData)
-            })
-            .finally(() => setIsLoading(false))
+        db.collection(type)
+            .orderBy("reports", "desc")
+            .limit(10)
+            .get()
+            .then((querySnapshot) => {
+                setLastDocumentCaptures(querySnapshot.docs[querySnapshot.docs.length - 1] || null)
+                setData(querySnapshot.docs.map(doc => ({ data: doc.data(), id: doc.id })));
+            }).finally(() => setIsLoading(false))
+
+
+
 
     }
 
-    const getMoreCaptures = () => {
-        const queryPromises = []
+    const getMoreCaptures = (type) => {
+        setIsLoading(true)
+
         if (lastDocumentCaptures) {
-            queryPromises.push(db.collection('captures2')
+            db.collection(type)
                 .orderBy("reports", "desc")
                 .limit(10)
                 .startAfter(lastDocumentCaptures)
                 .get()
                 .then((querySnapshot) => {
                     setLastDocumentCaptures(querySnapshot.docs[querySnapshot.docs.length - 1] || null)
-                    return (querySnapshot.docs.map(doc => ({ capture: doc.data(), id: doc.id })));
-                }))
+                    setData(prev => [...prev, ...querySnapshot.docs.map(doc => ({ data: doc.data(), id: doc.id }))]);
+                }).finally(() => setIsLoading(false))
+
         }
-        if (lastDocumentMissions) {
-            queryPromises.push(
-                db.collection("missions2")
-                    .orderBy("reports", "desc")
-                    .startAfter(lastDocumentMissions)
-                    .limit(10)
-                    .get()
-                    .then((querySnapshot) => {
-                        setLastDocumentMissions(querySnapshot.docs[querySnapshot.docs.length - 1] || null)
-                        return (querySnapshot.docs.map(doc => ({ mission: doc.data(), id: doc.id })));
-                    })
-            )
-        }
-        setIsLoading(true)
-        Promise.all(queryPromises)
-            .then(res => {
-                let newData = [];
-                for (const dataQuery of res) {
-                    newData = [...newData, ...dataQuery];
-                }
-                setData([...data, ...newData])
-            })
-            .finally(() => setIsLoading(false))
+
 
     }
 
 
 
 
-    return [data, getMoreCaptures, isLoading, (!!lastDocumentCaptures || !!lastDocumentMissions)]
+    return [data, getMoreCaptures, isLoading, !!lastDocumentCaptures]
 }
 
 
