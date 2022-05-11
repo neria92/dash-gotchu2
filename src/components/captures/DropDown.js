@@ -1,18 +1,27 @@
-import React, { useRef, Fragment } from 'react'
+import React, { useRef, Fragment,useContext } from 'react'
 import { Menu, Transition } from '@headlessui/react';
+import { db } from '../../firebase/firebaseConfig'
+import { EditCaptureContext } from './context/EditCaptureContext'
 import Icon from '../Icon';
 
 
-
 export const DropDown = () => {
+    const { capture,setCapture} = useContext(EditCaptureContext);
 
+   
+    const handleHide = () => {
+        setCapture({ ...capture, hide: !capture.hide })
+        db.doc(`captures2/${capture.id}`).update({
+            hide: !capture.hide
+        })
 
+    }
 
     return (
         <Menu as='div' >
             <div>
                 <Menu.Button className='flex items-center text-sm rounded-full hover:opacity-80'>
-                    
+
                     <Icon
                         name='settings'
                         style='w-8 h-8'
@@ -33,74 +42,43 @@ export const DropDown = () => {
              divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5
              focus:outline-none z-10'>
 
-                    <Menu.Item >
-                        {({ active }) => (
-                            <button
-                                // onClick={handleLogout}
-                                className={
-                                    `${active
-                                        ? 'bg-blue-300 rounded-sm'
-                                        : ''
-                                    } 
-                             group flex gap-1 rounded-sm items-center w-full px-4 py-2
-                             text-sm text-gray-900 font-semibold
-                             `
-                                }
-                            >
-                                <Icon
-                                    name='pencil'
-                                    style='w-4 h-4'
-                                />
-                                Editar
-                            </button>
-                        )}
-                    </Menu.Item>
-                    <Menu.Item >
-                        {({ active }) => (
-                            <button
-                                // onClick={handleLogout}
-                                className={
-                                    `${active
-                                        ? 'bg-blue-300 rounded-sm'
-                                        : ''
-                                    } 
-                             group flex gap-1 rounded-sm items-center w-full px-4 py-2
-                             text-sm text-gray-900 font-semibold
-                             `
-                                }
-                            >
-                                <Icon
-                                    name='close'
-                                    style='w-4 h-4'
-                                />
-                                Ocultar
-                            </button>
-                        )}
-                    </Menu.Item>
-                    <Menu.Item >
-                        {({ active }) => (
-                            <button
-                                // onClick={handleLogout}
-                                className={
-                                    `${active
-                                        ? 'bg-blue-300 rounded-sm'
-                                        : ''
-                                    } 
-                             group flex gap-1 rounded-sm items-center w-full px-4 py-2
-                             text-sm text-gray-900 font-semibold
-                             `
-                                }
-                            >
-                                <Icon
-                                    name='exit'
-                                    style='w-4 h-4'
-                                />
-                                Aceptar/rechazar
-                            </button>
-                        )}
-                    </Menu.Item>
+                    <Button
+                        name={!capture.hide ? 'eyeClosed' : 'eyeOpen'}
+                        title={!capture.hide ? 'ocultar' : 'mostrar'}
+                        onClick={handleHide}
+                    />
                 </Menu.Items>
             </Transition>
         </Menu>
+    )
+}
+
+
+
+const Button = ({ name, onClick, title }) => {
+    return (
+        <Menu.Item >
+            {({ active }) => (
+                <button
+                    onClick={onClick}
+                    className={
+                        `${active
+                            ? 'bg-blue-300 rounded-sm'
+                            : ''
+                        } 
+             group flex gap-1 rounded-sm items-center w-full px-4 py-2
+             text-sm text-gray-900 font-semibold
+             `
+                    }
+                >
+                    <Icon
+                        name={name}
+                        style='w-4 h-4'
+                    />
+                    {title}
+
+                </button>
+            )}
+        </Menu.Item>
     )
 }

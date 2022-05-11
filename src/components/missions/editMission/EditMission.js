@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { useLocation } from 'react-router'
 import { db } from '../../../firebase/firebaseConfig'
@@ -66,7 +66,7 @@ export const EditMission = () => {
         <span className='text-ellipsis font-semibold mt-5 text-gray-900'>Cargando...</span>
       </div>
       :
-      <EditMissionContext.Provider value={{ mission, setMission, isEdit }}>
+      <EditMissionContext.Provider value={{ mission, setMission, setIsEdit, isEdit }}>
 
         <div className='flex items-center justify-center mt-10'>
 
@@ -79,14 +79,7 @@ export const EditMission = () => {
                 <span className="pt-1 ml-5 font-bold text-xl">{mission?.userData?.username}</span>
               </div>
               <DropDown />
-              {
-                !isEdit
-                  ?
-                  <Edit setIsEdit={setIsEdit} />
-                  :
-                  <Save setIsEdit={setIsEdit} />
 
-              }
 
             </div>
             <div className="my-2">
@@ -148,28 +141,7 @@ export const EditMission = () => {
   )
 }
 
-const Save = ({ setIsEdit }) => {
 
-  const { mission } = useContext(EditMissionContext)
 
-  const updateChange = () => {
-    setIsEdit(prev => !prev)
-    const newMission = { ...mission }
-    delete newMission.id
-    db.doc(`missions2/${mission.id}`).update(newMission)
-  }
-  return (
-    <span className="px-2 bg-green-700/20 hover:bg-green-300 cursor-pointer rounded"
-      onClick={updateChange}
-    >Guardar<i className="fas fa-ellipsis-h pt-2 text-lg"></i></span>
-  )
-}
 
-const Edit = ({ setIsEdit }) => {
-  return (
-    <span className="px-2 hover:bg-gray-300 cursor-pointer rounded"
-      onClick={() => setIsEdit(prev => !prev)}
-    >Editar<i className="fas fa-ellipsis-h pt-2 text-lg"></i></span>
-  )
-}
 
