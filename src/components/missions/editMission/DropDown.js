@@ -1,7 +1,6 @@
 import React, { useRef, Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react';
-import Icon from '../Icon';
-
+import Icon from '../../Icon';
 
 
 export const DropDown = () => {

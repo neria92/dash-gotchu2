@@ -10,6 +10,8 @@ import { Objective } from './Objective'
 import { Difficulty } from './Difficulty'
 import { Stats } from './Stats'
 import { Rally } from './Rally'
+import { DropDown } from './DropDown'
+import { ReportsTable } from '../../captures/ReportsTable'
 
 
 export const EditMission = () => {
@@ -19,6 +21,7 @@ export const EditMission = () => {
 
   const [mission, setMission] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [reports, setReports] = useState([])
   const [isEdit, setIsEdit] = useState(false);
 
 
@@ -29,7 +32,29 @@ export const EditMission = () => {
         if (doc.exists) { setMission({ ...doc.data(), id: doc.id }) }
       })
       .finally(() => setIsLoading(false))
+
   }, [])
+
+  useEffect(() => {
+    if (!!mission?.reports) {
+      (async () => {
+        let reports = await Promise.all(mission?.reports.slice(0, 10).map(({ userId }) => {
+          return db.doc(`users2/${userId}`).get().then(doc => ({ ...doc.data().userData, id: doc.id }))
+        })
+        )
+        reports = reports.map((user) => {
+          for (const report of mission?.reports) {
+            if (report.userId === user.userId) {
+              let data = report
+              return { ...user, ...data }
+            }
+          }
+        }
+        )
+        setReports(reports)
+      })()
+    }
+  }, [mission])
 
 
   return (
@@ -47,12 +72,13 @@ export const EditMission = () => {
 
           <div className=" rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
             <div className="w-full flex justify-between p-3">
-              <div className="flex">
-                <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden">
+              <div className="flex justify-center items-center">
+                <div className="rounded-full h-auto w-12 bg-gray-500 flex items-center justify-center overflow-hidden">
                   <img src={mission?.userData?.photo} alt='image-mission' />
                 </div>
-                <span className="pt-1 ml-2 font-bold text-sm">{mission?.userData?.username}</span>
+                <span className="pt-1 ml-5 font-bold text-xl">{mission?.userData?.username}</span>
               </div>
+              <DropDown />
               {
                 !isEdit
                   ?
@@ -94,15 +120,24 @@ export const EditMission = () => {
                 <Difficulty />
               </div>
 
-
-
-
               <div className='hidden' id='coments' ref={coments} >
                 <Comments
                   countComments={mission?.stats?.commentsCount}
                   id={mission.id}
                 />
               </div>
+              {
+                (!!mission?.reports && reports.length > 0)
+                &&
+                <ReportsTable
+                  data={reports}
+                  columns={[
+                    { title: 'photo', field: 'photo' },
+                    { title: 'Usuario', field: 'username' },
+                    { title: 'fecha', field: 'username' },
+                  ]}
+                />
+              }
             </div>
           </div>
         </div>

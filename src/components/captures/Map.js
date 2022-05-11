@@ -60,13 +60,13 @@ export const Map = () => {
                             </LayersControl.BaseLayer>
                             <MarkerMap
                                 point={missionPoint}
-                                location='other'
-                                icon={IconLocation}
-                            />
+                                location='ubicación de la misión'
+                                icon={IconLocationMission}
+                                />
                             <MarkerMap
                                 point={evidencesPoint}
-                                location='klmdslkd'
-                                icon={IconLocationMission}
+                                location='ubicación del usuario'
+                                icon={IconLocation}
                             />
 
                             <Circle center={missionPoint} pathOptions={fillBlueOptions} radius={200} />

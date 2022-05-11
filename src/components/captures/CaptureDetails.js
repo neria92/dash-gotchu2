@@ -10,6 +10,7 @@ import { timeAgo } from '../../helpers/timeAgo'
 import { DropDown } from './DropDown'
 import { Map } from './Map'
 import { UbicationIformation } from './UbicationIformation'
+import { ReportsTable } from './ReportsTable'
 
 
 export const CaptureDetails = () => {
@@ -20,9 +21,9 @@ export const CaptureDetails = () => {
 
     const [capture, setCapture] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const [mission, setMission] = useState({})
+    const [mission, setMission] = useState({});
+    const [reports, setReports] = useState([]);
     const [isEdit, setIsEdit] = useState(false);
-
 
     useEffect(() => {
         setIsLoading(true)
@@ -39,8 +40,26 @@ export const CaptureDetails = () => {
             .then((doc) => {
                 if (doc.exists) { setMission({ ...doc.data(), id: doc.id }) }
             })
-    }, [capture])
+        if (!!capture?.reports) {
+            (async () => {
+                let reports = await Promise.all(capture?.reports.slice(0,10).map(({ userId }) => {
+                    return db.doc(`users2/${userId}`).get().then(doc => ({ ...doc.data().userData, id: doc.id }))
+                })
+                )
+                reports = reports.map((user) => {
+                    for (const report of capture?.reports) {
+                        if (report.userId === user.userId) {
+                            let data = report
+                            return { ...user, ...data }
+                        }
+                    }
+                }
+                )
+                setReports(reports)
+            })()
+        }
 
+    }, [capture])
 
 
     return (
@@ -53,9 +72,7 @@ export const CaptureDetails = () => {
             </div>
             :
             <EditCaptureContext.Provider value={{ capture, setCapture, mission, isEdit }}>
-
                 <div className='flex items-center justify-center mt-10 '>
-
                     <div className=" rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
                         <div className="w-full flex justify-between  p-3">
                             <div className='w-1/3 flex flex-row'>
@@ -101,17 +118,26 @@ export const CaptureDetails = () => {
                             </div>
                         </div>
 
-
                         <div className='flex flex-col md:flex-row justify-center items-center mt-2'>
                             <Map />
                             <UbicationIformation />
                         </div>
+                        {
+                            (!!capture?.reports && reports.length > 0)
+                            &&
+                            <ReportsTable
+                                data={reports}
+                                columns={[
+                                    { title: 'photo', field: 'photo' },
+                                    { title: 'Usuario', field: 'username' },
+                                    { title: 'fecha', field: 'username' },
+                                ]}
+                            />
+                        }
                     </div>
                 </div>
                 <br />
             </EditCaptureContext.Provider>
-
-
     )
 }
 
