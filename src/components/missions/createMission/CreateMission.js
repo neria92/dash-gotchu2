@@ -10,6 +10,7 @@ import { TypeEvidences } from './TypeEvidences'
 import { TypeServices } from './TypeServices'
 import { Rally } from './Rally'
 import { FlagInheritedHide } from './FlagInheritedHide'
+import { ImagesMission } from './ImagesMission'
 
 
 export const CreateMission = () => {
@@ -29,6 +30,7 @@ export const CreateMission = () => {
     return (
         <CreatMissionContext.Provider value={{ mission, setMission }}  >
             <TitleAndObjective />
+            <ImagesMission/>
             <Difficulty />
             <DateMission />
             <Rewards />
