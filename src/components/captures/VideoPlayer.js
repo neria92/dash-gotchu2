@@ -4,7 +4,7 @@ import Icon from '../Icon'
 
 export const VideoPlayer = ({ src, focus = false }) => {
 
-    const [playing, setPlaying] = useState(false);
+    const [playing, setPlaying] = useState(true);
     const [isActiveSound, setIsActiveSound] = useState(false)
     const video = useRef();
 
@@ -25,7 +25,7 @@ export const VideoPlayer = ({ src, focus = false }) => {
 
 
     return (
-        <div className='shrink-0 relative snap-center w-full rounded overflow-hidden shadow-lg shadow-blue-700/30'>
+        <div className='shrink-0 relative snap-center w-full h-80 rounded overflow-hidden shadow-lg shadow-blue-700/30'>
 
             <video
                 className='aspect-video object-cover '

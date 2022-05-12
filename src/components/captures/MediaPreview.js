@@ -28,34 +28,25 @@ export const MediaPreview = () => {
             scrollbar={{ draggable: true }}
             onSlideChange={() => console.log('slide change')}
         >
-
-
             {
                 multimedia.map((item) => {
+                    return (
+                        <SwiperSlide key={item.uri} >
+                            {({ isActive }) => (
 
-                    if (item.photo) {
-                        return (
-                            <SwiperSlide key={item.uri} >
-
-                                <img className="shrink-0 snap-center aspect-video object-cover block h-auto w-full bg-cover" src={item.uri} />
-                            </SwiperSlide>
-                        )
-
-                    }
-                    if (item.video) {
-                        return (
-                            <SwiperSlide key={item.uri} >
-
-                                {({ isActive }) => (
-                                    <VideoPlayer
-
+                                item.video
+                                    ? <VideoPlayer
                                         src={item.uri}
                                         focus={isActive}
                                     />
-                                )}
-                            </SwiperSlide>
-                        )
-                    }
+                                    : <img className="shrink-0 snap-center aspect-video object-cover block h-auto w-full bg-cover" src={item.uri} />
+
+
+                            )}
+                        </SwiperSlide>
+                    )
+
+
                 })
             }
 
