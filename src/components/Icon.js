@@ -50,6 +50,7 @@ import { ReactComponent as Free } from '../assets/icons/free.svg';
 import { ReactComponent as Save } from '../assets/icons/save.svg';
 import { ReactComponent as EyeOpen } from '../assets/icons/eye_on.svg';
 import { ReactComponent as EyeClosed } from '../assets/icons/eye_off.svg';
+import { ReactComponent as Following } from '../assets/icons/following.svg';
 
 const dimensions = { height: "100%", width: "100%" };
 
@@ -108,6 +109,7 @@ export default function Icon({ name = 'pencil', size = 30, style = {}, color = '
         save: <Save {...dimensions} fill={color} />,
         eyeOpen: <EyeOpen {...dimensions} fill={color} />,
         eyeClosed: <EyeClosed {...dimensions} fill={color} />,
+        following: <Following {...dimensions} fill={color} />,
 
     }
     return (
