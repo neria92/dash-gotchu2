@@ -23,13 +23,13 @@ export const Searcher = () => {
 
 
     return (
-        <div className=" relative mr-3 md:mr-0 md:block">
-            <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+        <div className=" relative mr-3 md:mr-0 md:block w-full">
+            {/* <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <Icon
                     name='search'
                     style='w-4 h-4'
                 />
-            </div>
+            </div> */}
             <input
                 name='search'
                 type="text"
