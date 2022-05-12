@@ -77,7 +77,7 @@ const ImagePreview = () => {
                 images?.map(item => {
 
                     return (
-                        <div className='bg-green-500 shrink-0 w-2/5 overflow-hidden rounded shadow-lg justify-center items-center' key={item.url}>
+                        <div className=' shrink-0 w-2/5 overflow-hidden rounded shadow-lg justify-center items-center' key={item.url}>
                             <img alt="Placeholder" className="aspect-video object-cover" src={item.url} loading='lazy' />
                         </div>
                     )
