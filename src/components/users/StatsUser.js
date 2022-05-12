@@ -15,6 +15,7 @@ export const StatsUser = ({ stats }) => {
                 <Item title={'gCoins'} name='gCoins' value={`${gCoins}`} color={'black'} />
                 <Item title={'Followers'} name='following' value={`${followers}`} color={'black'} />
                 <Item title={'Following'} name='following' value={`${following}`} color={'black'} />
+                <Item title={'Pagado'} name='money' value={`${following}`} color={'black'} />
                 
             </div>
 

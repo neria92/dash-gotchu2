@@ -26,18 +26,23 @@ export const UserDetails = () => {
         isLoading
             ? null
             :
-            <div className='max-w-5xl p-5 mx-auto mt-10  rounded  col-span-2 grid grid-cols-2 md:grid-cols-3 gap-1' >
+            <>
+                <div className='max-w-5xl p-5 mx-auto mt-10  rounded  col-span-2 grid grid-cols-2 md:grid-cols-3 gap-1' >
 
-                <div className=" md:w-11/12 w-full  col-span-2 md:col-span-1 ">
-                    <UserCard userData={user?.userData} />
-                    <StatsUser userData={user?.userData} />
+                    <div className=" md:w-11/12 w-full  col-span-2 md:col-span-1 ">
+                        <UserCard userData={user?.userData} />
+                        <StatsUser userData={user?.userData} />
+                    </div>
+
+                    <div className="w-full bg-white rounded-lg border shadow-md sm:p-2 dark:bg-[#2F4F4F] dark:border-[#2F4F4F] col-span-2  justify-center flex flex-col">
+                        <FinancialInformation financialInformation={user?.financialInformation} />
+                    </div>
+
                 </div>
-
-                <div className="w-full bg-white rounded-lg border shadow-md sm:p-2 dark:bg-[#2F4F4F] dark:border-[#2F4F4F] col-span-2  justify-center flex flex-col">
-                    <FinancialInformation financialInformation={user?.financialInformation} />
+                <div id='pagos' className='max-w-5xl p-5 mx-auto mt-10  rounded bg-white'>
+s
                 </div>
-
-            </div>
+            </>
 
     )
 }
