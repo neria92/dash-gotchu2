@@ -29,19 +29,21 @@ export const UserList = () => {
                         <span className='text-ellipsis font-semibold mt-5 text-gray-300'>Cargando...</span>
                     </div>
                     :
-                    <div id='container' className='max-w-5xl p-5 mx-auto mt-20  bg-[#2F4F4F]  rounded shadow-2xl  grid grid-cols-2 gap-2' >
-                        <Searcher />
-                        <div className="p-4 max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-[#2F4F4F] dark:border-[#2F4F4F]">
+                    <div id='container' className='max-w-3xl p-5 mx-auto mt-10  bg-[#2F4F4F]  rounded shadow-2xl  col-span-2 grid grid-cols-2 md:grid-cols-3 gap-1' >
+                        <div className=" w-full  col-span-2 md:col-span-1 p-5">
+                            <Searcher />
+                        </div>
+                        <div className="max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-[#2F4F4F] dark:border-[#2F4F4F] col-span-2 items-center justify-center flex flex-col  p-4">
                             <div className="flex justify-between items-center mb-4">
                                 <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">Usuarios Gotchu!</h5>
                                 {/* <a href="#" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
                         View all
                     </a> */}
                             </div>
-                            <div className="flow-root">
+                            <div className="flow-root w-full">
                                 <ul role="list" className="divide-y divide-gray-200 dark:divide-[#e6e9e9]">
                                     {
-                                        users.map((item) => <User user={item} />)
+                                        users.map((item) => <User user={item} key={item.id} />)
                                     }
 
                                 </ul>
