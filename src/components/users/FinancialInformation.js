@@ -1,12 +1,13 @@
 import React from 'react'
+import { Ranking } from '../Ranking'
 
-export const FinancialInformation = ({financialInformation}) => {
-    const accountName=financialInformation?.accountName || 'Aún no registra datos'
-    const bank=financialInformation?.bank?.name || 'Aún no registra datos'
-    const clabe=financialInformation?.clabe || 'Aún no registra datos'
-    const curp=financialInformation?.curp || 'Aún no registra datos'
-    const rfc=financialInformation?.rfc || 'Aún no registra datos'
-    const phone=financialInformation?.phone || 'Aún no registra datos'
+export const FinancialInformation = ({ financialInformation, ranking }) => {
+    const accountName = financialInformation?.accountName || 'Aún no registra datos'
+    const bank = financialInformation?.bank?.name || 'Aún no registra datos'
+    const clabe = financialInformation?.clabe || 'Aún no registra datos'
+    const curp = financialInformation?.curp || 'Aún no registra datos'
+    const rfc = financialInformation?.rfc || 'Aún no registra datos'
+    const phone = financialInformation?.phone || 'Aún no registra datos'
 
     return (
         <div className="bg-[#86A8A8] shadow overflow-hidden sm:rounded-lg mb-2">
@@ -17,7 +18,11 @@ export const FinancialInformation = ({financialInformation}) => {
             <div className="border-t border-gray-200">
                 <dl>
                     <Information_w title='Nombre completo' value={accountName} />
-                    <Information_b title='Ranking' value={''} />
+                    <Information_b title='Ranking' value={
+                        <div className='fle flex-row h-10 md-2 -mt-5 md:-mt-7'>
+                            <Ranking rating={ranking} />
+                        </div>
+                    } />
                     <Information_w title='Banco' value={bank} />
                     <Information_b title='Clabe' value={clabe} />
                     <Information_w title='RFC' value={rfc} />
@@ -25,9 +30,9 @@ export const FinancialInformation = ({financialInformation}) => {
                     <Information_w title='Telefono' value={phone} />
 
 
-             
+
                 </dl>
-                
+
             </div>
         </div>
     )

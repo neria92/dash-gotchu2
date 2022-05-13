@@ -122,7 +122,6 @@ const ImagePreview = () => {
 
             {
                 [iconMap].map(item => {
-                    console.log('item',item)
                     return (
                         <div className='bg-green-500 shrink-0 w-2/5 overflow-hidden rounded shadow-lg justify-center items-center' key={item}>
                             <img alt="Placeholder" className="aspect-video object-cover" src={item} loading='lazy' />

@@ -14,7 +14,6 @@ export const Rally = () => {
     })
 
     const handleOnchange = ({ target }) => {
-        console.log('target', target.value)
         onChange({ target })
         searchMissions(target.value)
     }
@@ -31,10 +30,6 @@ export const Rally = () => {
         searchMissions('')
 
     }
-
-    useEffect(() => {
-        console.log('mission', missions)
-    }, [missions])
 
 
 

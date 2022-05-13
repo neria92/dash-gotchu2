@@ -25,7 +25,7 @@ export const VideoPlayer = ({ src, focus = false }) => {
 
 
     return (
-        <div className='shrink-0 relative snap-center w-full h-80 rounded overflow-hidden shadow-lg shadow-blue-700/30'>
+        <div className='shrink-0 relative snap-center aspect-video w-full  rounded overflow-hidden shadow-lg shadow-blue-700/30'>
 
             <video
                 className='aspect-video object-cover '

@@ -23,9 +23,7 @@ export const CreateMission = () => {
         getUserLocation().then((res) => setuserPosition(res))
     }, [])    
 
-    useEffect(() => {
-        console.log('mission',mission)
-    }, [mission])
+  
     
     return (
         <CreatMissionContext.Provider value={{ mission, setMission }}  >

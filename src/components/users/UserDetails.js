@@ -53,10 +53,7 @@ export const UserDetails = () => {
             })()
         }
     }, [user])
-    useEffect(() => {
-        console.log('captures', captures)
-    }, [captures])
-
+  
     return (
         isLoading
             ? null
@@ -70,7 +67,7 @@ export const UserDetails = () => {
                     </div>
 
                     <div className="w-full bg-white rounded-lg border shadow-md sm:p-2 dark:bg-[#2F4F4F] dark:border-[#2F4F4F] col-span-2  justify-center flex flex-col">
-                        <FinancialInformation financialInformation={user?.financialInformation} />
+                        <FinancialInformation financialInformation={user?.financialInformation} ranking={user?.userData?.stats?.ranking}/>
                     </div>
 
                 </div>
