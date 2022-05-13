@@ -39,7 +39,9 @@ export const MediaPreview = () => {
                                         src={item.uri}
                                         focus={isActive}
                                     />
-                                    : <img className="shrink-0 snap-center aspect-video object-cover block h-auto w-full bg-cover" src={item.uri} />
+                                    :<img className="shrink-0 snap-center aspect-video object-cover block h-auto w-full bg-cover" src={item.uri} alt='phot_evidence'/>
+
+                                        
 
 
                             )}

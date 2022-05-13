@@ -18,9 +18,9 @@ export const MissionBox = ({ image, title, user, userphoto, finishDate, likes, i
                     <img alt="imageMssion" className="aspect-video object-cover block h-auto w-full" src={image} loading='lazy' />
                 </div>
                 <header className="flex items-center justify-between leading-tight p-2 md:p-4">
-                    <h1 className="text-lg">
-                        <span className="no-underline hover:underline text-black" >
-                            {shorName(title)}
+                    <h1 className="text-lg truncate text-ellipsis overflow-hidden">
+                        <span className="no-underline hover:underline text-black  " >
+                            {title}
                         </span>
                     </h1>
                     <div className='flex  items-center justify-center '>
@@ -60,9 +60,3 @@ export const MissionBox = ({ image, title, user, userphoto, finishDate, likes, i
     )
 }
 
-const shorName = (name) => {
-    if (name.length > 15) {
-        return name.slice(0, 12) + '...'
-    }
-    return name
-}

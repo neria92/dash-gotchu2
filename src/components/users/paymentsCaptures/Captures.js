@@ -1,5 +1,7 @@
 import React from 'react'
 import dayjs from "dayjs";
+import { ChangeStatus } from './ChangeStatus';
+import { Link } from 'react-router-dom';
 
 export const Captures = ({ columns = [{}], data }) => {
     return (
@@ -55,7 +57,13 @@ export const Captures = ({ columns = [{}], data }) => {
                                                                 :
                                                                 element.title === 'Monto'
                                                                     ? item.missionData.loot.money
-                                                                    : item[element.field]
+                                                                    : element.title === 'Estado'
+                                                                        ? <ChangeStatus status={item[element.field]} capture={item} />
+                                                                        : element.title === 'Ver más'
+                                                                            ? <Link to={'/captures/' + item.id} target='_blank' className='hover:text-green-200'>
+                                                                                Ver más
+                                                                            </Link>
+                                                                            : item[element.field]
                                                         }
                                                     </td>
 
