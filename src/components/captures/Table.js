@@ -110,15 +110,6 @@ export const Table = ({ displayCaptures = [], setCaptures, columns = [{ title: "
                 </tbody>
             </table>
 
-            {
-                isOpenModal
-                &&
-                <Modal
-                    setIsOpenModal={setIsOpenModal}
-                    capture={capturePay}
-                    setCaptures={setCaptures}
-                />
-            }
         </div>
     )
 }

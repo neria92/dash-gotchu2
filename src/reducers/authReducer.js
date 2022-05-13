@@ -9,6 +9,7 @@ export const authReducer = (state = {}, action) => {
                 photoURL: action.payload.photoURL,
                 email: action.payload.email,
                 isAdmin: action.payload.isAdmin,
+                isPaymentsCaptures: action.payload.isPaymentsCaptures,
             }
         case types.startLoading:
             return {

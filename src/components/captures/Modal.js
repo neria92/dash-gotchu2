@@ -6,79 +6,63 @@ import {
     getStorage,
 } from "@firebase/storage";
 import Swal from "sweetalert2";
-import { db } from '../../firebase/firebaseConfig';
+import { firebase, db } from '../../firebase/firebaseConfig';
+import { useSelector } from 'react-redux';
 
 
-export const Modal = ({ setIsOpenModal, capture, setCaptures }) => {
+export const Modal = ({ setIsOpenModal, captures, setCaptures, totalPay, userToPay }) => {
 
     const time = new Date()
-    const { missionData: { missionName } } = capture
     const [progress, setProgress] = useState(0);
-    const [imageUpload, setImageUpload] = useState(null)
+    const [imageUpload, setImageUpload] = useState(null);
+    const [isLoading, setIsLoading] = useState(false)
+    const { uid } = useSelector(state => state.auth);
 
+    const onChangePay = async () => {
 
-    const onChangePay = () => {
-
+        setIsLoading(true)
         if (!imageUpload) {
             Swal.fire(
                 "Lo sentimos",
                 'Es necesario que tenga el ticket de pago',
                 "error"
             );
-            return
-        }
-        if (capture.status === 'Pending' || capture.status === 'Rejected') {
-
-            Swal.fire({
-                title: 'Lo sentimos',
-                text: "Es necesario primero que la captura sea aceptada",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar',
-                cancelButtonText: 'Cancelar',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    setCaptures(prev => {
-                        return prev.map(item => {
-                            if (capture.id === item.id) {
-                                item['status'] = 'Accepted'
-                                return item
-                            } else {
-                                return item
-                            }
-                        })
-
-                    })
-                    Swal.fire(
-                        'Captura aceptad',
-                        'La Captura ya se ha aceptado',
-                        'success'
-                    )
-                }
-            })
+            setIsLoading(false)
             return
         }
         setCaptures(prev => {
-            return prev.map(item => {
-                if (capture.id === item.id) {
-                    item['payOut'] = true
-                    return item
-                } else {
-                    return item
+            const newCaptures = [...prev]
+            return newCaptures.map(item => {
+
+                for (let index = 0; index < captures.length; index++) {
+                    const element = captures[index];
+                    if (element.id === item.id) {
+                        item['payOut'] = true
+                        break
+                    }
                 }
+                return item
             })
 
         })
-        db.collection('captures2').doc(capture.id).update({
-            datepay: new Date(),
-            payOut: true,
-            ticketImage: imageUpload,
-            status:'Accepted'
+
+        captures.forEach(capture => {
+            db.collection('captures2').doc(capture.id).update({
+                datepay: new Date(),
+                payOut: true,
+                ticketImage: imageUpload,
+                payUserId: uid
+            })
         })
+
+        db.collection('users2').doc(userToPay).update({
+            [`userData.stats.totalPaidFromGotchu`]: firebase.firestore.FieldValue.increment(totalPay)
+        })
+        setIsLoading(false)
         setIsOpenModal(false)
+
     }
+
     const handleFireBaseUpload = e => {
 
         let result = ''
@@ -127,7 +111,7 @@ export const Modal = ({ setIsOpenModal, capture, setCaptures }) => {
 
                     <div className="flex justify-between items-center p-5 rounded-t border-b dark:border-gray-600">
                         <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-                            Pagar misión {missionName}
+                            Pagar {captures.length} misiones con un total de ${totalPay}
                         </h3>
                         <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="small-modal" onClick={() => setIsOpenModal(prev => !prev)}>
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
@@ -167,8 +151,17 @@ export const Modal = ({ setIsOpenModal, capture, setCaptures }) => {
                     </div>
 
                     <div className="flex items-center justify-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                        <button data-modal-toggle="small-modal" type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" onClick={onChangePay}>Pagar</button>
-                        <button data-modal-toggle="small-modal" type="button" className="text-white bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-white focus:z-10 dark:bg-red-700 dark:text-white dark:border-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-600" onClick={()=>setIsOpenModal(false)}>Cancelar</button>
+                        {
+                            isLoading
+                                ?
+                                <div className='flex flex-col bg-transparent  rounded items-center justify-center'>
+                                    <div className='spinner'></div>
+                                    <span className='text-ellipsis font-semibold  text-gray-300'>Cargando...</span>
+                                </div>
+                                : <button data-modal-toggle="small-modal" type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" onClick={onChangePay}>Pagar</button>
+                        }
+
+                        <button data-modal-toggle="small-modal" type="button" className="text-white bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-white focus:z-10 dark:bg-red-700 dark:text-white dark:border-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-600" onClick={() => setIsOpenModal(false)}>Cancelar</button>
                     </div>
                 </div>
             </div>

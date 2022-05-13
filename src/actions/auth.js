@@ -41,13 +41,13 @@ export const startLoadinLogin = (uid) => {
   return async (dispatch) => {
     dispatch(startLoadingAction())
     const doc = await getDocumentUser(uid)
-    dispatch(login(doc.uid, doc.userData.email, doc.userData.photo, doc.userData.username, doc.privileges.isAdmin));
+    dispatch(login(doc.uid, doc.userData.email, doc.userData.photo, doc.userData.username, doc.privileges.isAdmin,doc.privileges?.isPaymentsCaptures));
     dispatch(finishLoadingAction())
   }
 
 }
 
-export const login = (uid, email, photoURL, displayName, isAdmin) => {
+export const login = (uid, email, photoURL, displayName, isAdmin,isPaymentsCaptures) => {
   return {
     type: types.login,
     payload: {
@@ -55,7 +55,8 @@ export const login = (uid, email, photoURL, displayName, isAdmin) => {
       displayName,
       photoURL,
       email,
-      isAdmin
+      isAdmin,
+      isPaymentsCaptures
     },
   };
 };

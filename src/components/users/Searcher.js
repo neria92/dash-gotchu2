@@ -62,12 +62,12 @@ export const Searcher = () => {
 const Item = ({ photo, userId, username }) => {
 
     return (
-        <div className='hover:bg-blue-200 flex gap-4 p-4' >
+        <Link className='hover:bg-blue-200 flex gap-4 p-4' to={`/users/${userId}`}>
             <img src={photo} className='w-8 h-8 rounded-full object-contain' alt='image_mission' />
             <div>
                 <h3 className='text-sm font-semibold'>{username}</h3>
             </div>
 
-        </div>
+        </Link>
     )
 }
