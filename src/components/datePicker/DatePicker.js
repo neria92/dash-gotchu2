@@ -3,12 +3,9 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-import Icon from "../Icon";
-
 registerLocale("es", es);
-// CSS Modules, react-datepicker-cssmodules.css
 
-export const Datepicker = ({ date, getDate, placeholder ,}) => {
+export const Datepicker = ({ date, getDate, placeholder ,readOnly=false}) => {
 
     return (
         <DatePicker
@@ -16,6 +13,7 @@ export const Datepicker = ({ date, getDate, placeholder ,}) => {
             onChange={getDate}
             locale="es"
             withPortal
+            readOnly={readOnly}
             // maxDate={new Date()}
             // highlightDates={intervalDates}
             dateFormat="dd-MMMM-yyyy"

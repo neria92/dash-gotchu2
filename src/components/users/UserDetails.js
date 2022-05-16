@@ -52,13 +52,17 @@ export const UserDetails = () => {
                     .finally(() => setIsLoadingCaptures(false))
             })()
         }
-    }, [user])
-  
+    }, [user, startDate])
+
     return (
         isLoading
-            ? null
+            ?
+            <div className='flex flex-col mt-32 bg-transparent w-full rounded items-center justify-center'>
+                <div className='spinner'></div>
+                <span className='text-ellipsis font-semibold mt-5 text-gray-300'>Cargando...</span>
+            </div>
             :
-            <UserContext.Provider value={{ user, setUser, captures, setCaptures }}>
+            <UserContext.Provider value={{ user, setUser, captures, setCaptures, startDate, setStartDate }}>
                 <div className='max-w-5xl p-5 mx-auto mt-5  rounded  col-span-2 grid grid-cols-2 md:grid-cols-3 gap-1 ' >
 
                     <div className=" md:w-11/12 w-full  col-span-2 md:col-span-1 ">
@@ -67,14 +71,21 @@ export const UserDetails = () => {
                     </div>
 
                     <div className="w-full bg-white rounded-lg border shadow-md sm:p-2 dark:bg-[#2F4F4F] dark:border-[#2F4F4F] col-span-2  justify-center flex flex-col">
-                        <FinancialInformation financialInformation={user?.financialInformation} ranking={user?.userData?.stats?.ranking}/>
+                        <FinancialInformation financialInformation={user?.financialInformation} ranking={user?.userData?.stats?.ranking} />
                     </div>
 
                 </div>
                 {
                     (isPaymentsCaptures && !isLoadingCaptures)
-                    &&
-                    <PaymentsCaptures />
+                        &&
+                        isLoadingCaptures
+                        ?
+                        <div className='flex flex-col mt-32 bg-transparent w-full rounded items-center justify-center'>
+                            <div className='spinner'></div>
+                            <span className='text-ellipsis font-semibold mt-5 text-gray-300'>Cargando...</span>
+                        </div>
+                        :
+                        <PaymentsCaptures />
                 }
                 <br />
             </UserContext.Provider >

@@ -8,17 +8,16 @@ import { UserContext } from '../context/UserContext';
 
 export const Date = () => {
 
-    const { user } = useContext(UserContext)
+    const { user ,startDate,setStartDate} = useContext(UserContext)
 
     const handleStartDate = (date) => {
-        // setMission({ ...mission, missionData: { ...mission.missionData, startDate: date } })
+        setStartDate(date)
+        
     }
 
     const handleFinishDate = (date) => {
-        // setMission({ ...mission, missionData: { ...mission.missionData, finishDate: date } })
     }
 
-    const startDate = dayjs().subtract(7, 'days').toDate();
     const finishDate = dayjs().toDate()
 
     return (
@@ -40,6 +39,7 @@ export const Date = () => {
                                         date={finishDate}
                                         getDate={handleFinishDate}
                                         placeholder='inico de misión'
+                                        readOnly={true}
                                     />
                                 </div>
 

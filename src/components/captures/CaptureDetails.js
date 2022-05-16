@@ -61,6 +61,14 @@ export const CaptureDetails = () => {
 
     }, [capture])
 
+    useEffect(() => {
+        if(!!mission?.geoData?.table){
+            console.log('mission?.geoData?.table',mission?.geoData?.table)
+
+        }
+    }, [mission])
+    
+
 
     return (
 

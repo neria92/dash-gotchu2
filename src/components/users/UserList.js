@@ -7,9 +7,10 @@ import { Searcher } from './Searcher'
 export const UserList = () => {
 
     const [users, setUsers] = useState([]);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
+        setIsLoading(true)
         db.collection('users2')
             .limit(8)
             .get()

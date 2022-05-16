@@ -7,7 +7,9 @@ import { Date } from './Date'
 export const PaymentsCaptures = () => {
     const { captures, setCaptures } = useContext(UserContext)
     const [isOpenModal, setIsOpenModal] = useState(false);
-    const capturesAccepted = captures.filter(capture => capture.status === 'Accepted' && !capture.payOut )
+    const capturesAccepted = captures.filter(capture => capture.status === 'Accepted' && !capture.payOut)
+    const capturesRejected = captures.filter(capture => capture.status === 'Rejected')
+    const capturesPending = captures.filter(capture => capture.status === 'Pending')
     let total = 0
     for (let index = 0; index < capturesAccepted.length; index++) {
         const element = capturesAccepted[index];
@@ -15,16 +17,27 @@ export const PaymentsCaptures = () => {
     }
 
     return (
-        <div div id='pagos' className='max-w-5xl p-5 mx-auto mt-10  rounded bg-[#2F4F4F]'>
+        
+        <div id='pagos' className='max-w-5xl p-5 mx-auto mt-10  rounded bg-[#2F4F4F]'>
             <Date />
-            <Captures data={capturesAccepted} columns={columns} />
             {
-                total > 0
+                capturesAccepted.length > 0
                 &&
-                <TotalPay data={capturesAccepted} total={total} onChange={() => setIsOpenModal(prev => !prev)} />
+                <>
+                    <Captures data={capturesAccepted} columns={columns} />
+                    <TotalPay data={capturesAccepted} total={total} onChange={() => setIsOpenModal(prev => !prev)} />
+                </>
             }
-            <Captures data={captures.filter(capture => capture.status === 'Rejected')} columns={columns} />
-            <Captures data={captures.filter(capture => capture.status === 'Pending')} columns={columns} />
+            {
+                capturesRejected.length > 0
+                &&
+                < Captures data={capturesRejected} columns={columns} />
+            }
+            {
+                capturesPending.length > 0
+                &&
+                <Captures data={capturesPending} columns={columns} />
+            }
             {
                 isOpenModal
                 &&
@@ -53,7 +66,7 @@ const columns = [
     { title: 'Monto', field: 'missionData' },
 ]
 
-const TotalPay = ({ data, onChange, total }) => {
+const TotalPay = ({ onChange, total }) => {
 
 
 
