@@ -12,6 +12,7 @@ import { Map } from './Map'
 import { UbicationIformation } from './UbicationIformation'
 import { ReportsTable } from './ReportsTable'
 import { getTableMissions } from '../../services/getTableMission'
+import { StoresNearest } from './StoresNearest'
 
 
 export const CaptureDetails = () => {
@@ -139,6 +140,21 @@ export const CaptureDetails = () => {
                             <Map />
                             <UbicationIformation />
                         </div>
+                        {
+                            locations.length>0
+                            &&
+                            <StoresNearest
+                            data={locations}
+                            user={capture.hash===locations[0]?.hash}
+                            columns={[
+                                { title: 'id', field: 'id' },
+                                { title: 'Tienda', field: 'store' },
+                                { title: 'Fecha', field: 'date' },
+                                { title: 'Disponible', field: 'flag' },
+                                { title: 'Hecha por este usuario', field: 'flag' },
+                            ]}
+                            />
+                        }
                         {
                             (!!capture?.reports && reports.length > 0)
                             &&
