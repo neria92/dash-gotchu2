@@ -8,7 +8,7 @@ import {
     Popup
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { IconLocation,IconLocationMission } from '../IconLocation'
+import { IconLocation, IconLocationMission } from '../IconLocation'
 import { EditCaptureContext } from './context/EditCaptureContext';
 
 
@@ -23,7 +23,7 @@ export const Map = () => {
 
 
     const [isLoading, setIsLoading] = useState(false);
-    const { capture, mission } = useContext(EditCaptureContext)
+    const { capture, mission, locations } = useContext(EditCaptureContext)
 
     const { geoData: { coords: { latitude, longitude } } } = capture
     const latitudeMission = mission?.geoData?.latitude || latitude
@@ -58,18 +58,39 @@ export const Map = () => {
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
                             </LayersControl.BaseLayer>
-                            <MarkerMap
-                                point={missionPoint}
-                                location='ubicación de la misión'
-                                icon={IconLocationMission}
-                                />
+
+                            {
+                                locations.length > 0
+                                    ?
+                                    locations.map(location => {
+                                        return (
+                                            <div key={location.id}>
+                                                <MarkerMap
+                                                    point={[location.latitude,location.longitude]}
+                                                    location={`ubicación de la misión ${location.id}`}
+                                                    icon={IconLocationMission}
+                                                />
+                                                <Circle center={[location.latitude,location.longitude]} pathOptions={fillBlueOptions} radius={200} />
+                                            </div>
+
+                                        )
+                                    })
+                                    :
+                                    <>
+                                        <MarkerMap
+                                            point={missionPoint}
+                                            location='ubicación de la misión'
+                                            icon={IconLocationMission}
+                                        />
+                                        <Circle center={missionPoint} pathOptions={fillBlueOptions} radius={200} />
+                                    </>
+                            }
                             <MarkerMap
                                 point={evidencesPoint}
                                 location='ubicación del usuario'
                                 icon={IconLocation}
                             />
 
-                            <Circle center={missionPoint} pathOptions={fillBlueOptions} radius={200} />
                         </LayersControl>
                     </MapContainer>
             }
@@ -81,7 +102,7 @@ export const Map = () => {
 }
 
 
-const MarkerMap = ({ point, location,icon }) => (
+const MarkerMap = ({ point, location, icon }) => (
     <Marker
         position={point}
         icon={icon}

@@ -6,15 +6,18 @@ import { ChangeStatus } from './ChangeStatus'
 
 export const UbicationIformation = () => {
 
-    const { mission, capture } = useContext(EditCaptureContext);
+    const { mission, capture, locations } = useContext(EditCaptureContext);
 
     const { geoData: { coords: { latitude, longitude } } } = capture
     const latitudeMission = mission?.geoData?.latitude || latitude
     const longitudeMission = mission?.geoData?.longitude || longitude
 
-
-
-    const distance = distanceEarth(latitudeMission, longitudeMission, latitude, longitude)
+    let distance = ''
+    if (locations.length > 0) {
+        distance=distanceEarth(locations[0].latitude, locations[0].longitude, latitude, longitude)
+    }else{
+        distance = distanceEarth(latitudeMission, longitudeMission, latitude, longitude)
+    }
     return (
 
         <div className={`${!capture?.missionData && 'hidden'} h-80 w-full md:w-80 rounded my-10  p-2 md:p-5`}>

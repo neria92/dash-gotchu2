@@ -11,6 +11,7 @@ import { DropDown } from './DropDown'
 import { Map } from './Map'
 import { UbicationIformation } from './UbicationIformation'
 import { ReportsTable } from './ReportsTable'
+import { getTableMissions } from '../../services/getTableMission'
 
 
 export const CaptureDetails = () => {
@@ -24,6 +25,7 @@ export const CaptureDetails = () => {
     const [mission, setMission] = useState({});
     const [reports, setReports] = useState([]);
     const [isEdit, setIsEdit] = useState(false);
+    const [locations, setLocations] = useState([])
 
     useEffect(() => {
         setIsLoading(true)
@@ -63,7 +65,14 @@ export const CaptureDetails = () => {
 
     useEffect(() => {
         if(!!mission?.geoData?.table){
-            console.log('mission?.geoData?.table',mission?.geoData?.table)
+            (async()=>{
+                const table= await getTableMissions({
+                    table:mission?.geoData?.table,
+                    latitude:capture.geoData.coords.latitude,
+                    longitude:capture.geoData.coords.longitude,
+                })
+                setLocations(table.data)
+            })()
 
         }
     }, [mission])
@@ -79,7 +88,7 @@ export const CaptureDetails = () => {
                 <span className='text-ellipsis font-semibold mt-5 text-gray-900'>Cargando...</span>
             </div>
             :
-            <EditCaptureContext.Provider value={{ capture, setCapture, mission, isEdit }}>
+            <EditCaptureContext.Provider value={{ capture, setCapture, mission, isEdit,locations }}>
                 <div className='flex items-center justify-center mt-10 '>
                     <div className=" rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
                         <div className="w-full flex justify-between  p-3">
