@@ -7,7 +7,7 @@ export const Difficulty = () => {
 
     const { mission, setMission } = useContext(CreatMissionContext)
 
-    const difficulty = mission?.missionData?.difficulty || 'Baja'
+    const difficulty = mission?.missionData?.difficulty || 'Bajo'
 
     const onChangeValues = ({ target }) => {
         const value = target.value
@@ -34,19 +34,19 @@ export const Difficulty = () => {
                                     <div className="mt-4 space-y-4">
 
                                         <Button
-                                            level='Baja'
+                                            level='Bajo'
                                             onChage={onChangeValues}
-                                            isActive={difficulty === 'Baja'}
+                                            isActive={difficulty === 'Bajo'}
                                         />
                                         <Button
-                                            level='Media'
+                                            level='Medio'
                                             onChage={onChangeValues}
-                                            isActive={difficulty === 'Media'}
+                                            isActive={difficulty === 'Medio'}
                                         />
                                         <Button
-                                            level='Alta'
+                                            level='Alto'
                                             onChage={onChangeValues}
-                                            isActive={difficulty === 'Alta'}
+                                            isActive={difficulty === 'Alto'}
                                         />
 
                                     </div>

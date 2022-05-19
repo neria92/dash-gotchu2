@@ -23,7 +23,6 @@ export const CreateMission = () => {
         getUserLocation().then((res) => setuserPosition(res))
     }, [])    
 
-  
     
     return (
         <CreatMissionContext.Provider value={{ mission, setMission }}  >

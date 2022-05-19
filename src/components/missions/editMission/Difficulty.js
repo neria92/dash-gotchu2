@@ -24,19 +24,19 @@ export const Difficulty = () => {
                     <div className="mt-4 space-y-4">
 
                         <Button
-                            level='Baja'
+                            level='Bajo'
                             onChage={onChangeValues}
-                            isActive={difficulty === 'Baja'}
+                            isActive={difficulty === 'Bajo'}
                         />
                         <Button
-                            level='Media'
+                            level='Medio'
                             onChage={onChangeValues}
-                            isActive={difficulty === 'Media'}
+                            isActive={difficulty === 'Medio'}
                         />
                         <Button
-                            level='Alta'
+                            level='Alto'
                             onChage={onChangeValues}
-                            isActive={difficulty === 'Alta'}
+                            isActive={difficulty === 'Alto'}
                         />
 
                     </div>

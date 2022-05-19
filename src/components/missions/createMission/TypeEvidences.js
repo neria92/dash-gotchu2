@@ -17,6 +17,7 @@ export const TypeEvidences = () => {
     const [checkboxValues, setCheckboxValues] = useState({
         photos: false,
         videos: false,
+        audio: false,
     });
 
     const [isCheck, setIsCheck] = useState(false);
@@ -67,10 +68,11 @@ export const TypeEvidences = () => {
                     videos: [],
                 },
                 missionDescription: "",
+                isPaidGotchu: missionData.loot.money > 0,
                 ...(isRally && { type: missionData.type, nextMission: '' }),
-                ...(!!missionData?.iconMap && { iconMap: missionData?.iconMap})
+                ...(!!missionData?.iconMap && { iconMap: missionData?.iconMap })
             },
-            ...(!!missionData?.inheritedHide && { inheritedHide: missionData?.inheritedHide}),
+            ...(!!missionData?.inheritedHide && { inheritedHide: missionData?.inheritedHide }),
             userData,
             hide: false,
             fellows: [],
@@ -130,6 +132,13 @@ export const TypeEvidences = () => {
                                             onChange={onChange}
                                             title='Videos'
                                             name='videos'
+                                            placeHolder='Cantidad de segundos'
+                                        />
+                                        <Button
+                                            value={checkboxValues.audio}
+                                            onChange={onChange}
+                                            title='Audio'
+                                            name='audio'
                                             placeHolder='Cantidad de segundos'
                                         />
 
