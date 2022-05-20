@@ -12,9 +12,9 @@ export const validateData = (data) => {
     const money = data?.missionData?.loot?.money
     const gCoins = data?.missionData?.loot?.gCoins
     const xp = data?.missionData?.loot?.xp
-    const isRally=data?.isRally
+    
 
-  
+  console.log('typeEvidence',typeEvidence)
 
 
     if (!missionName) {
@@ -60,14 +60,20 @@ export const validateData = (data) => {
     if (Object.keys(typeEvidence).length === 0) {
         return [true, `Es necesario que la misión tenga  que tipo de evidencia se requiere`]
     }
-    if (typeEvidence?.photos === 0 || isNaN(typeEvidence?.photos)) {
+    if(!!typeEvidence?.photos){
 
-        return [true, `Es necesario que la misión tenga  un minimo de fotos`]
-
+        if (typeEvidence?.photos === 0 || isNaN(typeEvidence?.photos)) {
+    
+            return [true, `Es necesario que la misión tenga  un minimo de fotos`]
+    
+        }
     }
-    if (typeEvidence?.videos === 0 || isNaN(typeEvidence?.videos)) {
+    if(!!typeEvidence?.videos){
 
-        return [true, `Es necesario que la misión tenga  un minimo de segundos para el video`]
+        if (typeEvidence?.videos === 0 || isNaN(typeEvidence?.videos)) {
+    
+            return [true, `Es necesario que la misión tenga  un minimo de segundos para el video`]
+        }
     }
 
     return [false, '']

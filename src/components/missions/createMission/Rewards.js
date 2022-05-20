@@ -4,9 +4,9 @@ import { CreatMissionContext } from './context/CreatMissionContext';
 export const Rewards = () => {
     const { mission, setMission } = useContext(CreatMissionContext)
 
-    const money = mission?.missionData?.loot?.money || ''
-    const gCoins = mission?.missionData?.loot?.gCoins || ''
-    const xp = mission?.missionData?.loot?.xp || ''
+    const money = mission?.missionData?.loot?.money || 0
+    const gCoins = mission?.missionData?.loot?.gCoins || 0
+    const xp = mission?.missionData?.loot?.xp || 0
 
     const onChangeValues = ({ target }) => {
         const value = parseInt(target.value.replace(/[^0-9]/g, ''));
